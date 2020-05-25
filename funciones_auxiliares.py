@@ -42,7 +42,7 @@ def plot_pomegranate_bn_pgvz(pgm, filename=None, prog='dot', color='red'):
         
 
 # Visualizar redes de PGM con NetworkX
-def plot_pgm_bn(pgm, layout=None, node_size=2000, node_color='pink'):
+def plot_pgmpy_bn(pgm, layout=None, node_size=2000, node_color='pink'):
     if layout=='graphviz':
         pos = nx.drawing.nx_agraph.graphviz_layout(pgm, prog='dot')
     elif layout!=None:
