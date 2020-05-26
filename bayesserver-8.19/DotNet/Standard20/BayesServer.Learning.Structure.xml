@@ -1,0 +1,919 @@
+<?xml version="1.0"?>
+<doc>
+  <assembly>
+    <name>BayesServer.Learning.Structure</name>
+  </assembly>
+  <members>
+    <member name="T:BayesServer.Learning.Structure.ChowLiu.ChowLiuLinkOutput">
+      <summary>
+            Contains information about a new link learnt using the <see cref="T:BayesServer.Learning.Structure.ChowLiu.ChowLiuStructuralLearning" /> algorithm.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.ChowLiu.ChowLiuLinkOutput.Link">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Learning.Structure.ChowLiu.ChowLiuStructuralLearning">
+      <summary>
+            A structural learning algorithm for Bayesian networks based on the Chow-Liu algorithm.
+            </summary>
+      <remarks>
+            This algorithm uses tests (e.g. mutual information) to build a spanning tree, which is then directed
+            to construct a Bayesian network.
+            </remarks>
+    </member>
+    <member name="M:BayesServer.Learning.Structure.ChowLiu.ChowLiuStructuralLearning.Learn(BayesServer.Data.IEvidenceReaderCommand,System.Collections.Generic.IList{BayesServer.Node},BayesServer.Learning.Structure.IStructuralLearningOptions)">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Learning.Structure.ChowLiu.ChowLiuStructuralLearningOptions">
+      <summary>
+            Options for structural learning with the <see cref="T:BayesServer.Learning.Structure.ChowLiu.ChowLiuStructuralLearning" /> class.
+            </summary>
+    </member>
+    <member name="E:BayesServer.Learning.Structure.ChowLiu.ChowLiuStructuralLearningOptions.PropertyChanged">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Learning.Structure.ChowLiu.ChowLiuStructuralLearningOptions.LinkConstraints">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Learning.Structure.ChowLiu.ChowLiuStructuralLearningOptions.Progress">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Learning.Structure.ChowLiu.ChowLiuStructuralLearningOptions.Root">
+      <summary>
+            Gets or sets the root of the Chow-Liu tree.  During construction links are directed away from this root.
+            </summary>
+      <remarks>
+            If no root is specified, a root is chosen arbitrarily.
+            </remarks>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.ChowLiu.ChowLiuStructuralLearningOptions.MaximumBatchSize">
+      <summary>
+            Gets or sets the maximum number of tests that are buffered in memory for processing in a single iteration of the data.
+            </summary>
+      <remarks>
+            When large numbers of tests are required, instead of exhausting available memory, the tests are performed in batches.
+            This value limits the number of tests that need to be stored in memory.
+            </remarks>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.ChowLiu.ChowLiuStructuralLearningOptions.Cancellation">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Learning.Structure.ChowLiu.ChowLiuStructuralLearningOutput">
+      <summary>
+            Contains information returned from the <see cref="T:BayesServer.Learning.Structure.ChowLiu.ChowLiuStructuralLearning" /> algorithm.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.ChowLiu.ChowLiuStructuralLearningOutput.LinkOutputs">
+      <summary>
+            Gets information about any new links added during the learning process.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.ChowLiu.ChowLiuStructuralLearningProgressInfo">
+      <summary>
+            Progress information returned from the Chow-Liu structural learning algorithm.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.ChowLiu.ChowLiuStructuralLearningProgressInfo.Message">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Learning.Structure.ChowLiu.NamespaceDoc">
+      <summary>
+            Contains classes for learning the structure (links) of a Bayesian network or Dynamic Bayesian network using the Chow-Liu algorithm.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.Clustering.ClusteringLinkOutput">
+      <summary>
+            Contains information about a new link learnt using the <see cref="T:BayesServer.Learning.Structure.Clustering.ClusteringStructuralLearning" /> algorithm.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Clustering.ClusteringLinkOutput.Link">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Learning.Structure.Clustering.ClusteringStructuralLearning">
+      <summary>
+            A structural learning algorithm for a cluster model (a.k.a mixture model).
+            </summary>
+    </member>
+    <member name="M:BayesServer.Learning.Structure.Clustering.ClusteringStructuralLearning.Learn(BayesServer.Data.IEvidenceReaderCommand,System.Collections.Generic.IList{BayesServer.Node},BayesServer.Learning.Structure.IStructuralLearningOptions)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Learning.Structure.Clustering.ClusteringStructuralLearning.Learn(BayesServer.Data.IEvidenceReaderCommandFactory,System.Collections.Generic.IList{BayesServer.Node},BayesServer.Learning.Structure.IStructuralLearningOptions)">
+      <summary>
+            Learn a cluster / mixture model.
+            </summary>
+      <param name="evidenceReaderCommandFactory">Creates new evidence reader commands, which may be partitioned for use in cross validation.</param>
+      <param name="nodes">The nodes to be considered for links.</param>
+      <param name="options">Options for the structural learning algorithm.</param>
+      <returns>The output generated by the structural learning algorithm.</returns>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.Clustering.ClusteringStructuralLearningOptions">
+      <summary>
+            Options for structural learning with the <see cref="T:BayesServer.Learning.Structure.Clustering.ClusteringStructuralLearning" /> class.
+            </summary>
+    </member>
+    <member name="E:BayesServer.Learning.Structure.Clustering.ClusteringStructuralLearningOptions.PropertyChanged">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Clustering.ClusteringStructuralLearningOptions.InferenceFactory">
+      <summary>
+            Gets or sets the inference factory used during scoring.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Clustering.ClusteringStructuralLearningOptions.RunsPerConfiguration">
+      <summary>
+            Gets or sets the number of times training is re-run for each network structure tested.
+            </summary>
+      <remarks>
+            The higher the number, the longer the tests will take, but the more accurate the tests will be.
+            </remarks>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Clustering.ClusteringStructuralLearningOptions.ClusterVariableName">
+      <summary>
+            Gets or sets the name of the cluster/latent node/variable created when more than 1 hidden state is detected.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Clustering.ClusteringStructuralLearningOptions.Partitions">
+      <summary>
+            Gets or sets the number of cross validation partitions to use when scoring each cluster count.
+            </summary>
+      <remarks>
+            The higher the number, the longer the tests will take.
+            </remarks>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Clustering.ClusteringStructuralLearningOptions.MaximumIterations">
+      <summary>
+            Gets or sets the maximum number of iterations used by parameter learning to score each configuration.
+            </summary>
+      <remarks>
+            The higher the number, the longer the tests will take.
+            </remarks>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Clustering.ClusteringStructuralLearningOptions.Progress">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Clustering.ClusteringStructuralLearningOptions.Cancellation">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Clustering.ClusteringStructuralLearningOptions.LinkConstraints">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Clustering.ClusteringStructuralLearningOptions.MaximumClusterCount">
+      <summary>
+            Gets or sets the maximum number of clusters generated.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Clustering.ClusteringStructuralLearningOptions.TestSingleCluster">
+      <summary>
+            Gets or sets a value which determines whether a test is performed for a single cluster (i.e. no significant clusters found).
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.Clustering.ClusteringStructuralLearningOutput">
+      <summary>
+            Contains information returned from the <see cref="T:BayesServer.Learning.Structure.Clustering.ClusteringStructuralLearning" /> algorithm.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Clustering.ClusteringStructuralLearningOutput.LinkOutputs">
+      <summary>
+            Gets information about any new links added during the learning process.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.Clustering.ClusteringStructuralLearningProgressInfo">
+      <summary>
+            Progress information returned from the Clustering structural learning algorithm.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Clustering.ClusteringStructuralLearningProgressInfo.Message">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Learning.Structure.Features.FeatureSelection">
+      <summary>
+            Contains methods to determine which variables are likely to be good features (predictors) or not.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Learning.Structure.Features.FeatureSelection.Detect(System.Collections.Generic.IList{BayesServer.Variable},BayesServer.Data.IEvidenceReaderCommand,BayesServer.Variable,BayesServer.Learning.Structure.Features.FeatureSelectionOptions)">
+      <summary>
+            Determines which variables are likely to be good features (predictors) of a target variable.
+            </summary>
+      <param name="variables">The variables to test against the target.</param>
+      <param name="evidenceReaderCommand">The data.</param>
+      <param name="target">The target variable.</param>
+      <param name="options">Options governing the tests.</param>
+      <returns>Test information for each variable.</returns>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.Features.FeatureSelectionOptions">
+      <summary>
+            Options governing the tests carried out to determine whether variables are likely to be features (predictors) of a target variable.
+            </summary>
+    </member>
+    <member name="E:BayesServer.Learning.Structure.Features.FeatureSelectionOptions.PropertyChanged">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Features.FeatureSelectionOptions.MutualInformation">
+      <summary>
+            Gets or sets a value which when true calculates the mutual information between each target and test.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.Features.FeatureSelectionOutput">
+      <summary>
+            Contains information returned by <see cref="M:BayesServer.Learning.Structure.FeatureSelection.Detect" /> about feature selection tests.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Features.FeatureSelectionOutput.Tests">
+      <summary>
+            Gets the tests carried out for each variable against the target.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.Features.FeatureSelectionTest">
+      <summary>
+            Contains information about a test carried out between a variable and a target to determine whether the variable is likely to be a feature or not.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Features.FeatureSelectionTest.Variable">
+      <summary>
+            Gets the variable which was tested to see if it is likely to be a feature of the <see cref="P:BayesServer.Learning.Structure.FeatureSelectionTest.Target" /> variable.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Features.FeatureSelectionTest.TemporalOrder">
+      <summary>
+            Gets the temporal order (if any) used to test the variables.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Features.FeatureSelectionTest.OneMinusPValue">
+      <summary>
+            Gets a value which equals one minus the p-value returned from the statical independence test.
+            The higher this value, the more likely the variable is to be a feature.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Features.FeatureSelectionTest.MutualInformation">
+      <summary>
+            Gets the mutual information between the target and the test in NATS.
+            The higher this value, the more likely the variable is to be a feature.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Learning.Structure.Features.FeatureSelectionTest.IsFeature(System.Double)">
+      <summary>
+            Provides a hint as to whether the variable is likely to be a feature or not, at the given <paramref name="significanceLevel" />.
+            </summary>
+      <param name="significanceLevel">
+      </param>
+      <returns>
+        <c>true</c> if the variable is likely to be a feature at the given <paramref name="significanceLevel" />, or <c>false</c> otherwise.</returns>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Features.FeatureSelectionTest.Target">
+      <summary>
+            Gets the variable that was the target of the feature selection test.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.Features.NamespaceDoc">
+      <summary>
+            Contains classes to perform feature selection.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.Hierarchical.HierarchicalLinkOutput">
+      <summary>
+            Contains information about a new link learnt using the <see cref="T:BayesServer.Learning.Structure.Hierarchical.HierarchicalStructuralLearning" /> algorithm.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Hierarchical.HierarchicalLinkOutput.Link">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Learning.Structure.Hierarchical.HierarchicalStructuralLearning">
+      <summary>
+            A structural learning algorithm for Bayesian networks that groups subsets of nodes into a hierarchy.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Learning.Structure.Hierarchical.HierarchicalStructuralLearning.Learn(BayesServer.Data.IEvidenceReaderCommand,System.Collections.Generic.IList{BayesServer.Node},BayesServer.Learning.Structure.IStructuralLearningOptions)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Learning.Structure.Hierarchical.HierarchicalStructuralLearning.Learn(BayesServer.Data.IEvidenceReaderCommandFactory,System.Collections.Generic.IList{BayesServer.Node},BayesServer.Learning.Structure.IStructuralLearningOptions)">
+      <summary>
+            Learn the structure (links) of a Bayesian network.
+            </summary>
+      <param name="evidenceReaderCommandFactory">Creates new evidence reader commands, which may be partitioned for use in cross validation.</param>
+      <param name="nodes">The nodes to be considered for links.</param>
+      <param name="options">Options for the structural learning algorithm.</param>
+      <returns>The output generated by the structural learning algorithm.</returns>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.Hierarchical.HierarchicalStructuralLearningOptions">
+      <summary>
+            Options for structural learning with the <see cref="T:BayesServer.Learning.Structure.Hierarchical.HierarchicalStructuralLearning" /> class.
+            </summary>
+    </member>
+    <member name="E:BayesServer.Learning.Structure.Hierarchical.HierarchicalStructuralLearningOptions.PropertyChanged">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Hierarchical.HierarchicalStructuralLearningOptions.MaximumLevels">
+      <summary>
+            Gets or sets the maximum number of levels generated by the algorithm.
+            </summary>
+      <remarks>
+            A level refers to the set of latent variables introduced by the algorithm at each stage of learning, to group variables together.
+            </remarks>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Hierarchical.HierarchicalStructuralLearningOptions.Partitions">
+      <summary>
+            Gets or sets the number of cross validation partitions to use when scoring each cluster count.
+            </summary>
+      <remarks>
+            The higher the number, the longer the tests will take.
+            </remarks>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Hierarchical.HierarchicalStructuralLearningOptions.RunsPerConfiguration">
+      <summary>
+            Gets or sets the number of times training is re-run for each network structure tested.
+            </summary>
+      <remarks>
+            The higher the number, the longer the tests will take, but the more accurate the tests will be.
+            </remarks>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Hierarchical.HierarchicalStructuralLearningOptions.MaximumIterations">
+      <summary>
+            Gets or sets the maximum number of iterations used by parameter learning to score each configuration.
+            </summary>
+      <remarks>
+            The higher the number, the longer the tests will take.
+            </remarks>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Hierarchical.HierarchicalStructuralLearningOptions.AddNodeGroups">
+      <summary>
+            Gets or sets a value which determines whether network node groups are added for each group in a level.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Hierarchical.HierarchicalStructuralLearningOptions.MaximumGroupsPerLevel">
+      <summary>
+            Gets or sets the maximum number of groups created per level.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Hierarchical.HierarchicalStructuralLearningOptions.MaximumClustersPerGroup">
+      <summary>
+            Gets or sets the maximum number of clusters generated for each group.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Hierarchical.HierarchicalStructuralLearningOptions.InferenceFactory">
+      <summary>
+            Gets or sets the inference factory used during scoring.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Hierarchical.HierarchicalStructuralLearningOptions.Progress">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Hierarchical.HierarchicalStructuralLearningOptions.Cancellation">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Hierarchical.HierarchicalStructuralLearningOptions.LinkConstraints">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Learning.Structure.Hierarchical.HierarchicalStructuralLearningOutput">
+      <summary>
+            Contains information returned from the <see cref="T:BayesServer.Learning.Structure.Hierarchical.HierarchicalStructuralLearning" /> algorithm.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Hierarchical.HierarchicalStructuralLearningOutput.LinkOutputs">
+      <summary>
+            Gets information about any new links added during the learning process.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.Hierarchical.HierarchicalStructuralLearningProgressInfo">
+      <summary>
+            Progress information returned from the Hierarchical structural learning algorithm.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Hierarchical.HierarchicalStructuralLearningProgressInfo.Message">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Learning.Structure.ILinkOutput">
+      <summary>
+            Contains information about a link returned from a structural learning algorithm.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.ILinkOutput.Link">
+      <summary>
+            Gets the new link.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.Independence.IndependenceOptions">
+      <summary>
+            Options governing independence and conditional independence tests.
+            </summary>
+    </member>
+    <member name="E:BayesServer.Learning.Structure.Independence.IndependenceOptions.PropertyChanged">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Learning.Structure.Independence.IndependenceOptions.ToString">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Independence.IndependenceOptions.SignificanceLevel">
+      <summary>
+            Gets or sets the significance level used to accept or reject (conditional) independence tests.
+            </summary>
+      <remarks>
+        <para>
+            Statistical (conditional) independence tests return a p-value.
+            The null hypothesis is that two nodes are (conditionally) independent.  This is rejected
+            if the p-value is less than the <see cref="P:BayesServer.Learning.Structure.IndependenceOptions.SignificanceLevel" />.
+            </para>
+        <para>
+            What this means is that links are more likely with higher significance levels.
+            </para>
+        <para>A value of 0.05 or 0.01 is usually assumed.</para>
+      </remarks>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.Independence.NamespaceDoc">
+      <summary>
+            Contains classes concerned with independence/conditional independence testing.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.IStructuralLearning">
+      <summary>
+            Defines methods for learning the structure (links) of a Bayesian network.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Learning.Structure.IStructuralLearning.Learn(BayesServer.Data.IEvidenceReaderCommand,System.Collections.Generic.IList{BayesServer.Node},BayesServer.Learning.Structure.IStructuralLearningOptions)">
+      <summary>
+            Learn the structure (links) of a Bayesian network.
+            </summary>
+      <param name="evidenceReaderCommand">Can create a reader which iterates round the data used to learn the network.</param>
+      <param name="nodes">The nodes to be considered for links.</param>
+      <param name="options">Options for the structural learning algorithm.</param>
+      <returns>The output generated by the structural learning algorithm.</returns>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.IStructuralLearningOptions">
+      <summary>
+            Options governing a structural learning algorithm.  An individual algorithm may expose additional properties.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.IStructuralLearningOptions.LinkConstraints">
+      <summary>
+            Gets any link constraints to use during structural learning.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.IStructuralLearningOptions.Cancellation">
+      <summary>
+            Gets of sets the instance implementing <see cref="T:BayesServer.ICancellation" />, used for cancellation.
+            </summary>
+      <seealso cref="T:BayesServer.ICancellation" />
+    </member>
+    <member name="P:BayesServer.Learning.Structure.IStructuralLearningOptions.Progress">
+      <summary>
+            Gets of sets the instance implementing <see cref="T:BayesServer.Learning.Structure.IStructuralLearningProgress" />, used for progress notifications.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.IStructuralLearningOutput">
+      <summary>
+            Contains information returned from a structural learning algorithm.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.IStructuralLearningOutput.LinkOutputs">
+      <summary>
+            Gets information about any new links added during the learning process.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.IStructuralLearningProgress">
+      <summary>
+            Interface to provide progress information during structural learning.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Learning.Structure.IStructuralLearningProgress.Update(BayesServer.Learning.Structure.IStructuralLearningProgressInfo)">
+      <summary>
+            Progress updates from the structural learning algorithm.
+            </summary>
+      <param name="info">Contains progress information from the structural learning algorithm.</param>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.IStructuralLearningProgressInfo">
+      <summary>
+            Interface to provide progress information during structural learning.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.IStructuralLearningProgressInfo.Message">
+      <summary>
+            Gets a progress message.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.LinkConstraint">
+      <summary>
+            Defines a constraint on a link between two nodes during structural learning.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Learning.Structure.LinkConstraint.#ctor(BayesServer.Node,BayesServer.Node,BayesServer.Learning.Structure.LinkConstraintMethod,BayesServer.Learning.Structure.LinkConstraintFailureMode)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Learning.Structure.LinkConstraint" /> class.  
+            </summary>
+      <param name="a">The first node in the link constraint.</param>
+      <param name="b">The second node in the link constraint.</param>
+      <param name="method">The constraint method.</param>
+      <param name="failureMode">The action taken if the link constraint is violated.</param>
+      <exception cref="T:System.ArgumentNullException">Raised if either <paramref name="a" /> or <paramref name="b" /> is null.</exception>
+    </member>
+    <member name="M:BayesServer.Learning.Structure.LinkConstraint.#ctor(BayesServer.Node,BayesServer.Node,System.Nullable{System.Int32},BayesServer.Learning.Structure.LinkConstraintMethod,BayesServer.Learning.Structure.LinkConstraintFailureMode)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Learning.Structure.LinkConstraint" /> class.  
+            </summary>
+      <param name="a">The first node in the link constraint.</param>
+      <param name="b">The second node in the link constraint.</param>
+      <param name="temporalOrder">The order of the temporal link constraint (temporal nodes only).</param>
+      <param name="method">The constraint method.</param>
+      <param name="failureMode">The action taken if the link constraint is violated.</param>
+      <exception cref="T:System.ArgumentNullException">Raised if either <paramref name="a" /> or <paramref name="b" /> is null.</exception>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.LinkConstraint.A">
+      <summary>
+            Gets the first node involved in the constraint.  The type of constraint is defined using the <see cref="P:BayesServer.Learning.Structure.LinkConstraint.Method" />.
+            </summary>
+      <seealso cref="P:BayesServer.Learning.Structure.LinkConstraint.Method" />
+    </member>
+    <member name="P:BayesServer.Learning.Structure.LinkConstraint.B">
+      <summary>
+            Gets the second node involved in the constraint.  The type of constraint is defined using the <see cref="P:BayesServer.Learning.Structure.LinkConstraint.Method" />.
+            </summary>
+      <seealso cref="P:BayesServer.Learning.Structure.LinkConstraint.Method" />
+    </member>
+    <member name="P:BayesServer.Learning.Structure.LinkConstraint.TemporalOrder">
+      <summary>
+            Gets the temporal order of the constraint. 
+            </summary>
+      <remarks>
+            Used for temporal links such as those found in time series and sequence networks (Dynamic Bayesian networks).
+            </remarks>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.LinkConstraint.Method">
+      <summary>
+            Gets the method used to constrain nodes <see cref="P:BayesServer.Learning.Structure.LinkConstraint.A" /> and <see cref="P:BayesServer.Learning.Structure.LinkConstraint.B" />.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.LinkConstraint.FailureMode">
+      <summary>
+            Gets the action to take when this link constraint is violated.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.LinkConstraintCollection">
+      <summary>
+            A collection of <see cref="T:BayesServer.Learning.Structure.LinkConstraint">link constraints</see>.
+            </summary>
+      <remarks>
+            Link constraints can be used during structural learning to encode prior knowledge.
+            </remarks>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.LinkConstraintFailureMode">
+      <summary>
+            Determines the action taken if a link constraint cannot be honoured.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Learning.Structure.LinkConstraintFailureMode.ThrowException">
+      <summary>
+            If the link constraint cannot be honoured, throw an exception.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Learning.Structure.LinkConstraintFailureMode.Ignore">
+      <summary>
+            If the link constraint cannot be honoured, ignore and continue.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.LinkConstraintMethod">
+      <summary>
+            Determines how a link is constrained.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Learning.Structure.LinkConstraintMethod.AToB">
+      <summary>
+            Enforces a link from A to B.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Learning.Structure.LinkConstraintMethod.AToBIfExists">
+      <summary>
+            If a link is detected between A and B, ensure it is directed from A to B.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Learning.Structure.LinkConstraintMethod.AToBIfChoice">
+      <summary>
+            If a link is detected between A and B, direct it from A to B if a choice of direction is available.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Learning.Structure.LinkConstraintMethod.AToBOrBToA">
+      <summary>
+            Enforces a link between A and B, in either direction.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Learning.Structure.LinkConstraintMethod.NotAToBOrBToA">
+      <summary>
+            Ensures that a link is not created between A and B.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.NamespaceDoc">
+      <summary>
+            Contains classes for learning the structure (links) of a Bayesian network or Dynamic Bayesian network.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.PC.NamespaceDoc">
+      <summary>
+            Contains classes for learning the structure (links) of a Bayesian network or Dynamic Bayesian network using the PC algorithm.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.PC.PCLinkOutput">
+      <summary>
+            Contains information about a new link learnt using the <see cref="T:BayesServer.Learning.Structure.PC.PCStructuralLearning" /> algorithm.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.PC.PCLinkOutput.Link">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Learning.Structure.PC.PCStructuralLearning">
+      <summary>
+            A structural learning algorithm for Bayesian networks based on the PC algorithm.
+            </summary>
+      <remarks>
+            This algorithm uses independence and conditional independence tests to determine the structure (links) of the Bayesian network.
+            </remarks>
+    </member>
+    <member name="M:BayesServer.Learning.Structure.PC.PCStructuralLearning.Learn(BayesServer.Data.IEvidenceReaderCommand,System.Collections.Generic.IList{BayesServer.Node},BayesServer.Learning.Structure.IStructuralLearningOptions)">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Learning.Structure.PC.PCStructuralLearningOptions">
+      <summary>
+            Options for structural learning with the <see cref="T:BayesServer.Learning.Structure.PC.PCStructuralLearning" /> class.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Learning.Structure.PC.PCStructuralLearningOptions.#ctor">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Learning.Structure.PC.PCStructuralLearningOptions" /> class.
+            </summary>
+    </member>
+    <member name="E:BayesServer.Learning.Structure.PC.PCStructuralLearningOptions.PropertyChanged">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Learning.Structure.PC.PCStructuralLearningOptions.LinkConstraints">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Learning.Structure.PC.PCStructuralLearningOptions.Progress">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Learning.Structure.PC.PCStructuralLearningOptions.Cancellation">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Learning.Structure.PC.PCStructuralLearningOptions.MaximumBatchSize">
+      <summary>
+            Gets or sets the maximum number of tests that are buffered in memory for processing in a single iteration of the data.
+            </summary>
+      <remarks>
+            When large numbers of tests are required, instead of exhausting available memory, the tests are performed in batches.
+            This value limits the number of tests that need to be stored in memory.
+            </remarks>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.PC.PCStructuralLearningOptions.MaximumTemporalOrder">
+      <summary>
+            Gets or sets the maximum order of temporal links that are considered during learning.
+            </summary>
+      <remarks>
+            When learning Bayesian networks with temporal nodes (time series or sequence nodes) this value
+            tells the algorithm the maximum order or links (sometimes referred to as the lag).
+            </remarks>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.PC.PCStructuralLearningOptions.Independence">
+      <summary>
+            Gets options controlling how the independence tests are carried out.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.PC.PCStructuralLearningOptions.MaximumConditional">
+      <summary>
+            Gets or sets the maximum number of conditional variables to consider during independence testing.
+            </summary>
+      <value>
+            The maximum number of conditional variables considered.
+            </value>
+      <remarks>
+        <para>Typically a value of 3 is used.</para>
+        <para>A value of 0 means that only marginal independence tests will be performed.</para>
+      </remarks>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.PC.PCStructuralLearningOutput">
+      <summary>
+            Contains information returned from the <see cref="T:BayesServer.Learning.Structure.PC.PCStructuralLearning" /> algorithm.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.PC.PCStructuralLearningOutput.LinkOutputs">
+      <summary>
+            Gets information about any new links added during the learning process.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.PC.PCStructuralLearningProgressInfo">
+      <summary>
+            Progress information returned from the PC structural learning algorithm.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.PC.PCStructuralLearningProgressInfo.Message">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Learning.Structure.Search.ScoreMethod">
+      <summary>
+            The scoring mechanism used to evaluate different Bayesian network structures during a search.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Learning.Structure.Search.ScoreMethod.CrossLogLikelihood">
+      <summary>
+            The score is the log-likelihood calculated on unseen data using cross validation.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.Search.SearchLinkOutput">
+      <summary>
+            Contains information about a new link learnt using the <see cref="T:BayesServer.Learning.Structure.Search.SearchStructuralLearning" /> algorithm.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Search.SearchLinkOutput.Link">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Learning.Structure.Search.SearchStructuralLearning">
+      <summary>
+            A structural learning algorithm for Bayesian networks based on Search and Score.
+            </summary>
+      <remarks>
+            This algorithm performs a search of possible structures based on moves that are evaluated using
+            a scoring function.
+            </remarks>
+    </member>
+    <member name="M:BayesServer.Learning.Structure.Search.SearchStructuralLearning.Learn(BayesServer.Data.IEvidenceReaderCommand,System.Collections.Generic.IList{BayesServer.Node},BayesServer.Learning.Structure.IStructuralLearningOptions)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Learning.Structure.Search.SearchStructuralLearning.Learn(BayesServer.Data.IEvidenceReaderCommandFactory,System.Collections.Generic.IList{BayesServer.Node},BayesServer.Learning.Structure.IStructuralLearningOptions)">
+      <summary>
+            Learn the structure (links) of a Bayesian network.
+            </summary>
+      <param name="evidenceReaderCommandFactory">Creates new evidence reader commands, which may be partitioned for use in cross validation.</param>
+      <param name="nodes">The nodes to be considered for links.</param>
+      <param name="options">Options for the structural learning algorithm.</param>
+      <returns>The output generated by the structural learning algorithm.</returns>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.Search.SearchStructuralLearningOptions">
+      <summary>
+            Options for structural learning with the <see cref="T:BayesServer.Learning.Structure.Search.SearchStructuralLearning" /> class.
+            </summary>
+    </member>
+    <member name="E:BayesServer.Learning.Structure.Search.SearchStructuralLearningOptions.PropertyChanged">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Search.SearchStructuralLearningOptions.PartitionCount">
+      <summary>
+            Gets or sets the number of partitions used by scoring functions that use cross validation.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Search.SearchStructuralLearningOptions.Progress">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Search.SearchStructuralLearningOptions.MaximumIterations">
+      <summary>
+            Gets or sets the optional maximum number of iterations (moves) made during the search procedure.  By default, no maximum is set.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Search.SearchStructuralLearningOptions.ToleranceOrDefault">
+      <summary>
+            If Tolerance is null, this returns the default tolerance for the given scoring method, otherwise Tolerance is returned.
+            </summary>
+      <returns>
+      </returns>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Search.SearchStructuralLearningOptions.Tolerance">
+      <summary>
+            Gets or sets the tolerance used to determine whether or not a search move is a significant improvement.
+            </summary>
+      <remarks>
+            This is a non negative number which indicates that learning will only stop when the relative difference between
+            scores between moves is no greater than this value.
+            
+            <para>
+            When null, a default value is used which depends on the Score Method in use.
+            </para></remarks>
+      <value>The tolerance.</value>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Search.SearchStructuralLearningOptions.ScoreMethod">
+      <summary>
+            Gets or sets the scoring method used to evaluate search moves.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Search.SearchStructuralLearningOptions.InferenceFactory">
+      <summary>
+            Gets or sets the inference factory used during scoring.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Search.SearchStructuralLearningOptions.Stopping">
+      <summary>
+            Gets or sets the instance implementing <see cref="T:BayesServer.IStop" /> used for early stopping.
+            </summary>
+      <remarks>
+            Stopping is different to cancellation, as stopping will still complete the
+            learning process, albeit having performed fewer iterations.
+            </remarks>
+      <value>The instance used for stopping.</value>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Search.SearchStructuralLearningOptions.Cancellation">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Search.SearchStructuralLearningOptions.LinkConstraints">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Search.SearchStructuralLearningOptions.TestIndependence">
+      <summary>
+            Gets or sets a value which when true uses independence tests to reduce the search space.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.Search.SearchStructuralLearningOutput">
+      <summary>
+            Contains information returned from the <see cref="T:BayesServer.Learning.Structure.Search.SearchStructuralLearning" /> algorithm.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Search.SearchStructuralLearningOutput.LinkOutputs">
+      <summary>
+            Gets information about any new links added during the learning process.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.Search.SearchStructuralLearningProgressInfo">
+      <summary>
+            Progress information returned from the Search based structural learning algorithm.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.Search.SearchStructuralLearningProgressInfo.Message">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Learning.Structure.TAN.NamespaceDoc">
+      <summary>
+            Contains classes for learning the structure (links) of a Bayesian network or Dynamic Bayesian network using the Tree Augmented Naive Bayes algorithm.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.TAN.TANLinkOutput">
+      <summary>
+            Contains information about a new link learnt using the <see cref="T:BayesServer.Learning.Structure.TAN.TANStructuralLearning" /> algorithm.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.TAN.TANLinkOutput.Link">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Learning.Structure.TAN.TANStructuralLearning">
+      <summary>
+            A structural learning algorithm for Bayesian networks based on the Tree augmented naive Bayes (TAN) algorithm.
+            </summary>
+      <remarks>
+        <para>
+            This algorithm uses tests (e.g. mutual information) conditional on a target to build a spanning tree, which is then directed
+            to construct a Bayesian network with additional links added from the target.  Often used for classification of the target.
+            </para>
+      </remarks>
+    </member>
+    <member name="M:BayesServer.Learning.Structure.TAN.TANStructuralLearning.Learn(BayesServer.Data.IEvidenceReaderCommand,System.Collections.Generic.IList{BayesServer.Node},BayesServer.Learning.Structure.IStructuralLearningOptions)">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Learning.Structure.TAN.TANStructuralLearningOptions">
+      <summary>
+            Options for structural learning with the <see cref="T:BayesServer.Learning.Structure.TAN.TANStructuralLearning" /> class.
+            </summary>
+    </member>
+    <member name="E:BayesServer.Learning.Structure.TAN.TANStructuralLearningOptions.PropertyChanged">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Learning.Structure.TAN.TANStructuralLearningOptions.LinkConstraints">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Learning.Structure.TAN.TANStructuralLearningOptions.Target">
+      <summary>
+            Gets or sets the target of the TAN tree.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.TAN.TANStructuralLearningOptions.Progress">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Learning.Structure.TAN.TANStructuralLearningOptions.Root">
+      <summary>
+            Gets or sets the root of the TAN tree.  During construction links are directed away from this root.
+            </summary>
+      <remarks>
+            If no root is specified, a root is chosen arbitrarily.
+            </remarks>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.TAN.TANStructuralLearningOptions.MaximumBatchSize">
+      <summary>
+            Gets or sets the maximum number of tests that are buffered in memory for processing in a single iteration of the data.
+            </summary>
+      <remarks>
+            When large numbers of tests are required, instead of exhausting available memory, the tests are performed in batches.
+            This value limits the number of tests that need to be stored in memory.
+            </remarks>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.TAN.TANStructuralLearningOptions.Cancellation">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Learning.Structure.TAN.TANStructuralLearningOutput">
+      <summary>
+            Contains information returned from the <see cref="T:BayesServer.Learning.Structure.TAN.TANStructuralLearning" /> algorithm.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.TAN.TANStructuralLearningOutput.LinkOutputs">
+      <summary>
+            Gets information about any new links added during the learning process.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Structure.TAN.TANStructuralLearningProgressInfo">
+      <summary>
+            Progress information returned from the TAN structural learning algorithm.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Structure.TAN.TANStructuralLearningProgressInfo.Message">
+      <inheritdoc />
+    </member>
+  </members>
+</doc>

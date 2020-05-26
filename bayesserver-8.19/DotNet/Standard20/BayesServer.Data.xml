@@ -1,0 +1,1470 @@
+<?xml version="1.0"?>
+<doc>
+  <assembly>
+    <name>BayesServer.Data</name>
+  </assembly>
+  <members>
+    <member name="T:BayesServer.Data.ColumnValueType">
+      <summary>
+            Specifies the type of data in a column.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Data.ColumnValueType.Value">
+      <summary>
+            The column contains the value of a continuous variable or a value to match to a discrete <see cref="P:BayesServer.State.Value" />.
+            </summary>
+      <remarks>
+            If a variable is discretized, this option can be used to match continuous values to the correct
+            discrete <see cref="T:BayesServer.Interval{T}" /> in a <see cref="P:BayesServer.State.Value" />.
+            </remarks>
+    </member>
+    <member name="F:BayesServer.Data.ColumnValueType.Index">
+      <summary>
+            The column contains the zero based index of a discrete variable state.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Data.ColumnValueType.Name">
+      <summary>
+            The column contains the name of a discrete variable state.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.CrossValidation">
+      <summary>
+            Allows test metrics/scores to be calculated using cross validation.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Data.CrossValidation.kFoldList(System.Int32)">
+      <summary>
+            Gets a list of training and test DataPartitioning instances for each partition.
+            </summary>
+      <remarks>This method is an alternative to the callback based <see cref="M:BayesServer.Data.CrossValidation.kFold(System.Int32,System.Int32,System.Func{BayesServer.Data.DataPartitioning,BayesServer.Data.ICrossValidationNetwork},System.Func{BayesServer.Data.DataPartitioning,BayesServer.Data.ICrossValidationNetwork,BayesServer.Data.ICrossValidationTestResult[]},System.Func{System.Int32,BayesServer.Data.ICrossValidationTestResult[],BayesServer.Data.ICrossValidationScore})" /> method.</remarks>
+      <param name="partitionCount">The number of k-fold partitions.</param>
+      <returns>Training and test DataPartitioning instances for each partition.</returns>
+    </member>
+    <member name="M:BayesServer.Data.CrossValidation.kFold(System.Int32,System.Int32,System.Func{BayesServer.Data.DataPartitioning,BayesServer.Data.ICrossValidationNetwork},System.Func{BayesServer.Data.DataPartitioning,BayesServer.Data.ICrossValidationNetwork,BayesServer.Data.ICrossValidationTestResult[]},System.Func{System.Int32,BayesServer.Data.ICrossValidationTestResult[],BayesServer.Data.ICrossValidationScore})">
+      <summary>
+            Performs k-fold cross validation.
+            </summary>
+      <param name="partitionCount">The number of partitions to use.</param>
+      <param name="testMetricCount">The number of test metrics being calculated.</param>
+      <param name="learn">A user supplied function to learn a network based on a training partitioning of the data.</param>
+      <param name="test">A user supplied function to test the network on a test partioning of the data.</param>
+      <param name="combine">A user supplied function to combine the test results over multiple partitionings.</param>
+      <returns>A score for each test metric.</returns>
+    </member>
+    <member name="M:BayesServer.Data.CrossValidation.Combine(System.Collections.Generic.IEnumerable{BayesServer.Data.ICrossValidationTestResult},BayesServer.Data.CrossValidationCombineMethod)">
+      <summary>
+            Provides standard ways of combining numeric test results from a number of partitions.  These can be used in the combine each phase of k-fold cross validation.
+            </summary>
+      <param name="testResults">The test results.  Typically one for each test partitioning.</param>
+      <param name="method">The method to be used to combine the test results.</param>
+      <returns>The overall cross validation score, which can be used to compare models.</returns>
+    </member>
+    <member name="T:BayesServer.Data.CrossValidationCombineMethod">
+      <summary>
+            Ways of combining cross validation test results to form an overall cross validation score.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Data.CrossValidationCombineMethod.WeightedAverage">
+      <summary>
+            Calculates the average of the numeric test results weighted by the number of records in each test partitioning.
+            </summary>
+      <remarks>This would be appropriate when combining lift scores.</remarks>
+    </member>
+    <member name="F:BayesServer.Data.CrossValidationCombineMethod.UnweightedSum">
+      <summary>
+            Simply sums the numeric test results.  This assumes that the weight has already been incorporated.
+            </summary>
+      <remarks>
+            This would be appropriate when combining log-likelihoods, which for each test partitioning are the sum of the log-likelihoods for each test case.</remarks>
+    </member>
+    <member name="F:BayesServer.Data.CrossValidationCombineMethod.RSquared">
+      <summary>
+            Combines R-squared statistics calculated on different partitions of data.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.CrossValidationNetwork">
+      <summary>
+            Default basic implementation of <see cref="T:BayesServer.Data.ICrossValidationNetwork" />.
+            </summary>
+      <seealso cref="T:BayesServer.Data.CrossValidation" />
+    </member>
+    <member name="M:BayesServer.Data.CrossValidationNetwork.#ctor(BayesServer.Network)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.CrossValidationNetwork" /> class, with a network.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.CrossValidationNetwork.Network">
+      <summary>
+            Gets or sets the network learnt from a cross validation partitioning.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.CrossValidationOutput">
+      <summary>
+            Details of a Cross-Validation partition.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.CrossValidationOutput.Partition">
+      <summary>
+            Gets the zero based index of the partition.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.CrossValidationOutput.TrainingPartioning">
+      <summary>
+            Gets the training DataPartitioning associated with this partition.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.CrossValidationOutput.TestPartitioning">
+      <summary>
+            Gets the test DataPartitioning associated with this partition.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.CrossValidationScore">
+      <summary>
+            A default simple implementation of <see cref="T:BayesServer.Data.ICrossValidationScore" />.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Data.CrossValidationScore.#ctor(System.Double)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.CrossValidationScore" /> class.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.CrossValidationScore.Score">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Data.CrossValidationTestResult">
+      <summary>
+            A simple default implementation of <see cref="T:BayesServer.Data.ICrossValidationTestResult" />.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Data.CrossValidationTestResult.#ctor(System.Double,System.Object,System.Nullable{System.Double})">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.CrossValidationTestResult" /> class.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.CrossValidationTestResult.WeightedCaseCount">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Data.CrossValidationTestResult.Value">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.CrossValidationTestResult.NumericValue">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Data.DatabaseDataReaderCommand">
+      <summary>
+            Provides a default implementation of <see cref="T:BayesServer.Data.IDataReaderCommand" /> for reading databases.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Data.DatabaseDataReaderCommand.#ctor(System.Data.Common.DbProviderFactory,System.String,System.String)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.DatabaseDataReaderCommand" /> class.
+            </summary>
+      <param name="factory">The provider factory. E.g. <see cref="P:System.Data.SqlClient.SqlClientFactory.Instance" />.</param>
+      <param name="connectionString">The database connection string.</param>
+      <param name="commandText">The select command text.</param>
+      <remarks>
+            When temporal data is present any non temporal data must be sorted by the case identifier, and
+            temporal data must be sorted by both the case identifier and time.
+            </remarks>
+    </member>
+    <member name="M:BayesServer.Data.DatabaseDataReaderCommand.#ctor(System.Data.Common.DbProviderFactory,System.String,System.String,System.Int32)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.DatabaseDataReaderCommand" /> class.
+            </summary>
+      <param name="factory">The provider factory. E.g. <see cref="P:System.Data.SqlClient.SqlClientFactory.Instance" />.</param>
+      <param name="connectionString">The database connection string.</param>
+      <param name="commandText">The select command text.</param>
+      <param name="commandTimeout">The timeout to set on commands that are generated.</param>
+      <remarks>
+            When temporal data is present any non temporal data must be sorted by the case identifier, and
+            temporal data must be sorted by both the case identifier and time.
+            </remarks>
+    </member>
+    <member name="P:BayesServer.Data.DatabaseDataReaderCommand.CommandTimeout">
+      <summary>
+            Gets or sets the timeout to be used when commands are created.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Data.DatabaseDataReaderCommand.ExecuteReader">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Data.DataCount">
+      <summary>
+            Contains methods to count the number of cases that match a given evidence configuration.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Data.DataCount.Count(BayesServer.Data.IEvidenceReaderCommand,BayesServer.Inference.IEvidence)">
+      <summary>
+            Counts the number of cases that match the current evidence configuration.
+            </summary>
+      <param name="readerCommand">The evidence reader command, which can read the data to count.</param>
+      <param name="evidence">The evidence to match cases with.</param>
+    </member>
+    <member name="T:BayesServer.Data.DataCountOutput">
+      <summary>
+            Contains information returned by <see cref="T:BayesServer.Data.DataCount" />.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.DataCountOutput.WeightedCaseCount">
+      <summary>
+            Gets the number of cases that match the given evidence.  This count takes into account any weights associated with each case.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.DataCountOutput.UnweightedCaseCount">
+      <summary>
+            Gets the number of cases that match the given evidence.  This count disregards any weights associated with each case.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.DataPartitioning">
+      <summary>
+            Determines how data is partitioned.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Data.DataPartitioning.#ctor(System.Int32,BayesServer.Data.DataPartitionMethod,System.Int32)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.DataPartitioning" /> class.
+            </summary>
+      <param name="partitionNumber">The zero based partition number.  A number between 0 to (number of partitions - 1).</param>
+      <param name="method">The partitioning method.  E.g. whether to include or exclude the data in the partition.</param>
+      <param name="partitionCount">The total number of partitions.</param>
+    </member>
+    <member name="P:BayesServer.Data.DataPartitioning.PartitionNumber">
+      <summary>
+            Gets the zero based partition number.  A number between 0 to (number of partitions - 1). 
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.DataPartitioning.PartitionCount">
+      <summary>
+            Gets the total number of partitions.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.DataPartitioning.Method">
+      <summary>
+            Gets the partitioning method.  E.g. whether to include or exclude the data in the partition.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.DataPartitionMethod">
+      <summary>
+            Determines whether data is included or excluded from a <see cref="T:BayesServer.Data.DataPartitioning" />.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Data.DataPartitionMethod.IncludePartitionData">
+      <summary>
+            The data set should include data from the partition.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Data.DataPartitionMethod.ExcludePartitionData">
+      <summary>
+            The data set should exclude data from the partition.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.DataProgressEventArgs">
+      <summary>
+            Used to provide progress on how many cases have been read.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.DataProgressEventArgs.UnweightedCaseCount">
+      <summary>
+            Gets the number of cases read so far.  The count does not include any weights that may be applied to cases.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.DataProgressEventArgs.WeightedCaseCount">
+      <summary>
+            Gets the number of cases read so far.  The count includes any weights that may be applied to cases.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.DataProgressEventArgs.UnweightedTemporalCount">
+      <summary>
+            Gets the number of temporal rows read so far for all cases.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.DataReader">
+      <summary>
+            Reads and validates non temporal and/or temporal data.
+            </summary>
+      <seealso cref="T:BayesServer.Data.EvidenceReader" />
+    </member>
+    <member name="M:BayesServer.Data.DataReader.#ctor(System.Data.IDataReader,BayesServer.Data.ReaderOptions)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.DataReader" /> class.
+            </summary>
+      <param name="reader">The (non temporal) reader.</param>
+      <param name="readerOptions">The reader options.</param>
+    </member>
+    <member name="M:BayesServer.Data.DataReader.#ctor(System.Data.IDataReader,BayesServer.Data.TemporalReaderOptions)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.DataReader" /> class.
+            </summary>
+      <param name="temporalReader">The temporal reader.</param>
+      <param name="temporalReaderOptions">The temporal reader options.</param>
+    </member>
+    <member name="M:BayesServer.Data.DataReader.#ctor(System.Data.IDataReader,BayesServer.Data.ReaderOptions,System.Data.IDataReader,BayesServer.Data.TemporalReaderOptions)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.DataReader" /> class.
+            </summary>
+      <param name="reader">The (non temporal) reader.</param>
+      <param name="readerOptions">The reader options.</param>
+      <param name="temporalReader">The temporal reader.</param>
+      <param name="temporalReaderOptions">The temporal reader options.</param>
+    </member>
+    <member name="M:BayesServer.Data.DataReader.#ctor(System.Data.IDataReader,BayesServer.Data.ReaderOptions,System.Collections.Generic.IList{BayesServer.Data.NestedDataReader})">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.DataReader" /> class.
+            </summary>
+      <param name="reader">The (non temporal) reader.</param>
+      <param name="readerOptions">The reader options.</param>
+      <param name="nestedReaders">Nested table readers.</param>
+    </member>
+    <member name="M:BayesServer.Data.DataReader.#ctor(System.Data.IDataReader,BayesServer.Data.ReaderOptions,System.Data.IDataReader,BayesServer.Data.TemporalReaderOptions,System.Collections.Generic.IList{BayesServer.Data.NestedDataReader})">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.DataReader" /> class.
+            </summary>
+      <param name="reader">The (non temporal) reader.</param>
+      <param name="readerOptions">The reader options.</param>
+      <param name="temporalReader">The temporal reader.</param>
+      <param name="temporalReaderOptions">The temporal reader options.</param>
+      <param name="nestedReaders">Nested table readers.</param>
+    </member>
+    <member name="M:BayesServer.Data.DataReader.Read(BayesServer.Data.ReadInfo@)">
+      <summary>
+            Reads the next (non temporal) record.
+            </summary>
+      <remarks>
+        <para>
+            This method must be called in order to move to the first record,
+            and should be called repeatedly, until it returns <c>false</c>.
+            </para>
+        <para>
+            This method must still be called, even if there is only temporal data.
+            </para>
+        <para>
+            If non temporal data is present, after each call to <see cref="M:BayesServer.Data.DataReader.Read" />, <see cref="M:BayesServer.Data.DataReader.ReadTemporal" /> must be called repeatedly
+            until <see cref="M:BayesServer.Data.DataReader.ReadTemporal" /> returns <c>false</c>.
+            </para>
+      </remarks>
+      <param name="readInfo">Provides information about the current case id and record.</param>
+      <returns>
+        <c>true</c> if data was read successfully, or <c>false</c> if there are no further cases to read.</returns>
+      <seealso cref="M:BayesServer.Data.DataReader.ReadTemporal" />
+    </member>
+    <member name="P:BayesServer.Data.DataReader.NestedTableCount">
+      <summary>
+            Gets the number of nested tables.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Data.DataReader.ReadNested(System.Int32,BayesServer.Data.NestedReadInfo@)">
+      <summary>
+            Reads the next record from a nested table.
+            </summary>
+      <remarks>
+        <para>
+            This method must be called in order to move to the first nested record that corresponds to the current <see cref="M:BayesServer.Data.DataReader.Read" />.
+            </para>
+        <para>
+            This method should be called repeatedly until it returns <c>false</c>, within each call to <see cref="M:BayesServer.Data.DataReader.Read" />, which should also
+            be called repeatedly.  This must be done for each nested table.
+            </para>
+      </remarks>
+      <param name="nestedIndex">The zero based index of the nested table to read.</param>
+      <param name="nestedReadInfo">Provides information about the current case id, time, and nested record.</param>
+      <returns>
+        <c>true</c> if the read was successful, <c>false</c> if there is no more data for this nested table for this case.</returns>
+      <seealso cref="M:BayesServer.Data.DataReader.Read" />
+    </member>
+    <member name="M:BayesServer.Data.DataReader.ReadTemporal(BayesServer.Data.TemporalReadInfo@)">
+      <summary>
+            Reads the next temporal record.
+            </summary>
+      <remarks>
+        <para>
+            This method must be called in order to move to the first temporal record that corresponds to the current <see cref="M:BayesServer.Data.DataReader.Read" />.
+            </para>
+        <para>
+            Note that even if there is only temporal data, <see cref="M:BayesServer.Data.DataReader.Read" /> must still be called.
+            </para>
+        <para>
+            This method should be called repeatedly until it returns <c>false</c>, within each call to <see cref="M:BayesServer.Data.DataReader.Read" />, which should also
+            be called repeatedly.
+            </para>
+      </remarks>
+      <param name="temporalReadInfo">Provides information about the current temporal case id, time, and temporal record.</param>
+      <returns>
+        <c>true</c> if the read was successful, <c>false</c> if there is no more temporal data for this case.</returns>
+      <seealso cref="M:BayesServer.Data.DataReader.Read" />
+    </member>
+    <member name="P:BayesServer.Data.DataReader.HasTemporalReader">
+      <summary>
+            Gets a value indicating whether the reader includes temporal data.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.DataReaderCommandFiltered">
+      <summary>
+            Wraps an existing data reader command while filtering records.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Data.DataReaderCommandFiltered.#ctor(BayesServer.Data.IDataReaderCommand,BayesServer.Data.IDataReaderFilter)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.DataReaderCommandFiltered" /> class.
+            </summary>
+      <param name="inner">The existing data reader command to filter.</param>
+      <param name="filter">Determines whether a record should be included in the filtered data reader or not.</param>
+    </member>
+    <member name="M:BayesServer.Data.DataReaderCommandFiltered.ExecuteReader">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Data.DataReaderFiltered">
+      <summary>
+            Wraps an existing data reader while filtering records.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Data.DataReaderFiltered.#ctor(System.Data.IDataReader,BayesServer.Data.IDataReaderFilter)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.DataReaderFiltered" /> class.
+            </summary>
+      <param name="inner">The existing data reader to filter.</param>
+      <param name="filter">Determines whether a record should be included in the filtered data reader or not.</param>
+    </member>
+    <member name="P:BayesServer.Data.DataReaderFiltered.Item(System.String)">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Data.DataReaderFiltered.Item(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Data.DataReaderFiltered.Depth">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Data.DataReaderFiltered.FieldCount">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Data.DataReaderFiltered.IsClosed">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Data.DataReaderFiltered.RecordsAffected">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.DataReaderFiltered.Close">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.DataReaderFiltered.Dispose">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.DataReaderFiltered.GetBoolean(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.DataReaderFiltered.GetByte(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.DataReaderFiltered.GetBytes(System.Int32,System.Int64,System.Byte[],System.Int32,System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.DataReaderFiltered.GetChar(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.DataReaderFiltered.GetChars(System.Int32,System.Int64,System.Char[],System.Int32,System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.DataReaderFiltered.GetData(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.DataReaderFiltered.GetDataTypeName(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.DataReaderFiltered.GetDateTime(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.DataReaderFiltered.GetDecimal(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.DataReaderFiltered.GetDouble(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.DataReaderFiltered.GetFieldType(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.DataReaderFiltered.GetFloat(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.DataReaderFiltered.GetGuid(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.DataReaderFiltered.GetInt16(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.DataReaderFiltered.GetInt32(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.DataReaderFiltered.GetInt64(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.DataReaderFiltered.GetName(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.DataReaderFiltered.GetOrdinal(System.String)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.DataReaderFiltered.GetSchemaTable">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.DataReaderFiltered.GetString(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.DataReaderFiltered.GetValue(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.DataReaderFiltered.GetValues(System.Object[])">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.DataReaderFiltered.IsDBNull(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.DataReaderFiltered.NextResult">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.DataReaderFiltered.Read">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Data.DataTableDataReaderCommand">
+      <summary>
+            Default implementation of <see cref="T:BayesServer.Data.IDataReaderCommand" /> for in memory data.
+            </summary>
+      <remarks>
+            This class should only used for data sets that can easily fit in memory.  For large data sets
+            use <see cref="T:BayesServer.Data.DatabaseDataReaderCommand" />.
+            <para>
+            For small data sets, this class can be used to cache data from a <see cref="T:System.Data.IDataReader" />,
+            to eliminate potentially expensive calls to a data source.
+            </para></remarks>
+    </member>
+    <member name="M:BayesServer.Data.DataTableDataReaderCommand.#ctor(System.Data.IDataReader)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.DataTableDataReaderCommand" /> class, caching data from a <see cref="T:System.Data.IDataReader" />.
+            </summary>
+      <param name="reader">The reader whose data is to be cached.</param>
+    </member>
+    <member name="M:BayesServer.Data.DataTableDataReaderCommand.#ctor(System.Data.DataTable)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.DataTableDataReaderCommand" /> class, with a <see cref="T:System.Data.DataTable" />.
+            </summary>
+      <param name="dataTable">The data table.</param>
+    </member>
+    <member name="M:BayesServer.Data.DataTableDataReaderCommand.ExecuteReader">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Data.DataTableEvidenceReaderCommandFactory">
+      <summary>
+            A default implementation of <see cref="T:BayesServer.Data.IEvidenceReaderCommandFactory" /> based on a DataTable
+            and a simple partitioning scheme based on a partition column.
+            </summary>
+      <remarks>
+            In order to calculate the partition for a record, the value in the partiton column modulo the number of partitions is used.
+            </remarks>
+    </member>
+    <member name="M:BayesServer.Data.DataTableEvidenceReaderCommandFactory.#ctor(System.Data.DataTable,System.Collections.Generic.IList{BayesServer.Data.VariableReference},BayesServer.Data.ReaderOptions,System.String)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.DataTableEvidenceReaderCommandFactory" /> class.
+            </summary>
+      <param name="data">Non-temporal data.</param>
+      <param name="variables">Non-temporal variable references.</param>
+      <param name="readerOptions">Non-temporal options for reading the data.</param>
+      <param name="partitionColumn">A partition column for the non-temporal data.</param>
+    </member>
+    <member name="M:BayesServer.Data.DataTableEvidenceReaderCommandFactory.#ctor(System.Data.DataTable,System.Collections.Generic.IList{BayesServer.Data.VariableReference},BayesServer.Data.TemporalReaderOptions,System.String)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.DataTableEvidenceReaderCommandFactory" /> class.
+            </summary>
+      <param name="temporalData">Temporal data.</param>
+      <param name="temporalVariables">Temporal variables</param>
+      <param name="temporalReaderOptions">Temporal options for reading the data</param>
+      <param name="temporalPartitionColumn">A partition column for the temporal data.</param>
+    </member>
+    <member name="M:BayesServer.Data.DataTableEvidenceReaderCommandFactory.#ctor(System.Data.DataTable,System.Collections.Generic.IList{BayesServer.Data.VariableReference},BayesServer.Data.ReaderOptions,System.String,System.Data.DataTable,System.Collections.Generic.IList{BayesServer.Data.VariableReference},BayesServer.Data.TemporalReaderOptions,System.String)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.DataTableEvidenceReaderCommandFactory" /> class.
+            </summary>
+      <param name="data">Non-temporal data.</param>
+      <param name="variables">Non-temporal variable references.</param>
+      <param name="readerOptions">Non-temporal options for reading the data.</param>
+      <param name="partitionColumn">A partition column for the non-temporal data.</param>
+      <param name="temporalData">Temporal data.</param>
+      <param name="temporalVariables">Temporal variables</param>
+      <param name="temporalReaderOptions">Temporal options for reading the data</param>
+      <param name="temporalPartitionColumn">A partition column for the temporal data.</param>
+    </member>
+    <member name="M:BayesServer.Data.DataTableEvidenceReaderCommandFactory.Create(BayesServer.Network)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.DataTableEvidenceReaderCommandFactory.CreatePartitioned(BayesServer.Network,BayesServer.Data.DataPartitioning,System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Data.Distributed.IDataPartition`1">
+      <summary>
+            Interface used by distributed processes that read data.
+            </summary>
+      <typeparam name="T">The type of the context class which contains any information required by the partition.</typeparam>
+    </member>
+    <member name="M:BayesServer.Data.Distributed.IDataPartition`1.CreateDataReader(`0)">
+      <summary>
+            Create a data reader for this distributed partition.
+            </summary>
+      <param name="context">The context that holds any information required to create the data reader.</param>
+      <returns>
+      </returns>
+    </member>
+    <member name="T:BayesServer.Data.Distributed.IEvidencePartition`1">
+      <summary>
+            Interface used by distributed processes that read evidence.
+            </summary>
+      <typeparam name="T">The type of the context class which contains any information required by the mapper.</typeparam>
+    </member>
+    <member name="M:BayesServer.Data.Distributed.IEvidencePartition`1.CreateEvidenceReader(`0)">
+      <summary>
+            Create an evidence reader for this distributed mapper.
+            </summary>
+      <param name="context">The context that holds any information required to create the evidence reader.</param>
+      <returns>
+      </returns>
+    </member>
+    <member name="T:BayesServer.Data.Distributed.NamespaceDoc">
+      <summary>
+            Contains classes and interfaces for distributed data driven processes such as distributed parameter learning.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.EmptyStringAction">
+      <summary>
+            Determines the action to take when an empty string is encountered.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Data.EmptyStringAction.ThrowException">
+      <summary>
+            Throw an exception.  This is the default.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Data.EmptyStringAction.MissingValue">
+      <summary>
+            Assume the variable state is missing/unknown/null.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.EvidenceReader">
+      <summary>
+            Provides a default implementation of <see cref="T:BayesServer.Data.IEvidenceReader" />, used in Bayes Server for tasks such as parameter learning.
+            </summary>
+      <remarks>
+        <para>If temporal data (e.g. time series data) is present, it must be sorted by case identifier and then time.
+            </para>
+        <para>If non temporal data is present, it must be sorted by 
+            case identifier, if present.
+            </para>
+      </remarks>
+    </member>
+    <member name="M:BayesServer.Data.EvidenceReader.#ctor(System.Data.IDataReader,System.Collections.Generic.IList{BayesServer.Data.VariableReference},BayesServer.Data.ReaderOptions)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.EvidenceReader" /> class.  This override is used when there is no temporal data.
+            </summary>
+      <param name="reader">The data reader to read non temporal data.</param>
+      <param name="variables">The non temporal variables to read.</param>
+      <param name="readerOptions">Options for reading non temporal data.</param>
+    </member>
+    <member name="M:BayesServer.Data.EvidenceReader.#ctor(System.Data.IDataReader,System.Collections.Generic.IList{BayesServer.Data.VariableReference},BayesServer.Data.TemporalReaderOptions)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.EvidenceReader" /> class.  This override is used when there is temporal data, but no non temporal data.
+            </summary>
+      <param name="readerTemporal">The data reader to read temporal data.</param>
+      <param name="variablesTemporal">The temporal variables.</param>
+      <param name="temporalReaderOptions">Options for reading temporal data.</param>
+    </member>
+    <member name="M:BayesServer.Data.EvidenceReader.#ctor(System.Data.IDataReader,System.Collections.Generic.IList{BayesServer.Data.VariableReference},BayesServer.Data.ReaderOptions,System.Data.IDataReader,System.Collections.Generic.IList{BayesServer.Data.VariableReference},BayesServer.Data.TemporalReaderOptions)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.EvidenceReader" /> class, supporting both temporal and non temporal data.
+            </summary>
+      <param name="reader">The data reader to read non temporal data.</param>
+      <param name="variables">The non temporal variables.</param>
+      <param name="readerOptions">Options for reading non temporal data.</param>
+      <param name="readerTemporal">The data reader to read temporal data.</param>
+      <param name="variablesTemporal">The temporal variables.</param>
+      <param name="temporalReaderOptions">Options for reading temporal data.</param>
+    </member>
+    <member name="M:BayesServer.Data.EvidenceReader.Finalize">
+      <summary>
+            Releases unmanaged resources and performs other cleanup operations before the
+            <see cref="T:BayesServer.Data.EvidenceReader" /> is reclaimed by garbage collection.
+            </summary>
+    </member>
+    <member name="E:BayesServer.Data.EvidenceReader.PropertyChanged">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Data.EvidenceReader.DataProgress">
+      <summary>
+            Gets the instance used to report progress on the number of cases read.  Can be null.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.EvidenceReader.DataProgressInterval">
+      <summary>
+            Gets or sets a value which determines how often progress events are raised.
+            </summary>
+      <remarks>
+            Progress will be raised each time this number of (unweighted) cases or temporal rows are read.
+            </remarks>
+    </member>
+    <member name="P:BayesServer.Data.EvidenceReader.AutoReadTemporal">
+      <summary>
+            Determines whether any temporal data is read automatically.
+            </summary>
+      <remarks>
+        <para>When no temporal data is present, this option has no effect.</para>
+        <para>When <c>true</c> (the default), <see cref="M:BayesServer.Data.EvidenceReader.ReadTemporal" /> is called automatically (in a loop),
+            each time <see cref="M:BayesServer.Data.EvidenceReader.Read" /> is called.
+            </para>
+        <para>
+            When <c>false</c>, <see cref="M:BayesServer.Data.EvidenceReader.ReadTemporal" /> must be manually called (in a loop) to read any temporal data, after
+            each call to <see cref="M:BayesServer.Data.EvidenceReader.Read" />.  This allows temporal information to be extracted via <see cref="T:BayesServer.Data.TemporalReadInfo" />, 
+            during the read process.
+            </para>
+      </remarks>
+    </member>
+    <member name="P:BayesServer.Data.EvidenceReader.ReadInfo">
+      <summary>
+            Provides information about the last read of non temporal data.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.EvidenceReader.TemporalReadInfo">
+      <summary>
+            Provides information about the last read of temporal data.  Only valid when <see cref="P:BayesServer.Data.EvidenceReader.AutoReadTemporal" /> is <c>false</c>.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Data.EvidenceReader.Dispose">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.EvidenceReader.Read(BayesServer.Inference.IEvidence,BayesServer.Data.IReadOptions)">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Data.EvidenceReader.UnweightedCaseCount">
+      <summary>
+            Gets the number of cases (unweighted) read so far.  This counter is reset to zero when <see cref="M:BayesServer.Data.EvidenceReader.Reset" /> is called.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.EvidenceReader.WeightedCaseCount">
+      <summary>
+            Gets the number of cases (weighted) read so far.  This counter is reset to zero when <see cref="M:BayesServer.Data.EvidenceReader.Reset" /> is called.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Data.EvidenceReader.ReadTemporal(BayesServer.Inference.IEvidence,BayesServer.Data.IReadOptions)">
+      <summary>
+            Reads the next temporal record, setting evidence.
+            </summary>
+      <remarks>
+        <para>
+            This method can only be called if <see cref="P:BayesServer.Data.EvidenceReader.AutoReadTemporal" /> is <c>false</c>.
+            </para>
+        <para>
+            This method must be called in order to move to the first temporal record that corresponds to the current <see cref="M:BayesServer.Data.EvidenceReader.Read" />.
+            </para>
+        <para>
+            Note that even if there is only temporal data, <see cref="M:BayesServer.Data.EvidenceReader.Read" /> must still be called.
+            </para>
+        <para>
+            This method should be called repeatedly until it returns <c>false</c>, within each call to <see cref="M:BayesServer.Data.EvidenceReader.Read" />, which should also
+            be called repeatedly.
+            </para>
+      </remarks>
+      <param name="evidence">The evidence to update.</param>
+      <param name="readOptions">Read options.</param>
+      <returns>
+        <c>true</c> if the read was successful, <c>false</c> if there is no more temporal data for this case.</returns>
+      <seealso cref="M:BayesServer.Data.EvidenceReader.Read" />
+      <seealso cref="T:BayesServer.Data.TemporalReadInfo" />
+    </member>
+    <member name="T:BayesServer.Data.EvidenceReaderCommand">
+      <summary>
+            Creates instances of <see cref="T:BayesServer.Data.EvidenceReader" /> on demand.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.EvidenceReaderCommand.OnExecuteReader">
+      <summary>
+            Gets or sets a function that is called when a new reader is created.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Data.EvidenceReaderCommand.#ctor(BayesServer.Data.IDataReaderCommand,System.Collections.Generic.IList{BayesServer.Data.VariableReference},BayesServer.Data.ReaderOptions)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.EvidenceReaderCommand" /> class.
+            </summary>
+      <param name="command">The data reader command to read non temporal data.</param>
+      <param name="variables">The non temporal variables.</param>
+      <param name="readerOptions">Options for reading the data.</param>
+    </member>
+    <member name="M:BayesServer.Data.EvidenceReaderCommand.#ctor(BayesServer.Data.IDataReaderCommand,System.Collections.Generic.IList{BayesServer.Data.VariableReference},BayesServer.Data.TemporalReaderOptions)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.EvidenceReaderCommand" /> class.  This override is used when there is temporal data, but no non temporal data.
+            </summary>
+      <param name="commandTemporal">The data reader command to read temporal data.</param>
+      <param name="variablesTemporal">The temporal variables.</param>
+      <param name="temporalReaderOptions">Options for reading temporal data.</param>
+    </member>
+    <member name="M:BayesServer.Data.EvidenceReaderCommand.#ctor(BayesServer.Data.IDataReaderCommand,System.Collections.Generic.IList{BayesServer.Data.VariableReference},BayesServer.Data.ReaderOptions,BayesServer.Data.IDataReaderCommand,System.Collections.Generic.IList{BayesServer.Data.VariableReference},BayesServer.Data.TemporalReaderOptions)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.EvidenceReaderCommand" /> class, supporting both temporal and non temporal data.
+            </summary>
+      <param name="command">The data reader command to read non temporal data.</param>
+      <param name="variables">The non temporal variables.</param>
+      <param name="readerOptions">Options for reading non temporal data.</param>
+      <param name="commandTemporal">The data reader command to read temporal data.</param>
+      <param name="variablesTemporal">The temporal variables.</param>
+      <param name="temporalReaderOptions">Options for reading temporal data.</param>
+    </member>
+    <member name="M:BayesServer.Data.EvidenceReaderCommand.ExecuteReader">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Data.EvidenceReaderEventArgs">
+      <summary>
+            Contains a reference to a reader created by a reader command.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.EvidenceReaderEventArgs.EvidenceReader">
+      <summary>
+            Gets the reader created by a reader command.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.ICrossValidationNetwork">
+      <summary>
+            The result of learning on a single cross validation training partitioning.
+            </summary>
+      <seealso cref="T:BayesServer.Data.CrossValidation" />
+    </member>
+    <member name="P:BayesServer.Data.ICrossValidationNetwork.Network">
+      <summary>
+            Gets the network learnt from the cross validation partitioning.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.ICrossValidationScore">
+      <summary>
+            Interface for cross validation scores.  A score is the combined score over each cross validation partitioning.
+            </summary>
+      <seealso cref="T:BayesServer.Data.CrossValidation" />
+    </member>
+    <member name="P:BayesServer.Data.ICrossValidationScore.Score">
+      <summary>
+            Gets the combined score over each cross validation partitioning.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.ICrossValidationTestResult">
+      <summary>
+            Interface for cross validation test results.  Each test result is based on a cross validation test partitioning.
+            </summary>
+      <seealso cref="T:BayesServer.Data.CrossValidation" />
+    </member>
+    <member name="P:BayesServer.Data.ICrossValidationTestResult.WeightedCaseCount">
+      <summary>
+            Gets the number of records in the test partitioning.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.ICrossValidationTestResult.Value">
+      <summary>
+            Gets the test result value for this test partitioning.  This might be the log-likelihood, or the lift, etc... 
+            </summary>
+    </member>
+    <member name="M:BayesServer.Data.ICrossValidationTestResult.NumericValue">
+      <summary>
+            Returns the test result as a numeric value if supported, otherwise returns null.
+            </summary>
+      <returns>The numeric test result if supported.</returns>
+    </member>
+    <member name="T:BayesServer.Data.IDataReaderCommand">
+      <summary>
+            Interface used by <see cref="T:BayesServer.Data.IEvidenceReader" /> in order to read data multiple times.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Data.IDataReaderCommand.ExecuteReader">
+      <summary>
+            Returns an instance of <see cref="T:System.Data.IDataReader" />.
+            </summary>
+      <returns>A data reader.</returns>
+    </member>
+    <member name="T:BayesServer.Data.IDataReaderFilter">
+      <summary>
+            Interface to determine whether records should be filtered in a data reader.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Data.IDataReaderFilter.Include(System.Data.IDataRecord)">
+      <summary>
+            Determines whether a record should be included or not.
+            </summary>
+      <param name="record">The current record to include or exclude.</param>
+      <returns>Returns <c>true</c> if the record should be included, <c>false</c> if the recorded should be excluded.</returns>
+    </member>
+    <member name="T:BayesServer.Data.IEvidenceReader">
+      <summary>
+            A data set iterator, that can be read multiple times.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Data.IEvidenceReader.Read(BayesServer.Inference.IEvidence,BayesServer.Data.IReadOptions)">
+      <summary>
+            Reads the next case (record).  Read must be called to move to the first record.
+            </summary>
+      <param name="evidence">The destination evidence.</param>
+      <param name="readOptions">Read options.</param>
+      <returns>
+        <c>true</c> if a case was sucessfully read, <c>false</c> if no more cases (records) were present.</returns>
+    </member>
+    <member name="T:BayesServer.Data.IEvidenceReaderCommand">
+      <summary>
+            Interface used to create instances of <see cref="T:BayesServer.Data.IEvidenceReader" />.  Allows evidence to be read from data multiple times.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Data.IEvidenceReaderCommand.ExecuteReader">
+      <summary>
+            Returns an instance of <see cref="T:BayesServer.Data.IEvidenceReader" /> which allows evidence to be iterated over.
+            </summary>
+      <returns>An evidence reader.</returns>
+    </member>
+    <member name="T:BayesServer.Data.IEvidenceReaderCommandFactory">
+      <summary>
+            Creates evidence reader commands, for repeated iterating of a data set/partition of a data set.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Data.IEvidenceReaderCommandFactory.Create(BayesServer.Network)">
+      <summary>
+            Create an evidence reader command, based on a specific network which may be a copy of the original.
+            </summary>
+      <param name="network">The network to base the reader on.</param>
+      <returns>A new evidence reader command.</returns>
+    </member>
+    <member name="M:BayesServer.Data.IEvidenceReaderCommandFactory.CreatePartitioned(BayesServer.Network,BayesServer.Data.DataPartitioning,System.Int32)">
+      <summary>
+            Create an evidence reader command on a partition, based on a specific network which may be a copy of the original.
+            </summary>
+      <param name="network">The network to base the reader on.</param>
+      <param name="dataPartitioning">The partition number and method such as include/exclude.</param>
+      <param name="partitionCount">The total number of partitions.</param>
+      <returns>A new evidence reader command.</returns>
+    </member>
+    <member name="T:BayesServer.Data.IReadOptions">
+      <summary>
+            Provides information to <see cref="M:BayesServer.Data.IEvidenceReader.Read" />.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.IReadOptions.Cleared">
+      <summary>
+            Gets or sets a value indicating whether the <see cref="T:BayesServer.Inference.IEvidence" /> has been cleared prior to <see cref="M:BayesServer.Data.IEvidenceReader.Read" /> being called.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.NamespaceDoc">
+      <summary>
+            Provides interfaces/classes for handling data.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.NestedDataReader">
+      <summary>
+            Allows nested table to be read using a <see cref="T:BayesServer.Data.DataReader" />.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Data.NestedDataReader.#ctor(System.Data.IDataReader,System.String)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.NestedDataReader" /> class.
+            </summary>
+      <param name="dataReader">The data reader.</param>
+      <param name="caseIdColumn">The case id column.</param>
+    </member>
+    <member name="P:BayesServer.Data.NestedDataReader.CaseIdColumn">
+      <summary>
+            The name of the case identifier column, which links to the case table.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.NestedDataReader.DataReader">
+      <summary>
+            Gets the nested data reader.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.NestedReadInfo">
+      <summary>
+            Provides information about a nested table record.
+            </summary>
+      <seealso cref="T:BayesServer.Data.DataReader" />
+    </member>
+    <member name="M:BayesServer.Data.NestedReadInfo.#ctor(System.Data.IDataRecord)">
+      <summary>
+            Initializes a new instance of the NestedReadInfo struct.
+            </summary>
+      <param name="record">The current nested table record.</param>
+    </member>
+    <member name="P:BayesServer.Data.NestedReadInfo.Record">
+      <summary>
+            The current nested table record.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.PartitionDataReaderFilter">
+      <summary>
+            A data reader filter based on an integer column, which can contain ids or a zero based partition identifier.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Data.PartitionDataReaderFilter.#ctor(BayesServer.Data.DataPartitioning,System.Int32,System.String)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.PartitionDataReaderFilter" /> class.
+            </summary>
+      <param name="dataPartitioning">The partitioning to use to filter the data.</param>
+      <param name="partitionCount">The total number of partitions.</param>
+      <param name="partitionColumn">The name of the column containing ids or a zero based partition identifier.</param>
+    </member>
+    <member name="M:BayesServer.Data.PartitionDataReaderFilter.Include(System.Data.IDataRecord)">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Data.R2CrossValidationTestResult">
+      <summary>
+            Represents the R Squared statistic (Coefficient of determination) on a partition of data.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Data.R2CrossValidationTestResult.#ctor(System.Double,System.Double,System.Double,System.Double)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.R2CrossValidationTestResult" /> class.
+            </summary>
+      <param name="weightedCaseCount">The number of cases (rows) in the partition.</param>
+      <param name="rSquared">the R Squared statistic (Coefficient of determination) on a partition of data.</param>
+      <param name="meanActual">The mean of the actual column values (as opposed to the predicted values).</param>
+      <param name="varianceActual">The variance of the actual column values (as opposed to the predicted values).</param>
+    </member>
+    <member name="P:BayesServer.Data.R2CrossValidationTestResult.Value">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Data.R2CrossValidationTestResult.WeightedCaseCount">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.R2CrossValidationTestResult.NumericValue">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Data.R2CrossValidationTestResult.MeanActual">
+      <summary>
+            Gets the mean of the actual column values (as opposed to the predicted values).
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.R2CrossValidationTestResult.VarianceActual">
+      <summary>
+            Gets the variance of the actual column values (as opposed to the predicted values).
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.ReaderOptions">
+      <summary>
+            Options that apply to the reading of non temporal data.
+            </summary>
+      <seealso cref="T:BayesServer.Data.DataReader" />
+      <seealso cref="T:BayesServer.Data.EvidenceReader" />
+    </member>
+    <member name="M:BayesServer.Data.ReaderOptions.#ctor">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.ReaderOptions" /> class.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Data.ReaderOptions.#ctor(System.String)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.ReaderOptions" /> class.
+            </summary>
+      <param name="caseIdColumn">The name of the case identifier column, if one is present.</param>
+    </member>
+    <member name="M:BayesServer.Data.ReaderOptions.#ctor(System.String,System.String)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.ReaderOptions" /> class.
+            </summary>
+      <param name="caseIdColumn">The name of the case identifier column, if one is present.</param>
+      <param name="weightColumn">The name of the case weight column, if one is present. Values in this column, are mapped to <see cref="P:BayesServer.Inference.IEvidence.Weight" />.</param>
+    </member>
+    <member name="P:BayesServer.Data.ReaderOptions.CaseIdColumn">
+      <summary>
+            The name of the case identifier column, if one is present.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.ReaderOptions.WeightColumn">
+      <summary>
+            The name of the case weight column, if one is present.  Values in this column, are mapped to <see cref="P:BayesServer.Inference.IEvidence.Weight" />.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.ReadInfo">
+      <summary>
+            Provides information about a non temporal record.
+            </summary>
+      <seealso cref="T:BayesServer.Data.DataReader" />
+    </member>
+    <member name="M:BayesServer.Data.ReadInfo.#ctor(System.Object,System.Data.IDataRecord)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.ReadInfo" /> struct.
+            </summary>
+      <param name="caseId">The current case id.  Can be null.</param>
+      <param name="record">The current record.</param>
+    </member>
+    <member name="M:BayesServer.Data.ReadInfo.#ctor(System.Object,System.Double,System.Data.IDataRecord)">
+            Initializes a new instance of the ReadInfo struct.
+            <param name="caseId">The current case id.  Can be null.</param><param name="weight">The case weight.  See <see cref="P:BayesServer.Inference.IEvidence.Weight" /> for more information.</param><param name="record">The current record.</param></member>
+    <member name="P:BayesServer.Data.ReadInfo.CaseId">
+      <summary>
+            The current case id.  Can be null.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.ReadInfo.Record">
+      <summary>
+            The current record.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.ReadInfo.Weight">
+      <summary>
+            The case weight.  See <see cref="P:BayesServer.Inference.IEvidence.Weight" /> for more information.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.ReadOptions">
+      <summary>
+            Provides a default implementation of <see cref="T:BayesServer.Data.IReadOptions" />.
+            </summary>
+    </member>
+    <member name="E:BayesServer.Data.ReadOptions.PropertyChanged">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.ReadOptions.#ctor">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.ReadOptions" /> class.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Data.ReadOptions.#ctor(System.Boolean)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.ReadOptions" /> class.
+            </summary>
+      <param name="cleared">A value indicating whether the <see cref="T:BayesServer.Inference.IEvidence" /> has been cleared prior to <see cref="M:BayesServer.Data.IEvidenceReader.Read" /> being called.</param>
+    </member>
+    <member name="P:BayesServer.Data.ReadOptions.Cleared">
+      <summary>
+            Gets or sets a value indicating whether the <see cref="T:BayesServer.Inference.IEvidence" /> has been cleared prior to <see cref="M:BayesServer.Data.IEvidenceReader.Read" /> being called.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.StateNotFoundAction">
+      <summary>
+            Determines the action to take when a state name or value cannot be matched to a variable state.  Does not affect <see cref="F:BayesServer.Data.ColumnValueType.Index" />.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Data.StateNotFoundAction.ThrowException">
+      <summary>
+            Throw an exception.  This is the default.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Data.StateNotFoundAction.MissingValue">
+      <summary>
+            Assume the variable state is missing/unknown/null.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.TemporalReaderOptions">
+      <summary>
+            Options that apply to the reading of temporal data.
+            </summary>
+      <seealso cref="T:BayesServer.Data.DataReader" />
+      <seealso cref="T:BayesServer.Data.EvidenceReader" />
+    </member>
+    <member name="M:BayesServer.Data.TemporalReaderOptions.#ctor(System.String,System.String,BayesServer.Data.TimeValueType)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.TemporalReaderOptions" /> class.
+            </summary>
+      <param name="caseIdColumn">The name of the temporal case identifier column, if one is present.</param>
+      <param name="timeColumn">The name of the time column in the temporal data, if temporal data is present.</param>
+      <param name="timeValueType">The type of values contained in the time column.</param>
+    </member>
+    <member name="P:BayesServer.Data.TemporalReaderOptions.CaseIdColumn">
+      <summary>
+            The name of the temporal case identifier column, if one is present.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.TemporalReaderOptions.TimeColumn">
+      <summary>
+            The name of the time column in the temporal data, if temporal data is present.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.TemporalReaderOptions.TimeValueType">
+      <summary>
+            The type of values contained in the time column.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.TemporalReadInfo">
+      <summary>
+            Provides information about a temporal record.
+            </summary>
+      <seealso cref="T:BayesServer.Data.DataReader" />
+    </member>
+    <member name="M:BayesServer.Data.TemporalReadInfo.#ctor(System.Nullable{System.Int32},System.Object,System.Data.IDataRecord)">
+            Initializes a new instance of the TemporalReadInfo struct.
+            <param name="timeIndex">The zero based time index (e.g. t=0, t=100).  Can be null.</param><param name="timeValue">The current value in the time column.  Can be null.</param><param name="record">The current temporal record.</param></member>
+    <member name="P:BayesServer.Data.TemporalReadInfo.Record">
+      <summary>
+            The current temporal record.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.TemporalReadInfo.TimeIndex">
+      <summary>
+            Gets the zero based time index (e.g. t=0, t=100).  Can be null.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.TemporalReadInfo.TimeValue">
+      <summary>
+            Gets the current value in the time column.  Can be null.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.TimeSeries.NamespaceDoc">
+      <summary>
+            Contains classes and interfaces for manipulating time series data.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.TimeSeries.WindowDataReader">
+      <summary>
+            A data reader that reads windows of data over another data reader.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReader.#ctor(System.Data.IDataReader,BayesServer.Data.TimeSeries.WindowOptions,BayesServer.Data.TimeSeries.WindowDataReaderOptions)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.TimeSeries.WindowDataReader" /> class.
+            </summary>
+      <param name="source">The source data to window over.</param>
+      <param name="windowOptions">Options for the windows to create.</param>
+      <param name="readerOptions">Options for the window reader, such as a derived column names.</param>
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReader.Read">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Data.TimeSeries.WindowDataReader.Depth">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Data.TimeSeries.WindowDataReader.IsClosed">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Data.TimeSeries.WindowDataReader.RecordsAffected">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Data.TimeSeries.WindowDataReader.FieldCount">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Data.TimeSeries.WindowDataReader.Item(System.String)">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Data.TimeSeries.WindowDataReader.Item(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReader.Close">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReader.GetSchemaTable">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReader.NextResult">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReader.Dispose">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReader.GetName(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReader.GetDataTypeName(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReader.GetFieldType(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReader.GetValue(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReader.GetValues(System.Object[])">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReader.GetOrdinal(System.String)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReader.GetBoolean(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReader.GetByte(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReader.GetBytes(System.Int32,System.Int64,System.Byte[],System.Int32,System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReader.GetChar(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReader.GetChars(System.Int32,System.Int64,System.Char[],System.Int32,System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReader.GetGuid(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReader.GetInt16(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReader.GetInt32(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReader.GetInt64(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReader.GetFloat(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReader.GetDouble(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReader.GetString(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReader.GetDecimal(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReader.GetDateTime(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReader.GetData(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReader.IsDBNull(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Data.TimeSeries.WindowDataReaderCommand">
+      <summary>
+            A data reader command that reads windows of data over another data reader.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReaderCommand.#ctor(BayesServer.Data.IDataReaderCommand,BayesServer.Data.TimeSeries.WindowOptions,BayesServer.Data.TimeSeries.WindowDataReaderOptions)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.TimeSeries.WindowDataReaderCommand" /> class.
+            </summary>
+      <param name="source">The source data to window over.</param>
+      <param name="windowOptions">Options for the windows to create.</param>
+      <param name="readerOptions">Options for the window reader, such as a derived column names.</param>
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowDataReaderCommand.ExecuteReader">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Data.TimeSeries.WindowDataReaderOptions">
+      <summary>
+            Options for creating windowed data readers.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.TimeSeries.WindowDataReaderOptions.WindowColumnName">
+      <summary>
+            Gets or sets the name of the column which will contain the window identifier.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.TimeSeries.WindowDataReaderOptions.WindowTimeColumnName">
+      <summary>
+            Gets or sets the name of the column which will contain the window time.  (e.g. -2 = 2 steps back, 0 is current, 3 is 3 steps into the futrue)
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.TimeSeries.WindowOptions">
+      <summary>
+            Options for creating windows over time series data.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowOptions.#ctor(System.Int32,System.Int32)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.TimeSeries.WindowOptions" /> class, with a shift of 1.
+            </summary>
+      <param name="history">The number of historic records to include in the time window.</param>
+      <param name="future">The number of future records to include in the time window.</param>
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowOptions.#ctor(System.Int32,System.Int32,System.Int32)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.TimeSeries.WindowOptions" /> class.
+            </summary>
+      <param name="history">The number of historic records to include in the time window.</param>
+      <param name="future">The number of future records to include in the time window.</param>
+      <param name="shift">The number of records between successive windows.</param>
+    </member>
+    <member name="M:BayesServer.Data.TimeSeries.WindowOptions.#ctor(System.Int32[],System.Int32)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.TimeSeries.WindowOptions" /> class.
+            </summary>
+      <param name="times">The times to include in the window.  E.g. -5, -3, 0, 3, 10.  Include zero if the current time should be included.</param>
+      <param name="shift">The number of records between successive windows.</param>
+    </member>
+    <member name="P:BayesServer.Data.TimeSeries.WindowOptions.Times">
+      <summary>
+            Gets or sets the times to include in the window.  E.g. -5, -3, 0, 3, 10.  Include zero if the current time should be included.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.TimeSeries.WindowOptions.Shift">
+      <summary>
+            Gets or sets the number of records between successive windows.  Defaults to 1, meaning each window is shifted by 1 record. 
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.TimeValueType">
+      <summary>
+            The type of values stored in a time column.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Data.TimeValueType.Index">
+      <summary>
+            The time column contains zero based time indexes.  E.g. 0, 1, 5 maps to t=0, t=1, t=5.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Data.TimeValueType.Value">
+      <summary>
+            The time column contains values that can be sorted, and will be treated in sequence.  E.g. 100, 200, 300 maps to t=0, t=1, t=2.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Data.VariableReference">
+      <summary>
+            Identifies a <see cref="T:BayesServer.Variable" /> and data binding information.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Data.VariableReference.#ctor(BayesServer.Variable,BayesServer.Data.ColumnValueType,System.String)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.VariableReference" /> class.
+            </summary>
+      <param name="variable">The variable.</param>
+      <param name="columnValueType">The type of column to bind to.</param>
+      <param name="column">The name of the column in the data source.</param>
+    </member>
+    <member name="M:BayesServer.Data.VariableReference.#ctor(BayesServer.Variable,BayesServer.Data.ColumnValueType,System.String,BayesServer.Data.StateNotFoundAction)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.VariableReference" /> class.
+            </summary>
+      <param name="variable">The variable.</param>
+      <param name="columnValueType">The type of column to bind to.</param>
+      <param name="column">The name of the column in the data source.</param>
+      <param name="stateNotFoundAction">The action to take if a state name/value cannot be mapped to a state.</param>
+    </member>
+    <member name="M:BayesServer.Data.VariableReference.#ctor(BayesServer.Variable,BayesServer.Data.ColumnValueType,System.String,BayesServer.Data.StateNotFoundAction,BayesServer.Data.EmptyStringAction)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.VariableReference" /> class.
+            </summary>
+      <param name="variable">The variable.</param>
+      <param name="columnValueType">The type of column to bind to.</param>
+      <param name="column">The name of the column in the data source.</param>
+      <param name="stateNotFoundAction">The action to take if a state name/value cannot be mapped to a state.</param>
+      <param name="emptyStringAction">The action to take if an empty string is detected.</param>
+    </member>
+    <member name="M:BayesServer.Data.VariableReference.Copy(BayesServer.Variable)">
+      <summary>
+            Creates a copy of this instance, but based on a different variable.
+            </summary>
+      <param name="newVariable">The new variable to reference.</param>
+      <returns>A new instance of a VariableReference.</returns>
+    </member>
+    <member name="P:BayesServer.Data.VariableReference.StateNotFoundAction">
+      <summary>
+            Determines the action to take if the name or value from the data cannot be matched to a particular state for this reference variable.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.VariableReference.EmptyStringAction">
+      <summary>
+            Determines the action to take if an empty string is encountered.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Data.VariableReference.Column">
+      <summary>
+            Gets the name of the relevant column in the data source.
+            </summary>
+      <value>The name of the column.</value>
+    </member>
+    <member name="P:BayesServer.Data.VariableReference.ColumnValueType">
+      <summary>
+            Gets the type of value in the bound data column.
+            </summary>
+      <value>The type of value in the column.</value>
+    </member>
+    <member name="P:BayesServer.Data.VariableReference.Variable">
+      <summary>
+            Gets the variable.
+            </summary>
+      <value>The variable.</value>
+    </member>
+  </members>
+</doc>

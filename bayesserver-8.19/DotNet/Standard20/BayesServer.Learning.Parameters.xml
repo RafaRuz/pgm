@@ -1,0 +1,760 @@
+<?xml version="1.0"?>
+<doc>
+  <assembly>
+    <name>BayesServer.Learning.Parameters</name>
+  </assembly>
+  <members>
+    <member name="T:BayesServer.Learning.Parameters.ConvergenceMethod">
+      <summary>
+            The method used to determine whether learning has converged.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Learning.Parameters.ConvergenceMethod.Parameters">
+      <summary>
+            Convergence is determined based on the change in network parameters between successive iterations.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Learning.Parameters.ConvergenceMethod.LogLikelihood">
+      <summary>
+            Convergence is determined based on the change in the log-likelihood between successive iterations.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Parameters.DecisionPostProcessingMethod">
+      <summary>
+            The type of post processing to be applied to the distributions of decision nodes at the end of parameter learning.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Learning.Parameters.DecisionPostProcessingMethod.NotApplicable">
+      <summary>
+            There are no decision nodes in the network.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Learning.Parameters.DecisionPostProcessingMethod.Uniform">
+      <summary>
+            The distribution of each decision node is overwritten with a uniform distribution, but only once learning is complete.
+            </summary>
+      <remarks>
+            This option does not penalize a decision if it did not frequently occur in the training data.
+            </remarks>
+    </member>
+    <member name="F:BayesServer.Learning.Parameters.DecisionPostProcessingMethod.Probabilities">
+      <summary>
+            The distributions learned from the data are left intact and not overridden.
+            </summary>
+      <remarks>
+            This option penalizes decisions based on their occurrence in the training data.
+            </remarks>
+    </member>
+    <member name="T:BayesServer.Learning.Parameters.DiscretePriorMethod">
+      <summary>
+            The type of discrete prior to use for discrete distributions during parameter learning.
+            </summary>
+      <remarks>
+            The type of prior can be set for all distributions or individually allowing fine grained control.
+            </remarks>
+    </member>
+    <member name="F:BayesServer.Learning.Parameters.DiscretePriorMethod.Uniform">
+      <summary>
+            The prior is uniformly distributed over all discrete combinations.
+            </summary>
+      <remarks>
+            This allows each combination to have a chance of happening, even if it did occur in the data.
+            <para>
+            This is useful when you still want to be able to make a prediction even when the combinations found in the data
+            are not possible in a query due to other evidence.
+            </para><para>
+            A consequence of uniform priors is that combinations that are clearly impossible have a very small chance of occurring,
+            such as Pregnant Males or a country belonging to different continents.
+            </para><para>This can be set for all distributions or individually.</para></remarks>
+    </member>
+    <member name="F:BayesServer.Learning.Parameters.DiscretePriorMethod.Frequencies">
+      <summary>
+            The prior for each combination is adjusted based on the frequency of that combination in the data.
+            <para>
+            This means that you do not get situations where a small probability is given to a combination such as 
+            Pregnant Male.  Sometimes a uniform prior is better when the data doesn't reflect all possible combinations.
+            </para><para>This can be set for all distributions or individually.</para></summary>
+    </member>
+    <member name="T:BayesServer.Learning.Parameters.DistributedMapperContext">
+      <summary>
+            Contains information used during distributed parameter learning.
+            </summary>
+      <see cref="M:BayesServer.Learning.Parameters.ParameterLearning.LearnDistributed" />
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.DistributedMapperContext.Network">
+      <summary>
+            Gets the <see cref="T:BayesServer.Network" /> that is being learnt by the distributed process.  
+            </summary>
+      <remarks>
+            This will not be the same reference as the original network, as it may be processed on a different machine.
+            </remarks>
+    </member>
+    <member name="T:BayesServer.Learning.Parameters.DistributerContext">
+      <summary>
+            Contains contextual information about the process/iteration being distributed.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.DistributerContext.Name">
+      <summary>
+            Gets the name of the process/iteration being distributed.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Parameters.DistributionMonitoring">
+      <summary>
+            Indicates which distribution to monitor during learning.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Learning.Parameters.DistributionMonitoring.None">
+      <summary>
+            Do not monitor any distributions.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Learning.Parameters.DistributionMonitoring.All">
+      <summary>
+            Monitor all distributions.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Parameters.DistributionSpecification">
+      <summary>
+            Identifies a node's distribution to learn, and options for learning.
+            </summary>
+      <remarks>
+            Note that temporal nodes and noisy nodes can have multiple distributions, and each distribution is identified by temporal order.
+            </remarks>
+    </member>
+    <member name="E:BayesServer.Learning.Parameters.DistributionSpecification.PropertyChanged">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Learning.Parameters.DistributionSpecification.#ctor(BayesServer.Node)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Learning.Parameters.DistributionSpecification" /> class.
+            </summary>
+      <param name="node">The node the distribution refers to.</param>
+    </member>
+    <member name="M:BayesServer.Learning.Parameters.DistributionSpecification.#ctor(BayesServer.Node,System.Int32)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Learning.Parameters.DistributionSpecification" /> class.
+            </summary>
+      <param name="node">The node the distribution refers to.</param>
+      <param name="order">The order of the distribution, for temporal nodes.</param>
+    </member>
+    <member name="M:BayesServer.Learning.Parameters.DistributionSpecification.#ctor(BayesServer.Node,BayesServer.NodeDistributionKey)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Learning.Parameters.DistributionSpecification" /> class.
+            </summary>
+      <param name="node">The node the distribution refers to.</param>
+      <param name="key">Properties that identify the distribution, such as the temporal order.</param>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.DistributionSpecification.Initialize">
+      <summary>
+            Gets or sets a flag indicating whether the distribution should be initialized.
+            </summary>
+      <remarks>
+            When <c>null</c><see cref="P:BayesServer.Learning.Parameters.ParameterLearningOptions.Initialization.InitializeDistributions" /> will be used to 
+            determine whether initialization is performed.
+            </remarks>
+      <value>When <c>true</c> initialize the distribution, when <c>false</c> do not initialize the distributions, and when 
+            <c>null</c> use the value from <see cref="P:BayesServer.Learning.Parameters.ParameterLearningOptions.Initialization.InitializeDistributions" />.
+            </value>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.DistributionSpecification.DiscretePriorMethod">
+      <summary>
+            Gets or sets the type of discrete prior to use for this distribution.
+            </summary>
+      <remarks>
+            When <c>null</c><see cref="P:BayesServer.Learning.Parameters.ParameterLearningOptions.PriorOptions.DiscretePriorMethod" /> will be used to 
+            determine the type of prior.
+            </remarks>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.DistributionSpecification.Node">
+      <summary>
+            Gets the <see cref="T:BayesServer.Node" /> this distribution specification refers to.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.DistributionSpecification.Order">
+      <summary>
+            Gets the order of the distribution, for temporal nodes.  
+            </summary>
+      <remarks>For non temporal nodes this value will always be zero.</remarks>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.DistributionSpecification.Key">
+      <summary>
+            Gets the order/related node of the distribution.
+            </summary>
+      <remarks>For non temporal nodes this value will always be zero.</remarks>
+    </member>
+    <member name="T:BayesServer.Learning.Parameters.InitializationMethod">
+      <summary>
+            Determines the algorithm used to initialize distributions during parameter learning.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Learning.Parameters.InitializationMethod.Auto">
+      <summary>
+            Automatically select the best algorithm.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Learning.Parameters.InitializationMethod.Sampling">
+      <summary>
+            Cases are selected at random to initialize distributions.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Learning.Parameters.InitializationMethod.Clustering">
+      <summary>
+            An iterative clustering algorithm is used, which picks cases that are different from each other.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Parameters.InitializationOptions">
+      <summary>
+            Options governing the initialization of distributions at the start of parameter learning.
+            </summary>
+    </member>
+    <member name="E:BayesServer.Learning.Parameters.InitializationOptions.PropertyChanged">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.InitializationOptions.InitializeDistributions">
+      <summary>
+            Indicates whether or not to initialize distributions by default.  
+            </summary>
+      <remarks>
+            This value can be overridden by <see cref="M:BayesServer.Learning.Parameters.DistributionSpecification.Initialize" />.
+            </remarks>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.InitializationOptions.Method">
+      <summary>
+            Determines the algorithm used for initialization.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Learning.Parameters.InitializationOptions.ToString">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.InitializationOptions.MaximumSupport">
+      <summary>
+            Limits the amount of support each distribution is given during initialization.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.InitializationOptions.SamplingProbability">
+      <summary>
+            A value between 0 and 1 (inclusive) indicating what probability of cases to use for initialization.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Parameters.IParameterLearningProgress">
+      <summary>
+            Interface to provide progress information during parameter learning.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Learning.Parameters.IParameterLearningProgress.Update(BayesServer.Learning.Parameters.ParameterLearningProgressInfo)">
+      <summary>
+            Progress update, containing information about the last iteration.
+            </summary>
+      <param name="info">Information about the last iteration.</param>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.IParameterLearningProgress.DistributionMonitoring">
+      <summary>
+            Gets information about the current state of distributions being monitored.
+            </summary>
+      <value>Distribution monitoring information.</value>
+    </member>
+    <member name="T:BayesServer.Learning.Parameters.NamespaceDoc">
+      <summary>
+            Provides parameter learning for Bayesian networks and Dynamic Bayesian networks.  See <see cref="M:BayesServer.Learning.Parameters.ParameterLearning.Learn" /> for sample code.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Parameters.OnlineLearning">
+      <summary>
+            Adapts the parameters of a Bayesian network, using Bayesian statistics.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Learning.Parameters.OnlineLearning.#ctor(BayesServer.Network,BayesServer.Inference.IInferenceFactory)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Learning.Parameters.OnlineLearning" /> class.
+            </summary>
+      <remarks>
+            Learning uses inference as a subroutine, and creates one or more inference engines
+            via the <paramref name="factory" /> parameter.
+            </remarks>
+      <param name="network">The network whose parameters are being adapted.</param>
+      <param name="factory">The inference factory used to create inference engines in cases when learning requires inference.</param>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.OnlineLearning.Evidence">
+      <summary>
+            Gets the evidence used internally. Setting evidence on this instance, and passing it to Adapt saves a copy.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Learning.Parameters.OnlineLearning.Adapt(BayesServer.Inference.IEvidence,BayesServer.Learning.Parameters.OnlineLearningOptions)">
+      <summary>
+            Adapt the parameters of a Bayesian network using Bayesian statistics.
+            </summary>
+      <remarks>
+        <para>
+            For nodes to be adapted, they must have Experience tables assigned (and optionally fading tables).
+            </para>
+        <para>
+            In the case a discrete node, the experience table combined with the probability are used to create a Dirichlet distribution.
+            This distribution acts as a prior during the Bayesian inference process.
+            </para>
+      </remarks>
+      <param name="evidence">The evidence to learn.</param>
+      <param name="options">Options that affect how parameters are adapted.</param>
+    </member>
+    <member name="T:BayesServer.Learning.Parameters.OnlineLearningOptions">
+      <summary>
+            Options for online learning (adaptation using Bayesian statistics).
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.OnlineLearningOptions.DecisionAlgorithm">
+      <summary>
+            Gets or sets the algorithm to use for adaption of decision graphs.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Learning.Parameters.ParameterLearning">
+      <summary>
+            Learns the parameters of Bayesian networks and Dynamic Bayesian networks, from data. See <see cref="M:BayesServer.Learning.Parameters.ParameterLearning.Learn(IEvidenceReader, ParameterLearningOptions)" /> for sample code.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Learning.Parameters.ParameterLearning.#ctor(BayesServer.Network,BayesServer.Inference.IInferenceFactory)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Learning.Parameters.ParameterLearning" /> class.
+            </summary>
+      <remarks>
+            Learning uses inference as a subroutine, and creates one or more inference engines
+            via the <paramref name="factory" /> parameter.
+            </remarks>
+      <param name="network">The network whose parameters are being learnt.</param>
+      <param name="factory">The inference factory used to create inference engines in cases when learning requires inference.</param>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.ParameterLearning.Network">
+      <summary>
+            Returns the relevant network.
+            </summary>
+      <value>The network.</value>
+    </member>
+    <member name="M:BayesServer.Learning.Parameters.ParameterLearning.Learn(BayesServer.Data.IEvidenceReaderCommand,BayesServer.Learning.Parameters.ParameterLearningOptions)">
+      <summary>
+            Learns the parameters of a Bayesian network or Dynamic Bayesian network, from data.
+            </summary>
+      <param name="readerCommand">Can create a reader containing the data to learn from.</param>
+      <param name="options">Learning options.</param>
+      <returns>Summary information about parameter learning.</returns>
+    </member>
+    <member name="M:BayesServer.Learning.Parameters.ParameterLearning.LearnDistributedReducer(System.Collections.Generic.IEnumerable{BayesServer.Distributed.INameValuesReader},BayesServer.Distributed.INameValuesReader,BayesServer.Distributed.INameValuesWriter)">
+      <summary>
+            Aggregates (reduces) the results obtained from the distributed calls to <see cref="M:BayesServer.Learning.Parameters.ParameterLearning.LearnDistributedMapper" />.
+            </summary>
+      <param name="inputs">The results from each distributed mapper.</param>
+      <param name="configuration">Configuration data that was distributed during the call to 
+            <see cref="M:BayesServer.Learning.Parameters.ParameterLearning.LearnDistributed" />.</param>
+      <param name="output">The aggregated results which will be used by the driver program which called 
+            <see cref="M:BayesServer.Learning.Parameters.ParameterLearning.LearnDistributed" />.</param>
+    </member>
+    <member name="M:BayesServer.Learning.Parameters.ParameterLearning.LearnDistributedMapper(BayesServer.Data.Distributed.IEvidencePartition{BayesServer.Learning.Parameters.DistributedMapperContext},BayesServer.Distributed.INameValuesReader,BayesServer.Distributed.INameValuesWriter,BayesServer.Inference.IInferenceFactory)">
+      <summary>
+            This method should be called during distributed parameter learning on a distributed partition. 
+            </summary>
+      <param name="partition">The distributed data to be learnt from.</param>
+      <param name="configuration">Configuration data that was distributed during the call to 
+            <see cref="M:BayesServer.Learning.Parameters.ParameterLearning.LearnDistributed" />.</param>
+      <param name="output">Stores the result of the distributed process.  These results will later be passed to an aggregator (reducer).</param>
+      <param name="factory">The inference factory used to create inference engines in cases when learning requires inference.</param>
+    </member>
+    <member name="M:BayesServer.Learning.Parameters.ParameterLearning.LearnDistributed(BayesServer.Network,BayesServer.Learning.Parameters.ParameterLearningOptions,BayesServer.Distributed.IDistributer{BayesServer.Learning.Parameters.DistributerContext})">
+      <summary>
+            Learns the parameters of a Bayesian network or Dynamic Bayesian network from data, on a distributed platform.
+            </summary>
+      <param name="network">The network whose parameters are being learnt.</param>
+      <param name="options">Learning options.</param>
+      <param name="distributer">The caller must implement this interface, which allows processing to be distributed.</param>
+      <remarks>
+        <see cref="M:BayesServer.Learning.Parameters.ParameterLearning.LearnDistributedMapper" /> should be called in the map phase, and
+            <see cref="M:BayesServer.Learning.Parameters.ParameterLearning.LearnDistributedReducer" /> should be called to reduce the results.
+            </remarks>
+      <returns>Summary information about parameter learning.</returns>
+    </member>
+    <member name="M:BayesServer.Learning.Parameters.ParameterLearning.LearnDistributed(BayesServer.Network,System.Collections.Generic.IList{BayesServer.Learning.Parameters.DistributionSpecification},BayesServer.Learning.Parameters.ParameterLearningOptions,BayesServer.Distributed.IDistributer{BayesServer.Learning.Parameters.DistributerContext})">
+      <summary>
+            Learns the parameters of a Bayesian network or Dynamic Bayesian network from data, on a distributed platform.  See <see cref="M:BayesServer.Learning.Parameters.ParameterLearning.Learn(IEvidenceReader, ParameterLearningOptions)" /> for sample code.
+            </summary>
+      <param name="network">The network whose parameters are being learnt.</param>
+      <param name="distributionSpecifications">The distributions to learn and options.</param>
+      <param name="options">Learning options.</param>
+      <param name="distributer">The caller must implement this interface, which allows processing to be distributed.</param>
+      <remarks>
+        <see cref="M:BayesServer.Learning.Parameters.ParameterLearning.LearnDistributedMapper" /> should be called in the map phase, and
+            <see cref="M:BayesServer.Learning.Parameters.ParameterLearning.LearnDistributedReducer" /> should be called to reduce the results.
+            </remarks>
+      <returns>Summary information about parameter learning.</returns>
+    </member>
+    <member name="M:BayesServer.Learning.Parameters.ParameterLearning.Learn(BayesServer.Data.IEvidenceReaderCommand,System.Collections.Generic.IList{BayesServer.Learning.Parameters.DistributionSpecification},BayesServer.Learning.Parameters.ParameterLearningOptions)">
+      <summary>
+            Learns the parameters of a Bayesian network or Dynamic Bayesian network, from data.  See <see cref="M:BayesServer.Learning.Parameters.ParameterLearning.Learn(IEvidenceReader, ParameterLearningOptions)" /> for sample code.
+            </summary>
+      <remarks>The parameters of the <see cref="T:BayesServer.Network" /> are replaced during learning.
+            If necessary, a copy of the original network can be made prior to learning, to keep the original values.
+            </remarks>
+      <param name="readerCommand">Can create a reader containing the data to learn from.</param>
+      <param name="distributionSpecifications">The distributions to learn and options.</param>
+      <param name="options">Learning options.</param>
+      <returns>Summary information about parameter learning.</returns>
+    </member>
+    <member name="T:BayesServer.Learning.Parameters.ParameterLearningOptions">
+      <summary>
+            Options governing parameter learning.
+            </summary>
+    </member>
+    <member name="E:BayesServer.Learning.Parameters.ParameterLearningOptions.PropertyChanged">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.ParameterLearningOptions.MaximumConcurrency">
+      <summary>
+            Gets or sets the maximum number of inference engines used during
+            learning.
+            </summary>
+      <remarks>
+        <para>
+            This options only applies when using .NET 4.0 or later.  When using .NET 3.5, this parameter is ignored, and 
+            a single thread is used.
+            </para>
+        <para>
+            During learning, multiple inference engines may be used in parallel.  However
+            each inference engine has its own memory requirements for inference, and so this
+            parameter allows the number to be limited, to avoid excessive memory consumption.
+            The amount of memory used per inference engine, depends on the <see cref="T:BayesServer.Network" />
+            and also the data.
+            </para>
+      </remarks>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.ParameterLearningOptions.ConvergenceMethod">
+      <summary>
+            Gets or sets the method used to determine convergence of the learning algorithm.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.ParameterLearningOptions.CalculateStatistics">
+      <summary>
+            Gets or sets a value indicating whether to calculate summary statistics
+            in an extra iteration at the end of learning.
+            </summary>
+      <value>When <c>true</c> statistics are calculated.</value>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.ParameterLearningOptions.SaveHyperparameters">
+      <summary>
+            Gets or sets a value indicating whether hyperparameters (e.g. experience tables) should be saved to the network. 
+            </summary>
+      <remarks>
+            Hyperparameters such as experience tables can be used for online learning (adaptation).
+            </remarks>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.ParameterLearningOptions.MonitorLogLikelihood">
+      <summary>
+            Calculates the log likelihood at each iteration. <c>False</c> by default, as it can be expensive to calculate.
+            </summary>
+      <remarks>
+            This property does not effect the output of statistics on completion of learning.
+            </remarks>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.ParameterLearningOptions.Priors">
+      <summary>
+            Contains parameters used to avoid boundary conditions during learning.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.ParameterLearningOptions.Seed">
+      <summary>
+            Gets or sets the seed used to generate random numbers for initialization.  Only valid when <see cref="P:BayesServer.Learning.Parameters.ParameterLearningOptions.MaximumConcurrency" /> is 1 and when not distributed.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.ParameterLearningOptions.Initialization">
+      <summary>
+            Options for initialization.
+            </summary>
+      <remarks>
+            Note that a <see cref="T:BayesServer.Learning.Parameters.DistributionSpecification" /> can override certain 
+            initialization values.
+            </remarks>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.ParameterLearningOptions.DecisionPostProcessing">
+      <summary>
+            Gets or sets the post processing method for decision nodes.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.ParameterLearningOptions.TimeSeriesMode">
+      <summary>
+            Gets or sets the mode in which time series distributions are learned.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.ParameterLearningOptions.MaximumIterations">
+      <summary>
+            Gets or sets the maximum number of iterations that parameter learning will perform.
+            </summary>
+      <remarks>
+            The parameter learning algorithm can perform fewer iterations that this maximum, if
+            convergence is detected using the <see cref="P:BayesServer.Learning.Parameters.ParameterLearningOptions.Tolerance" />.
+            </remarks>
+      <value>Maximum iterations.</value>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.ParameterLearningOptions.Stopping">
+      <summary>
+            Gets or sets the instance implementing <see cref="T:BayesServer.IStop" /> used for early stopping.
+            </summary>
+      <remarks>
+            Stopping is different to cancellation, as stopping will still complete the
+            learning process, albeit having performed fewer iterations.
+            </remarks>
+      <value>The instance used for stopping.</value>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.ParameterLearningOptions.Cancellation">
+      <summary>
+            Gets of sets the instance implementing <see cref="T:BayesServer.ICancellation" />, used for cancellation.
+            </summary>
+      <seealso cref="T:BayesServer.ICancellation" />
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.ParameterLearningOptions.Progress">
+      <summary>
+            Gets of sets the instance implementing <see cref="T:BayesServer.Learning.Parameters.IParameterLearningProgress" />, used for progress notifications.
+            </summary>
+      <seealso cref="T:BayesServer.Learning.Parameters.IParameterLearningProgress" />
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.ParameterLearningOptions.ToleranceOrDefault">
+      <summary>
+            If Tolerance is null, this returns the default tolerance for the given convergence method, otherwise Tolerance is returned.
+            </summary>
+      <returns>
+      </returns>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.ParameterLearningOptions.Tolerance">
+      <summary>
+            Gets or sets the tolerance used to determine whether or not parameter learning has converged.
+            </summary>
+      <remarks>
+            This is a non negative number which indicates that parameter learning will only stop when the relative difference between
+            parameters or log-likelihood between iterations is no greater than this value.
+            
+            <para>
+            When null, a default value is used which depends on the Convergence Method in use.
+            </para></remarks>
+      <value>The tolerance.</value>
+    </member>
+    <member name="T:BayesServer.Learning.Parameters.ParameterLearningOutput">
+      <summary>
+            Contains summary information returned by <see cref="M:BayesServer.Learning.Parameters.ParameterLearning.Learn" />.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.ParameterLearningOutput.Seed">
+      <summary>
+            Gets the seed used to generate random numbers for initialization. Only valid when <see cref="P:BayesServer.Learning.Parameters.ParameterLearningOptions.MaximumConcurrency" /> is 1.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.ParameterLearningOutput.Converged">
+      <summary>
+            Gets or sets a value indicating whether this parameter learning converged.
+            </summary>
+      <remarks>
+            For more information see <see cref="P:BayesServer.Learning.Parameters.ParameterLearningOptions.Tolerance" />.
+            </remarks>
+      <value>
+        <c>true</c> if converged; otherwise, <c>false</c>.</value>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.ParameterLearningOutput.LogLikelihood">
+      <summary>
+            Gets the log likelihood of the learning data with the final learnt <see cref="T:BayesServer.Network" />.
+            </summary>
+      <remarks>
+        <para>The log likelihood increases as the model fits the data better.</para>
+        <para>
+            This value is only calculated if <see cref="P:BayesServer.Learning.Parameters.ParameterLearningOptions.CalculateStatistics" /> is <c>true</c>.
+            </para>
+      </remarks>
+      <value>The log likelihood.</value>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.ParameterLearningOutput.IterationCount">
+      <summary>
+            Gets the number of iterations performed during learning.
+            </summary>
+      <value>The iteration count.</value>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.ParameterLearningOutput.CaseCount">
+      <summary>
+            Gets the number of cases (records) in the learning data.
+            </summary>
+      <remarks>
+            Any weights associated with cases are incorporated into this sum.</remarks>
+      <value>The case count.</value>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.ParameterLearningOutput.WeightedCaseCount">
+      <summary>
+            Gets the weighted case count in the learning data.
+            </summary>
+      <remarks>
+            Any weights associated with cases are incorporated into this sum.</remarks>
+      <value>The weighted case count.</value>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.ParameterLearningOutput.UnweightedCaseCount">
+      <summary>
+            Gets the unweighted case count in the learning data.
+            </summary>
+      <remarks>
+            Any weights associated with cases are NOT incorporated into this sum.</remarks>
+      <value>The unweighted case count.</value>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.ParameterLearningOutput.BIC">
+      <summary>
+            Gets the Bayesian Information Criterion (BIC) for the final learnt <see cref="T:BayesServer.Network" /> based on the learning data.
+            </summary>
+      <remarks>
+        <para>
+            When comparing two models using the BIC heuristic, a lower value is preferred.
+            </para>
+        <para>This statistic is only calculated if <see cref="P:BayesServer.Learning.Parameters.ParameterLearningOptions.CalculateStatistics" /> is <c>true</c>.</para>
+        <para>
+            The BIC statistics is a Log Likelihood based statistic which penalizes models with more parameters.
+            It can be used as an heuristic to compare networks with different parameters learnt with the same data.
+            </para>
+      </remarks>
+      <value>The BIC statistic.</value>
+    </member>
+    <member name="T:BayesServer.Learning.Parameters.ParameterLearningProgressInfo">
+      <summary>
+            Provides progress information during <see cref="M:BayesServer.Learning.Parameters.ParameterLearning.Learn" />.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Learning.Parameters.ParameterLearningProgressInfo.GetMonitoredDistribution(BayesServer.Node)">
+      <summary>
+            Gets a copy of the current distribution assigned to the <paramref name="node" />.
+            </summary>
+      <param name="node">The node.</param>
+      <returns>A copy of the current node distribution.</returns>
+    </member>
+    <member name="M:BayesServer.Learning.Parameters.ParameterLearningProgressInfo.GetMonitoredDistribution(BayesServer.Node,System.Nullable{System.Int32})">
+      <summary>
+            Gets a copy of the current distribution assigned to the <paramref name="node" /> at the requested order.
+            </summary>
+      <param name="order">The order of the distribution to retrieve.  For temporal nodes that may have more than one distribution.</param>
+      <param name="node">The node.</param>
+      <returns>A copy of the current node distribution at a specific order.</returns>
+    </member>
+    <member name="M:BayesServer.Learning.Parameters.ParameterLearningProgressInfo.GetMonitoredDistribution(BayesServer.Node,BayesServer.NodeDistributionKey)">
+      <summary>
+            Gets a copy of the current distribution assigned to the <paramref name="node" /> at the requested order.
+            </summary>
+      <param name="key">The order/related node of the distribution to retrieve.  For temporal nodes / noisy nodes that may have more than one distribution.</param>
+      <param name="node">The node.</param>
+      <returns>A copy of the current node distribution at a specific order.</returns>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.ParameterLearningProgressInfo.LogLikelihood">
+      <summary>
+            Gets or sets the current log likelihood value, if calculated
+            </summary>
+      <remarks>
+        <para>
+            This value is only calculated if <see cref="P:BayesServer.Learning.Parameters.ParameterLearningOptions.MonitorLogLikelihood" /> is <c>true</c>, 
+            as it can be expensive to calculate.
+            </para>
+        <para>
+            For more information about the log likelihood statistic see <see cref="P:BayesServer.Learning.Parameters.ParameterLearningOutput.LogLikelihood" />.
+            </para>
+      </remarks>
+      <value>The log likelihood.</value>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.ParameterLearningProgressInfo.Delta">
+      <summary>
+            Gets the relative change in parameters used to determine convergence.
+            </summary>
+      <remarks>
+            See <see cref="P:BayesServer.Learning.Parameters.ParameterLearningOptions.Tolerance" /> for more information about convergence.
+            </remarks>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.ParameterLearningProgressInfo.IterationCount">
+      <summary>
+            Gets the current iteration count.
+            </summary>
+      <value>The iteration count.</value>
+    </member>
+    <member name="T:BayesServer.Learning.Parameters.Priors">
+      <summary>
+            Contains parameters used to avoid boundary conditions during learning.
+            </summary>
+    </member>
+    <member name="E:BayesServer.Learning.Parameters.Priors.PropertyChanged">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Learning.Parameters.Priors.ToString">
+      <summary>
+            Returns a <see cref="T:System.String" /> that represents this instance.
+            </summary>
+      <returns>
+            A <see cref="T:System.String" /> that represents this instance.
+            </returns>
+    </member>
+    <member name="M:BayesServer.Learning.Parameters.Priors.ZeroAll">
+      <summary>
+            Sets all values to zero.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.Priors.SimpleVariance">
+      <summary>
+            Used to make a fixed adjustment to all covariance matrices during learning,
+            by increasing each diagonal (variance) entry.
+            </summary>
+      <remarks>
+            It is recommended that this property is left at zero.
+            However sometimes it is useful to use this property in order
+            to compare outputs with other libraries.
+            </remarks>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.Priors.DiscretePriorMethod">
+      <summary>
+            The default discrete prior to use for discrete distributions during parameter learning.  Can be overriden for individual distributions.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.Priors.Continuous">
+      <summary>
+            Gets or sets the amount continuous distributions are adjusted during learning.
+            </summary>
+      <remarks>
+        <para>This value is used to avoid boundary conditions, such as perfect correlations.</para>
+        <para>The larger the number of cases used during learning, the less impact this value has.</para>
+        <para>The value defines the number of virtual cases taken from the global statistics (overall data summary statistics), 
+            that are included when learning continuous Gaussian distributions.
+            The property <see cref="P:BayesServer.Learning.Parameters.Priors.IncludeGlobalCovariance" /> determines how the adjustments are made.
+            </para>
+        <para>Setting this value to zero, will disable the adjustments.</para>
+      </remarks>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.Priors.IncludeGlobalCovariance">
+      <summary>
+            When Gaussian distributions are adjusted according to the <see cref="P:BayesServer.Learning.Parameters.Priors.Continuous" /> prior, this property 
+            determines whether the global covariance should be included in the adjustment, as well as the global variance.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Learning.Parameters.Priors.Discrete">
+      <summary>
+            Gets or sets the amount distributions containing discrete variables are adjusted during learning.
+            </summary>
+      <remarks>
+        <para>This value is used to avoid boundary conditions.</para>
+        <para>The larger the number of cases used during learning, the less impact this value has.</para>
+        <para>The value defines the number of virtual cases taken from the global statistics (overall data summary statistics), 
+            that are included when learning distributions with discrete variables.
+            </para>
+        <para>Setting this value to zero, will disable the adjustments.</para>
+      </remarks>
+    </member>
+    <member name="T:BayesServer.Learning.Parameters.TimeSeriesMode">
+      <summary>
+            Determines how time series distributions are learned.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Learning.Parameters.TimeSeriesMode.None">
+      <summary>
+            Not applicable. i.e. we are not learning a time series model (network with temporal nodes).
+            </summary>
+    </member>
+    <member name="F:BayesServer.Learning.Parameters.TimeSeriesMode.Rolling">
+      <summary>
+            All temporal distribution are updated at every time point.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Learning.Parameters.TimeSeriesMode.Pinned">
+      <summary>
+            At each time point, lower order distributions are only updated until a higher order distribution can be used.
+            </summary>
+    </member>
+  </members>
+</doc>

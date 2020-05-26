@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BayesServer.Data.Sampling</name>
+    </assembly>
+    <members>
+        <member name="T:BayesServer.Data.Sampling.DataSampler">
+            <summary>
+            Generates samples from a Bayesian network or Dynamic Bayesian network. See <see cref="M:BayesServer.Data.Sampling.DataSampler.TakeSample"/> for sample code.
+            </summary>
+        </member>
+        <member name="M:BayesServer.Data.Sampling.DataSampler.#ctor(BayesServer.Network)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.Sampling.DataSampler"/> class.
+            </summary>
+            <param name="network">The Bayesian network or Dynamic Bayesian network the samples will be taken from.</param>
+        </member>
+        <member name="M:BayesServer.Data.Sampling.DataSampler.#ctor(BayesServer.Network,BayesServer.Inference.IEvidence)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.Sampling.DataSampler"/> class.
+            </summary>
+            <param name="network">The Bayesian network or Dynamic Bayesian network the samples will be taken from.</param>
+            <param name="fixedData">Any data that is fixed. Can be null.</param>
+        </member>
+        <member name="P:BayesServer.Data.Sampling.DataSampler.Network">
+            <summary>
+            Gets the Bayesian network or Dynamic Bayesian network that was used in the constructor.
+            </summary>
+            <value>The Bayesian network or Dynamic Bayesian network.</value>
+        </member>
+        <member name="M:BayesServer.Data.Sampling.DataSampler.TakeSample(BayesServer.Inference.IEvidence,System.Random,BayesServer.Data.Sampling.DataSamplingOptions)">
+            <summary>
+            Generates sample data from the Bayesian network or Dynamic Bayesian network.
+            </summary>
+            <remarks>
+            Each call to <see cref="M:BayesServer.Data.Sampling.DataSampler.TakeSample"/> generates a single sample.  Call repeatedly to generate multiple samples.
+            <para>For Dynamic Bayesian networks, see <see cref="P:BayesServer.Data.Sampling.DataSamplingOptions.SequenceLength"/> to change the length of generated sequences.</para>
+            </remarks>
+            <param name="sampleData">Evidence instance to hold the sample data.</param>
+            <param name="random">Random number generator.</param>
+            <param name="options">The sampling options.</param>
+            <exception cref="T:BayesServer.Inference.InconsistentEvidenceException">Raised if the generation of a sample leads to inconsistent evidence.</exception>
+        </member>
+        <member name="P:BayesServer.Data.Sampling.DataSampler.FixedData">
+            <summary>
+            Sets any evidence that should be fixed for each sample.
+            </summary>
+        </member>
+        <member name="T:BayesServer.Data.Sampling.DataSamplingOptions">
+            <summary>
+            Options for data sampling.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Sampling.DataSamplingOptions.SequenceLength">
+            <summary>
+            The sequence length generated for each sample from networks with temporal nodes.
+            </summary>
+            <remarks>
+            This value can be changed between calls to <see cref="M:BayesServer.Data.Sampling.DataSampler.TakeSample"/> to generate varying length sequences.
+            </remarks>
+        </member>
+        <member name="P:BayesServer.Data.Sampling.DataSamplingOptions.MissingDataProbability">
+            <summary>
+            When positive, sets a certain percentage of values to missing (except when <see cref="P:BayesServer.Data.Sampling.DataSamplingOptions.MissingDataProbabilityMin"/> has a value).
+            Valid values are between 0 and 1.
+            </summary>
+            <remarks>
+            <para>When <see cref="P:BayesServer.Data.Sampling.DataSamplingOptions.MissingDataProbabilityMin"/> is set, the missing data probability
+            for each case varies randomly between <see cref="P:BayesServer.Data.Sampling.DataSamplingOptions.MissingDataProbabilityMin"/>
+            and <see cref="P:BayesServer.Data.Sampling.DataSamplingOptions.MissingDataProbability"/>.</para>
+            <para>
+            The missing data mechanism is assumed to be MCAR (Missing Completely At Random).</para>
+            </remarks>
+        </member>
+        <member name="P:BayesServer.Data.Sampling.DataSamplingOptions.MissingDataProbabilityMin">
+            <summary>
+            When set, the missing data probability for each case varies randomly between <see cref="P:BayesServer.Data.Sampling.DataSamplingOptions.MissingDataProbabilityMin"/>
+            and <see cref="P:BayesServer.Data.Sampling.DataSamplingOptions.MissingDataProbability"/>.  Valid values are between 0 and 1.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Sampling.DataSamplingOptions.MissingDataExclusions">
+            <summary>
+            Variables can be added, to indicate that they should not generate missing values.
+            </summary>
+            <seealso cref="P:BayesServer.Data.Sampling.DataSamplingOptions.MissingDataProbability"/>
+        </member>
+        <member name="T:BayesServer.Data.Sampling.ExcludedVariables">
+            <summary>
+            Set of variables which should be excluded from an operation, such as missing data generation.
+            </summary>
+        </member>
+        <member name="M:BayesServer.Data.Sampling.ExcludedVariables.InsertItem(System.Int32,BayesServer.Variable)">
+            <inheritdoc />
+        </member>
+        <member name="M:BayesServer.Data.Sampling.ExcludedVariables.RemoveItem(System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:BayesServer.Data.Sampling.ExcludedVariables.SetItem(System.Int32,BayesServer.Variable)">
+            <inheritdoc />
+        </member>
+        <member name="M:BayesServer.Data.Sampling.ExcludedVariables.ClearItems">
+            <inheritdoc />
+        </member>
+        <member name="M:BayesServer.Data.Sampling.ExcludedVariables.Contains(BayesServer.Variable)">
+            <summary>
+            Determines whether the specified variable is excluded.
+            </summary>
+            <param name="item">The variable.</param>
+            <returns>
+            	<c>true</c> if the specified variable is excluded; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="T:BayesServer.Data.Sampling.NamespaceDoc">
+            <summary>
+            Contains classes for sampling data from Bayesian networks and Dynamic Bayesian networks.  See <see cref="M:BayesServer.Data.Sampling.DataSampler.TakeSample"/> for sample code.
+            </summary>
+        </member>
+    </members>
+</doc>

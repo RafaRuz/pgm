@@ -1,0 +1,2054 @@
+<?xml version="1.0"?>
+<doc>
+  <assembly>
+    <name>BayesServer.Inference</name>
+  </assembly>
+  <members>
+    <member name="T:BayesServer.Inference.Approximate.ConvergenceException">
+      <summary>
+            Exception raised when an iterative inference algorithm fails to converge to within a given tolerance.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Inference.Approximate.ConvergenceException.#ctor">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.Approximate.ConvergenceException" /> class.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Inference.Approximate.ConvergenceException.#ctor(System.String)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.Approximate.ConvergenceException" /> class.
+            </summary>
+      <param name="message">The message.</param>
+    </member>
+    <member name="M:BayesServer.Inference.Approximate.ConvergenceException.#ctor(System.String,System.Exception)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.Approximate.ConvergenceException" /> class.
+            </summary>
+      <param name="message">The message.</param>
+      <param name="inner">The inner.</param>
+    </member>
+    <member name="T:BayesServer.Inference.Approximate.GibbsSampling.NamespaceDoc">
+      <summary>
+            Contains classes for performing inference with Bayesian networks and Dynamic Bayesian networks using an approximate inference method based on Gibbs sampling.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Inference.Approximate.IQuerySamplingOptions">
+      <summary>
+            Interface for approximate sampling inference algorithms, which can be implemented in addition to <see cref="T:BayesServer.Inference.IQueryOptions" />.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.IQuerySamplingOptions.SampleCount">
+      <summary>
+            Gets or sets a value indicating how many samples cases to generate in order to approximate the current query.
+            </summary>
+      <remarks>
+            The higher the value, the more accurate the predictions will be, at the expense of query time.
+            <para>
+            When null, the algorithm being used will decide how many samples to use.
+            </para></remarks>
+    </member>
+    <member name="T:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingInference">
+      <summary>
+            An approximate probabilistic inference algorithm for Bayesian networks and Dynamic Bayesian networks, based on Likelihood Sampling.
+            </summary>
+      <seealso cref="T:BayesServer.Inference.IInference" />
+    </member>
+    <member name="E:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingInference.QueryExecuting">
+      <inheritdoc />
+    </member>
+    <member name="E:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingInference.QueryExecuted">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingInference.#ctor(BayesServer.Network)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.Approximate.LikelihoodSamplingInference" /> class, with the target Bayesian network.
+            </summary>
+      <param name="network">The target <see cref="T:BayesServer.Network" />.</param>
+      <exception cref="T:System.ArgumentNullException">Raised if <paramref name="network" /> is null.</exception>
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingInference.Network">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingInference.Evidence">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingInference.BaseEvidence">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingInference.QueryDistributions">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingInference.Query(BayesServer.Inference.IQueryOptions,BayesServer.Inference.IQueryOutput)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingInference.Finalize">
+      <summary>
+            Stops listening to notifications on the underlying <see cref="T:BayesServer.Network" /> before the
+            <see cref="T:BayesServer.Inference.Approximate.LikelihoodSamplingInference" /> instance is reclaimed by garbage collection.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingInference.Dispose">
+      <summary>
+            Stops listening to notifications on the underlying <see cref="T:BayesServer.Network" />.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingInferenceFactory">
+      <summary>
+            Uses the factory design pattern to create inference related objects for the Likelihood Sampling algorithm.  See <see cref="T:BayesServer.Inference.IInferenceFactory" /> for more details.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingInferenceFactory.CreateInferenceEngine(BayesServer.Network)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingInferenceFactory.CreateQueryOptions">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingInferenceFactory.CreateQueryOutput">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingQueryOptions">
+      <summary>
+            Options that govern the calculations performed by <see cref="M:BayesServer.Inference.IInference.Query" />.
+            </summary>
+    </member>
+    <member name="E:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingQueryOptions.PropertyChanged">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingQueryOptions.#ctor">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.Approximate.LikelihoodSamplingQueryOptions" /> class.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingQueryOptions.SampleCount">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingQueryOptions.Seed">
+      <summary>
+            Gets or sets an optional seed for the random number generator.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingQueryOptions.TerminalTime">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingQueryOptions.Propagation">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingQueryOptions.DecisionAlgorithm">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingQueryOptions.Cancellation">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingQueryOptions.LogLikelihood">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingQueryOptions.Conflict">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingQueryOptions.QueryEvidenceMode">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingQueryOptions.InconsistentEvidenceMode">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingQueryOutput">
+      <summary>
+            Returns any information, in addition to the <see cref="T:BayesServer.Inference.IQueryDistributionCollection">distributions</see>, that is requested from a <see cref="M:BayesServer.Inference.IInference.Query">query</see>.  For example the <see cref="P:BayesServer.Inference.IQueryOutput.LogLikelihood">log-likelihood</see>.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingQueryOutput.Seed">
+      <summary>
+            Gets or sets the seed used by the random number generator.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingQueryOutput.#ctor">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.Approximate.LikelihoodSamplingQueryOutput" /> class.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingQueryOutput.LogLikelihood">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingQueryOutput.Conflict">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Approximate.LikelihoodSampling.LikelihoodSamplingQueryOutput.Reset">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Inference.Approximate.LikelihoodSampling.NamespaceDoc">
+      <summary>
+            Contains classes for performing inference with Bayesian networks and Dynamic Bayesian networks using an approximate inference method called Likelihood sampling.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefInference">
+      <summary>
+            An approximate but deterministic probabilistic inference algorithm for Bayesian networks and Dynamic Bayesian networks based on Loopy Belief Propagation.
+            </summary>
+      <seealso cref="T:BayesServer.Inference.IInference" />
+    </member>
+    <member name="E:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefInference.QueryExecuting">
+      <inheritdoc />
+    </member>
+    <member name="E:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefInference.QueryExecuted">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefInference.#ctor(BayesServer.Network)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.Approximate.LoopyBeliefInference" /> class, with the target Bayesian network.
+            </summary>
+      <param name="network">The target <see cref="T:BayesServer.Network" />.</param>
+      <exception cref="T:System.ArgumentNullException">Raised if <paramref name="network" /> is null.</exception>
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefInference.Network">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefInference.Evidence">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefInference.BaseEvidence">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefInference.QueryDistributions">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefInference.Query(BayesServer.Inference.IQueryOptions,BayesServer.Inference.IQueryOutput)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefInference.Finalize">
+      <summary>
+            Stops listening to notifications on the underlying <see cref="T:BayesServer.Network" /> before the
+            <see cref="T:BayesServer.Inference.Approximate.LoopyBeliefInference" /> instance is reclaimed by garbage collection.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefInference.Dispose">
+      <summary>
+            Stops listening to notifications on the underlying <see cref="T:BayesServer.Network" />.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefInferenceFactory">
+      <summary>
+            Uses the factory design pattern to create inference related objects for the Loopy Belief algorithm.  See <see cref="T:BayesServer.Inference.IInferenceFactory" /> for more details.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefInferenceFactory.CreateInferenceEngine(BayesServer.Network)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefInferenceFactory.CreateQueryOptions">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefInferenceFactory.CreateQueryOutput">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefQueryOptions">
+      <summary>
+            Options that govern the calculations performed by <see cref="M:BayesServer.Inference.IInference.Query" />.
+            </summary>
+    </member>
+    <member name="E:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefQueryOptions.PropertyChanged">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefQueryOptions.#ctor">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.Approximate.LoopyBeliefQueryOptions" /> class.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefQueryOptions.Tolerance">
+      <summary>
+            Gets or sets the tolerance used to determine whether or not the approximate inference process has converged.
+            </summary>
+      <value>The tolerance.</value>
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefQueryOptions.TerminalTime">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefQueryOptions.Propagation">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefQueryOptions.DecisionAlgorithm">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefQueryOptions.Cancellation">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefQueryOptions.LogLikelihood">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefQueryOptions.Conflict">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefQueryOptions.QueryEvidenceMode">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefQueryOptions.InconsistentEvidenceMode">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefQueryOutput">
+      <summary>
+            Returns any information, in addition to the <see cref="T:BayesServer.Inference.IQueryDistributionCollection">distributions</see>, that is requested from a <see cref="M:BayesServer.Inference.IInference.Query">query</see>.  For example the <see cref="P:BayesServer.Inference.IQueryOutput.LogLikelihood">log-likelihood</see>.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefQueryOutput.#ctor">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.Approximate.LoopyBeliefQueryOutput" /> class.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefQueryOutput.Iterations">
+      <summary>
+            Gets the number of iterations performed.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefQueryOutput.LogLikelihood">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefQueryOutput.Conflict">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Approximate.LoopyBelief.LoopyBeliefQueryOutput.Reset">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Inference.Approximate.LoopyBelief.NamespaceDoc">
+      <summary>
+            Contains classes for performing inference with Bayesian networks and Dynamic Bayesian networks using an approximate inference method based on loopy belief propagation.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Inference.Approximate.NamespaceDoc">
+      <summary>
+            Contains classes and interfaces for performing approximate probabilistic inference with a
+            Bayesian network, such as calculating posterior probabilities and log-likelihoods.
+            See the <see cref="T:BayesServer.Inference.LoopyBelief.LoopyBeliefInference" /> class for an algorithm that implements the necessary interfaces.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Inference.DecisionAlgorithm">
+      <summary>
+            The type of algorithm to use when a network has decision nodes.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Inference.DecisionAlgorithm.SinglePolicyUpdating">
+      <summary>
+            The Single Policy Updating (SPU) algorithm is used when a network has Decision nodes.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Inference.DecisionAlgorithm.None">
+      <summary>
+            Any decision nodes are treated like standard probability nodes.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Inference.DecisionAlgorithm.Default">
+      <summary>
+            Use the default algorithm.  The default algorithm is subject to change as new algorithms are developed. 
+            </summary>
+    </member>
+    <member name="T:BayesServer.Inference.Evidence">
+      <summary>
+            Represents the evidence, or case data (e.g. row in a database) used in a <see cref="M:BayesServer.Inference.IInference.Query">query</see>.
+            </summary>
+      <remarks>Evidence is always associated with a particular network, however
+            if necessary can be detached or attached to an instance of an inference engine.
+            This has the follwing advantages:
+            - Evidence can be set before an inference engine is created, or retained when an inference engine is destroyed.
+            - Evidence can be switched between inference engines.
+            - An inference engine can switch between different evidence instances.
+            </remarks>
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.#ctor(BayesServer.Network)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.Evidence" /> class, with the target Bayesian network.
+            </summary>
+      <param name="network">The target <see cref="T:BayesServer.Network" />.</param>
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.#ctor(BayesServer.Inference.IEvidence)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.Evidence" /> class, and copies the evidence from another instance.
+            </summary>
+      <param name="evidence">The evidence to copy.</param>
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.#ctor(BayesServer.Inference.Evidence)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.Evidence" /> class, copying data from an existing <see cref="T:BayesServer.Inference.Evidence" /> object.
+            </summary>
+      <param name="evidence">The evidence.</param>
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.Finalize">
+      <summary>
+            Finalizes an instance of the <see cref="T:BayesServer.Inference.Evidence" /> class.
+            </summary>
+      <remarks>
+            Stops listening to notifications on the underlying <see cref="T:BayesServer.Network" /> before the
+            <see cref="T:BayesServer.Inference.Evidence" /> instance is reclaimed by garbage collection.
+            </remarks>
+    </member>
+    <member name="E:BayesServer.Inference.Evidence.Changed">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.Evidence.Count">
+      <summary>
+            Gets the count of variables with either hard, soft or temporal evidence set.
+            </summary>
+      <value>The count of variables with evidence.</value>
+    </member>
+    <member name="P:BayesServer.Inference.Evidence.Network">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.Evidence.Weight">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.Evidence.LogWeight">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.BeginUpdate">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.Clear(BayesServer.Variable,System.Nullable{System.Int32})">
+      <summary>
+            Clears evidence on a variable at the specified time.
+            </summary>
+      <param name="variable">The variable whose evidence you want to clear.</param>
+      <param name="time">The time at which to clear evidence.  Can be null.</param>
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.Clear(BayesServer.Node,System.Nullable{System.Int32})">
+      <summary>
+            Clears evidence on a node's single variable.
+            </summary>
+      <param name="node">A node with a single variable whose evidence you want to clear.</param>
+      <param name="time">The time at which to clear evidence.  Can be null.</param>
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.Clear(BayesServer.Variable)">
+      <summary>
+            Clears any evidence on a variable.
+            </summary>
+      <param name="variable">The variable to clear evidence on.</param>
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.Clear(BayesServer.Node)">
+      <summary>
+            Clears evidence on a node's variables.
+            </summary>
+      <param name="node">The node whose variables you want to clear evidence on.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="node" /> is null.</exception>
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.Clear">
+      <summary>
+            Clears any evidence on all variables.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.Copy(BayesServer.Inference.IEvidence)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.Copy(BayesServer.Inference.IEvidence,BayesServer.Variable)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.Copy(BayesServer.Inference.IEvidence,BayesServer.Variable,System.Nullable{System.Int32})">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.Dispose">
+      <summary>
+            Stops listening to notifications on the underlying <see cref="T:BayesServer.Network" />.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.EndUpdate">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.Get(BayesServer.Variable)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.Get(BayesServer.Variable,System.Nullable{System.Int32})">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.Get(BayesServer.Node,System.Nullable{System.Int32})">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.Get(BayesServer.Variable,System.Nullable{System.Double}[],System.Int32,System.Int32,System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.Get(BayesServer.Node,System.Nullable{System.Double}[],System.Int32,System.Int32,System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.Get(BayesServer.Node)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.GetEvidenceType(BayesServer.Variable)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.GetEvidenceType(BayesServer.Node)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.GetEvidenceType(BayesServer.Node,System.Nullable{System.Int32})">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.GetEvidenceType(BayesServer.Variable,System.Nullable{System.Int32})">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.GetMaxTime(BayesServer.Variable)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.GetMaxTime">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.GetState(BayesServer.Variable)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.GetState(BayesServer.Variable,System.Nullable{System.Int32})">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.GetState(BayesServer.Node)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.GetState(BayesServer.Node,System.Nullable{System.Int32})">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.GetStates(BayesServer.Variable,System.Double[])">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.GetStates(BayesServer.Node,System.Double[])">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.GetStates(BayesServer.Table)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.GetStates(BayesServer.Node,System.Double[],System.Nullable{System.Int32})">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.GetStates(BayesServer.Variable,System.Double[],System.Nullable{System.Int32})">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.GetVariables(BayesServer.Variable[])">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.Load(System.IO.Stream)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.Load(System.String)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.Save(System.IO.Stream)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.Save(System.String)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.Set(BayesServer.Variable,System.Nullable{System.Double}[],System.Int32,System.Int32,System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.Set(BayesServer.Node,System.Nullable{System.Double}[],System.Int32,System.Int32,System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.Set(BayesServer.Variable,System.Nullable{System.Double})">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.Set(BayesServer.Node,System.Nullable{System.Double},System.Nullable{System.Int32})">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.Set(BayesServer.Variable,System.Nullable{System.Double},System.Nullable{System.Int32})">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.Set(BayesServer.Node,System.Nullable{System.Double})">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.SetState(BayesServer.Variable,System.Nullable{System.Int32})">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.SetState(BayesServer.Variable,System.Nullable{System.Int32},System.Nullable{System.Int32})">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.SetState(BayesServer.State)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.SetState(BayesServer.State,System.Nullable{System.Int32})">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.SetState(BayesServer.Node,System.Nullable{System.Int32})">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.SetState(BayesServer.Node,System.Nullable{System.Int32},System.Nullable{System.Int32})">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.SetStates(BayesServer.Variable,System.Double[])">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.SetStates(BayesServer.Node,System.Double[])">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.SetStates(BayesServer.Node,System.Double[],System.Nullable{System.Int32})">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.Evidence.SetStates(BayesServer.Variable,System.Double[],System.Nullable{System.Int32})">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Inference.EvidenceChangedEventArgs">
+      <summary>
+            Contains information passed by <see cref="E:BayesServer.Inference.IEvidence.Changed" />.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Inference.EvidenceChangedEventArgs.#ctor(BayesServer.Variable,System.Nullable{System.Int32})">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.EvidenceChangedEventArgs" /> class.
+            </summary>
+      <param name="variable">The variable.  Can be null.</param>
+      <param name="time">The time at which evidence has been changed.  Can be null.</param>
+    </member>
+    <member name="P:BayesServer.Inference.EvidenceChangedEventArgs.Variable">
+      <summary>
+            Gets the variable whose evidence has changed.  Null if more than one variable has been affected.
+            </summary>
+      <value>The variable whose evidence has changed.  Can be null.</value>
+    </member>
+    <member name="P:BayesServer.Inference.EvidenceChangedEventArgs.Time">
+      <summary>
+            Gets the time at which evidence has changed.  Can be null if the variable is not temporal or changes have been made at more than one time.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Inference.EvidenceType">
+      <summary>
+            The type of evidence for a variable.  When a variable is set to a specific value, this is called <see cref="F:BayesServer.Inference.EvidenceType.Hard">Hard</see> evidence.
+            </summary>
+      <remarks>
+            For a discrete variable with a number of possible states, soft evidence implies that we have some information about
+            the configuration of the states, but we are uncertain of the exact state.  For example if a node has 3 states and we are sure that the last state
+            is not possible, we can have evidence of the form {1, 1, 0}.  We can also assign a distribution such as {0.3,0.4, 0.3}.
+            <para>See <see cref="M:BayesServer.Inference.IEvidence.SetStates(Variable, double[])" /> for information on how to set this type of evidence.</para></remarks>
+    </member>
+    <member name="F:BayesServer.Inference.EvidenceType.None">
+      <summary>
+            No evidence has been set.  I.e. the variable's value is unknown/missing/null.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Inference.EvidenceType.Hard">
+      <summary>
+            The value for the variable is known, such as the specific state of a discrete node.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Inference.EvidenceType.Soft">
+      <summary>
+            A distribution is used to indicate evidence that is uncertain.
+            </summary>
+      <remarks>
+            For a discrete variable with a number of possible states, soft evidence implies that we have some information about
+            the configuration of the states, but we are uncertain of the exact state.  For example if a node has 3 states and we are sure that the last state
+            is not possible, we can have evidence of the form {1, 1, 0}.  We can also assign a distribution such as {0.3,0.4, 0.3}.
+            <para>See <see cref="M:BayesServer.Inference.IEvidence.SetStates(Variable, double[])" /> for information on how to set this type of evidence.</para></remarks>
+    </member>
+    <member name="F:BayesServer.Inference.EvidenceType.Temporal">
+      <summary>
+            The variable has evidence at one or more times.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Inference.IEvidence">
+      <summary>
+            Represents the evidence, or case data (e.g. row in a database) used in a <see cref="M:BayesServer.Inference.IInference.Query">query</see>.
+            </summary>
+      <remarks>Evidence is always associated with a particular network, however
+            if necessary can be detached or attached to an instance of an inference engine.
+            This has the follwing advantages:
+            - Evidence can be set before an inference engine is created, or retained when an inference engine is destroyed.
+            - Evidence can be switched between inference engines.
+            - An inference engine can switch between different evidence instances.</remarks>
+    </member>
+    <member name="E:BayesServer.Inference.IEvidence.Changed">
+      <summary>
+            Raised when evidence has changed, on one or more variables, or when the <see cref="P:BayesServer.Inference.IEvidence.Weight" /> changes.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Inference.IEvidence.Count">
+      <summary>
+            Gets the count of variables with either hard, soft or temporal evidence set.
+            </summary>
+      <value>The count of variables with evidence.</value>
+    </member>
+    <member name="P:BayesServer.Inference.IEvidence.Network">
+      <summary>
+            Gets the Bayesian network that is the the target of the evidence.
+            </summary>
+      <value>The <see cref="T:BayesServer.Network" />.</value>
+    </member>
+    <member name="P:BayesServer.Inference.IEvidence.Weight">
+      <summary>
+            Gets or sets a weight that can be applied to the evidence. Default value is 1. Value must be positive.
+            </summary>
+      <remarks>
+            A weight can be applied to a case, to give it more or less importance during learning or inference.
+            For example, if a database has groups of records that are identical, each group can be represented by a single case with a weight equal to the number in that group.
+            <para>
+            Note that setting the weight to anything but 1, will effect the <see cref="P:BayesServer.Inference.IQueryOutput.LogLikelihood" /> statistic.
+            </para></remarks>
+    </member>
+    <member name="P:BayesServer.Inference.IEvidence.LogWeight">
+      <summary>
+            Gets or sets the natural logarithm of <see cref="P:BayesServer.Inference.IEvidence.Weight" />.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.BeginUpdate">
+      <summary>
+            Disables <see cref="E:BayesServer.Inference.IEvidence.Changed" /> notifications, until <see cref="M:BayesServer.Inference.IEvidence.EndUpdate" /> is called.
+            </summary>
+      <remarks>
+            Calls to <see cref="M:BayesServer.Inference.IEvidence.BeginUpdate" /> can be nested, in which case notifications only continue after the final call to 
+            <see cref="M:BayesServer.Inference.IEvidence.EndUpdate" />.
+            </remarks>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.Clear">
+      <summary>
+            Clears any evidence on all variables, and resets the <see cref="P:BayesServer.Inference.IEvidence.Weight" /> to 1.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.Clear(BayesServer.Variable)">
+      <summary>
+            Clears evidence on a variable.
+            </summary>
+      <param name="variable">The variable whose evidence you want to clear.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.Clear(BayesServer.Variable,System.Nullable{System.Int32})">
+      <summary>
+            Clears evidence on a variable at the specified time.
+            </summary>
+      <param name="variable">The variable whose evidence you want to clear.</param>
+      <param name="time">The time at which to clear evidence.  Can be null.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.Clear(BayesServer.Node,System.Nullable{System.Int32})">
+      <summary>
+            Clears evidence on a node's single variable.
+            </summary>
+      <param name="node">A node with a single variable whose evidence you want to clear.</param>
+      <param name="time">The time at which to clear evidence.  Can be null.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.Clear(BayesServer.Node)">
+      <summary>
+            Clears evidence on a node's variables.
+            </summary>
+      <param name="node">The node whose variables you want to clear evidence on.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.Copy(BayesServer.Inference.IEvidence)">
+      <summary>
+            Replaces the current evidence, with that from another <see cref="T:BayesServer.Inference.IEvidence" /> instance.
+            </summary>
+      <param name="evidence">The source evidence to copy from.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.Copy(BayesServer.Inference.IEvidence,BayesServer.Variable)">
+      <summary>
+            Replaces the current evidence for an individual variable, with that from another <see cref="T:BayesServer.Inference.IEvidence" /> instance.
+            </summary>
+      <remarks>For temporal variables, evidence is copied from the source at all times.</remarks>
+      <param name="evidence">The source evidence to copy from.</param>
+      <param name="variable">The variable to copy evidence for.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.Copy(BayesServer.Inference.IEvidence,BayesServer.Variable,System.Nullable{System.Int32})">
+      <summary>
+            Replaces the current evidence for an individual variable at a specific time, with that from another <see cref="T:BayesServer.Inference.IEvidence" /> instance.
+            </summary>
+      <param name="evidence">The source evidence to copy from.</param>
+      <param name="variable">The variable to copy evidence for.</param>
+      <param name="time">The time at which to copy evidence.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.EndUpdate">
+      <summary>
+            Enables <see cref="E:BayesServer.Inference.IEvidence.Changed" /> notifications.
+            </summary>
+      <remarks>A corresponding call must first be made to <see cref="M:BayesServer.Inference.IEvidence.BeginUpdate" /> to disable notifications.</remarks>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.GetVariables(BayesServer.Variable[])">
+      <summary>
+            Fills out a buffer with all variables that have either hard or soft evidence.  The buffer must have length equal to or greater than the current <see cref="P:BayesServer.Inference.IEvidence.Count" />.
+            </summary>
+      <param name="buffer">A container for any variables with evidence.  It must have length equal to or greater than the current <see cref="P:BayesServer.Inference.IEvidence.Count" />.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.Load(System.IO.Stream)">
+      <summary>
+            Loads evidence from the specified stream.
+            </summary>
+      <param name="input">The input stream.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.Load(System.String)">
+      <summary>
+            Loads evidence from the specified file.
+            </summary>
+      <param name="fileName">Name of the file.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.Save(System.IO.Stream)">
+      <summary>
+            Saves the evidence to the specified stream.
+            </summary>
+      <param name="output">The output stream.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.Save(System.String)">
+      <summary>
+            Saves the specified to the specified file.
+            </summary>
+      <param name="fileName">Name of the file.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.GetMaxTime(BayesServer.Variable)">
+      <summary>
+            Gets the maximum time containing evidence for a variable.
+            </summary>
+      <param name="variable">The variable to check.</param>
+      <returns>The maximum zero based time at which evidence is present for the variable or null if no evidence is present.</returns>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.GetMaxTime">
+      <summary>
+            Gets the maximum time containing evidence.
+            </summary>
+      <returns>The maximum zero based time at which evidence is present for any variable or null if no evidence is present.</returns>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.GetEvidenceType(BayesServer.Variable)">
+      <summary>
+            Returns the type of evidence currently set for a variable (if any).
+            </summary>
+      <param name="variable">The variable in question.</param>
+      <returns>The <see cref="T:BayesServer.Inference.EvidenceType" />.</returns>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.GetEvidenceType(BayesServer.Node)">
+      <summary>
+            Returns the type of evidence currently set for a node with a single variable.
+            </summary>
+      <param name="node">The node in question.</param>
+      <returns>The <see cref="T:BayesServer.Inference.EvidenceType" />.</returns>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.GetEvidenceType(BayesServer.Node,System.Nullable{System.Int32})">
+      <summary>
+            Returns the type of evidence currently set for a node with a single variable at a given time.
+            </summary>
+      <param name="node">The node in question.</param>
+      <param name="time">The time at which evidence is set.  Can be null.</param>
+      <returns>The <see cref="T:BayesServer.Inference.EvidenceType" />.</returns>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.GetEvidenceType(BayesServer.Variable,System.Nullable{System.Int32})">
+      <summary>
+            Returns the type of evidence currently set for a variable at a given time.
+            </summary>
+      <param name="variable">The variable in question.</param>
+      <param name="time">The time at which evidence is set.  Can be null.</param>
+      <returns>The <see cref="T:BayesServer.Inference.EvidenceType" />.</returns>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.GetState(BayesServer.Variable)">
+      <summary>
+            Gets the hard evidence state for a particular variable, or returns null if the <see cref="T:BayesServer.Inference.EvidenceType" /> equals <see cref="F:BayesServer.Inference.EvidenceType.None" /> or <see cref="F:BayesServer.Inference.EvidenceType.Soft" />.
+            </summary>
+      <param name="variable">The variable.</param>
+      <returns>The zero based index of the <see cref="T:BayesServer.State" /> with hard evidence set, or null if the <see cref="T:BayesServer.Inference.EvidenceType" /> does not equal <see cref="F:BayesServer.Inference.EvidenceType.Hard" />..</returns>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="variable" /> is null.</exception>
+      <exception cref="T:System.ArgumentException">The variable does not belong to the appropriate network, or is not discrete.</exception>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.GetState(BayesServer.Variable,System.Nullable{System.Int32})">
+      <summary>
+            Gets the hard evidence state for a particular variable, or returns null if the <see cref="T:BayesServer.Inference.EvidenceType" /> equals <see cref="F:BayesServer.Inference.EvidenceType.None" /> or <see cref="F:BayesServer.Inference.EvidenceType.Soft" />.
+            </summary>
+      <param name="variable">The variable.</param>
+      <param name="time">Time at which to retrieve evidence, if the variable belongs to a temporal node, otherwise null.</param>
+      <returns>The zero based index of the <see cref="T:BayesServer.State" /> with hard evidence set, or null if the <see cref="T:BayesServer.Inference.EvidenceType" /> does not equal <see cref="F:BayesServer.Inference.EvidenceType.Hard" />..</returns>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="variable" /> is null.</exception>
+      <exception cref="T:System.ArgumentException">The variable does not belong to the appropriate network, or is not discrete.</exception>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.GetState(BayesServer.Node)">
+      <summary>
+            Gets the hard evidence state for node with a single variable, or returns null if the <see cref="T:BayesServer.Inference.EvidenceType" /> equals <see cref="F:BayesServer.Inference.EvidenceType.None" /> or <see cref="F:BayesServer.Inference.EvidenceType.Soft" />.
+            </summary>
+      <param name="node">The node with a single discrete variable.</param>
+      <returns>The zero based index of the <see cref="T:BayesServer.State" /> with hard evidence set, or null if the <see cref="T:BayesServer.Inference.EvidenceType" /> does not equal <see cref="F:BayesServer.Inference.EvidenceType.Hard" />..</returns>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="node" /> is null.</exception>
+      <exception cref="T:System.ArgumentException">The node does not belong to the appropriate network, or does not have a single discrete variable.</exception>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.GetState(BayesServer.Node,System.Nullable{System.Int32})">
+      <summary>
+            Gets the hard evidence state for node with a single variable, or returns null if the <see cref="T:BayesServer.Inference.EvidenceType" /> equals <see cref="F:BayesServer.Inference.EvidenceType.None" /> or <see cref="F:BayesServer.Inference.EvidenceType.Soft" />.
+            </summary>
+      <param name="node">The node with a single discrete variable.</param>
+      <param name="time">Time at which to retrieve evidence, if the node is temporal, otherwise null.</param>
+      <returns>The zero based index of the <see cref="T:BayesServer.State" /> with hard evidence set, or null if the <see cref="T:BayesServer.Inference.EvidenceType" /> does not equal <see cref="F:BayesServer.Inference.EvidenceType.Hard" />..</returns>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="node" /> is null.</exception>
+      <exception cref="T:System.ArgumentException">The node does not belong to the appropriate network, or does not have a single discrete variable.</exception>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.SetState(BayesServer.Variable,System.Nullable{System.Int32})">
+      <summary>
+            Sets a discrete variable to a particular state (hard evidence).
+            </summary>
+      <param name="variable">The discrete variable to set evidence on.</param>
+      <param name="state">The zero based index of the state to set, or null to clear the evidence.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.SetState(BayesServer.Variable,System.Nullable{System.Int32},System.Nullable{System.Int32})">
+      <summary>
+            Sets a discrete variable to a particular state (hard evidence), specifiying a time if the state belongs to a variable whose node is temporal.
+            </summary>
+      <param name="variable">The discrete variable to set evidence on.</param>
+      <param name="state">The zero based index of the state to set, or null to clear the evidence.</param>
+      <param name="time">The time at which to set evidence, if the state belongs to a variable whose node is temporal, otherwise null.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.SetState(BayesServer.State)">
+      <summary>
+            Sets evidence on a discrete state (hard evidence).
+            </summary>
+      <param name="state">The state to set, cannot be null.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.SetState(BayesServer.State,System.Nullable{System.Int32})">
+      <summary>
+            Sets evidence on a discrete state (hard evidence) at a particular time (zero based).
+            </summary>
+      <param name="state">The state to set, cannot be null.</param>
+      <param name="time">The time at which to set evidence, if the node is temporal, otherwise null.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.SetState(BayesServer.Node,System.Nullable{System.Int32})">
+      <summary>
+            Sets evidence on a node with a single discrete variable to a particular state (hard evidence).
+            </summary>
+      <param name="node">The node with a single discrete variable to set evidence on.</param>
+      <param name="state">The zero based index of the state to set, or null to clear the evidence.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.SetState(BayesServer.Node,System.Nullable{System.Int32},System.Nullable{System.Int32})">
+      <summary>
+            Sets evidence on a node with a single discrete variable to a particular state (hard evidence) specifiying a time if the node is temporal.
+            </summary>
+      <param name="node">The node with a single discrete variable to set evidence on.</param>
+      <param name="state">The zero based index of the state to set, or null to clear the evidence.</param>
+      <param name="time">The time at which to set evidence, if the node is temporal, otherwise null.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.Get(BayesServer.Variable)">
+      <summary>
+            Gets the hard evidence for a discrete variable or continuous variable, or returns null if the <see cref="T:BayesServer.Inference.EvidenceType" /> equals <see cref="F:BayesServer.Inference.EvidenceType.None" /> or <see cref="F:BayesServer.Inference.EvidenceType.Soft" />.
+            </summary>
+      <param name="variable">The discrete or continuous variable.</param>
+      <returns>The evidence for the variable, or null if the <see cref="T:BayesServer.Inference.EvidenceType" /> does not equal <see cref="F:BayesServer.Inference.EvidenceType.Hard" />.</returns>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="variable" /> is null.</exception>
+      <exception cref="T:System.ArgumentException">The variable does not belong to the appropriate network.</exception>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.Get(BayesServer.Variable,System.Nullable{System.Int32})">
+      <summary>
+            Gets the evidence for a discrete variable at the specified time.
+            </summary>
+      <param name="variable">The variable.</param>
+      <param name="time">The time at which to retrieve evidence. Can be null.</param>
+      <returns>The evidence for the variable at the specified time.</returns>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.Get(BayesServer.Variable,System.Nullable{System.Double}[],System.Int32,System.Int32,System.Int32)">
+      <summary>
+            Gets the evidence for a temporal variable. 
+            </summary>
+      <param name="variable">The temporal variable.</param>
+      <param name="destination">The destination buffer which will be filled with the evidence values.</param>
+      <param name="destinationStart">The position in the buffer to start copying.</param>
+      <param name="startTime">The time to start copying from.</param>
+      <param name="count">The number of evidence values to copy.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.Get(BayesServer.Node,System.Nullable{System.Double}[],System.Int32,System.Int32,System.Int32)">
+      <summary>
+            Gets the evidence for a node's single temporal variable. 
+            </summary>
+      <param name="node">A node with a single temporal variable.</param>
+      <param name="destination">The destination buffer which will be filled with the evidence values.</param>
+      <param name="destinationStart">The position in the buffer to start copying.</param>
+      <param name="startTime">The time to start copying from.</param>
+      <param name="count">The number of evidence values to copy.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.Get(BayesServer.Node)">
+      <summary>
+            Gets the hard evidence value for a particular node's variable, or returns null if the <see cref="T:BayesServer.Inference.EvidenceType" /> equals <see cref="F:BayesServer.Inference.EvidenceType.None" /> or <see cref="F:BayesServer.Inference.EvidenceType.Soft" />.
+            </summary>
+      <param name="node">A node with a single variable in question.</param>
+      <returns>The evidence value for the node's variable, or null if the <see cref="T:BayesServer.Inference.EvidenceType" /> does not equal <see cref="F:BayesServer.Inference.EvidenceType.Hard" />.</returns>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.Get(BayesServer.Node,System.Nullable{System.Int32})">
+      <summary>
+            Gets the evidence for a node with a single variable at the specified time.
+            </summary>
+      <param name="node">A node with a single variable.</param>
+      <param name="time">The time to retrieve evidence for.  Can be null.</param>
+      <returns>The evidence.  Can be null.</returns>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.Set(BayesServer.Variable,System.Nullable{System.Double})">
+      <summary>
+            Sets a variable to a particular value (hard evidence).
+            </summary>
+      <param name="variable">The variable to set evidence on.</param>
+      <param name="value">The value to set, or null to clear the evidence.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.Set(BayesServer.Variable,System.Nullable{System.Double},System.Nullable{System.Int32})">
+      <summary>
+            Sets evidence on a variable at a specified time.
+            </summary>
+      <param name="variable">The variable to set evidence on.</param>
+      <param name="value">The value to set, or null to clear the evidence.</param>
+      <param name="time">The time at which to set evidence.  Can be null.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.Set(BayesServer.Node,System.Nullable{System.Double},System.Nullable{System.Int32})">
+      <summary>
+            Sets evidence on a node's single variable at a specified time.
+            </summary>
+      <param name="node">A node with a single variable to set evidence on.</param>
+      <param name="value">The value to set, or null to clear the evidence.</param>
+      <param name="time">The time at which to set evidence.  Can be null.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.Set(BayesServer.Variable,System.Nullable{System.Double}[],System.Int32,System.Int32,System.Int32)">
+      <summary>
+            Sets temporal evidence on a variable.
+            </summary>
+      <param name="variable">The variable to set evidence on.</param>
+      <param name="source">The evidence values.</param>
+      <param name="sourceStart">The position in <paramref name="source" /> to start copying from.</param>
+      <param name="startTime">The time to start copying at.</param>
+      <param name="count">The number of values to copy.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.Set(BayesServer.Node,System.Nullable{System.Double}[],System.Int32,System.Int32,System.Int32)">
+      <summary>
+            Sets temporal evidence on a node with a single variable.
+            </summary>
+      <param name="node">A node with a single variable to set evidence on.</param>
+      <param name="source">The evidence values.</param>
+      <param name="sourceStart">The position in <paramref name="source" /> to start copying from.</param>
+      <param name="startTime">The time to start copying at.</param>
+      <param name="count">The number of values to copy.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.Set(BayesServer.Node,System.Nullable{System.Double})">
+      <summary>
+            Sets a node's variable to a particular value (hard evidence).
+            </summary>
+      <param name="node">A node with a single variable to set evidence on.</param>
+      <param name="value">The value to set, or null to clear the evidence.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.GetStates(BayesServer.Variable,System.Double[])">
+      <summary>
+            Fills out a buffer containing the soft evidence for a particular variable.  If the variable does not have soft evidence, the method will succeed, however it is better to use another version of <c>Get</c>.
+            </summary>
+      <remarks>
+            The resulting values will depend on the current <see cref="T:BayesServer.Inference.EvidenceType" /> for the variable:
+            <list type="bullet"><item><see cref="F:BayesServer.Inference.EvidenceType.None" /> - All values will equal 1.</item><item><see cref="F:BayesServer.Inference.EvidenceType.Hard" /> - All values will equal 0, except at the hard evidence state, where the value will equal 1.</item><item><see cref="F:BayesServer.Inference.EvidenceType.None" /> - The soft evidence values will be used.</item></list></remarks>
+      <param name="variable">The variable to retrieve evidence for.</param>
+      <param name="buffer">A buffer whose values are replaced with the current evidence.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.GetStates(BayesServer.Node,System.Double[])">
+      <summary>
+            Fills out a buffer containing the soft evidence for a node with a single variable.  If the variable does not have soft evidence, the method will succeed, however it is better to use another version of <c>Get</c>.
+            </summary>
+      <remarks>
+            The resulting values will depend on the current <see cref="T:BayesServer.Inference.EvidenceType" /> for the variable:
+            <list type="bullet"><item><see cref="F:BayesServer.Inference.EvidenceType.None" /> - All values will equal 1.</item><item><see cref="F:BayesServer.Inference.EvidenceType.Hard" /> - All values will equal 0, except at the hard evidence state, where the value will equal 1.</item><item><see cref="F:BayesServer.Inference.EvidenceType.None" /> - The soft evidence values will be used.</item></list></remarks>
+      <param name="node">A node with a single variable to retrieve evidence for.</param>
+      <param name="buffer">A buffer whose values are replaced with the current evidence.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.GetStates(BayesServer.Variable,System.Double[],System.Nullable{System.Int32})">
+      <summary>
+            Fills out a buffer containing the soft evidence for a particular variable at a specified time.  If the variable does not have soft evidence, the method will succeed, however it is better to use another version of <c>Get</c>.
+            </summary>
+      <remarks>
+            The resulting values will depend on the current <see cref="T:BayesServer.Inference.EvidenceType" /> for the variable:
+            <list type="bullet"><item><see cref="F:BayesServer.Inference.EvidenceType.None" /> - All values will equal 1.</item><item><see cref="F:BayesServer.Inference.EvidenceType.Hard" /> - All values will equal 0, except at the hard evidence state, where the value will equal 1.</item><item><see cref="F:BayesServer.Inference.EvidenceType.None" /> - The soft evidence values will be used.</item></list></remarks>
+      <param name="variable">The variable to retrieve evidence for.</param>
+      <param name="buffer">A buffer whose values are replaced with the current evidence.</param>
+      <param name="time">The time at which to retrieve evidence.  Can be null.  Used by Dynamic Bayesian networks.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.GetStates(BayesServer.Node,System.Double[],System.Nullable{System.Int32})">
+      <summary>
+            Fills out a buffer containing the soft evidence for a node with a single variable at a specified time.  If the variable does not have soft evidence, the method will succeed, however it is better to use another version of <c>Get</c>.
+            </summary>
+      <remarks>
+            The resulting values will depend on the current <see cref="T:BayesServer.Inference.EvidenceType" /> for the variable:
+            <list type="bullet"><item><see cref="F:BayesServer.Inference.EvidenceType.None" /> - All values will equal 1.</item><item><see cref="F:BayesServer.Inference.EvidenceType.Hard" /> - All values will equal 0, except at the hard evidence state, where the value will equal 1.</item><item><see cref="F:BayesServer.Inference.EvidenceType.None" /> - The soft evidence values will be used.</item></list></remarks>
+      <param name="node">A node with a single variable to retrieve evidence for.</param>
+      <param name="buffer">A buffer whose values are replaced with the current evidence.</param>
+      <param name="time">The time at which to retrieve evidence.  Can be null.  Used by Dynamic Bayesian networks.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.GetStates(BayesServer.Table)">
+      <summary>
+            Fills out a table containing the soft evidence for a particular variable.  If the variable does not have soft evidence, the method will succeed, however it is better to use another version of <c>Get</c>.
+            </summary>
+      <remarks>
+            The resulting values will depend on the current <see cref="T:BayesServer.Inference.EvidenceType" /> for the variable:
+            <list type="bullet"><item><see cref="F:BayesServer.Inference.EvidenceType.None" /> - All values will equal 1.</item><item><see cref="F:BayesServer.Inference.EvidenceType.Hard" /> - All values will equal 0, except at the hard evidence state, where the value will equal 1.</item><item><see cref="F:BayesServer.Inference.EvidenceType.None" /> - The soft evidence values will be used.</item></list></remarks>
+      <param name="table">A <see cref="T:BayesServer.Table" /> containing a single <see cref="T:BayesServer.Variable" />.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.SetStates(BayesServer.Variable,System.Double[])">
+      <summary>
+            Sets soft evidence for a particular discrete variable.
+            </summary>
+      <remarks>If the evidence <paramref name="values" /> are not actual soft evidence (e.g. {1, 0, 0} or {1, 1, 1}
+            then the evidence will be stored correctly but the <see cref="T:BayesServer.Inference.EvidenceType" /> will not be <see cref="F:BayesServer.Inference.EvidenceType.Soft" />.
+            </remarks>
+      <param name="variable">The variable to set evidence on.</param>
+      <param name="values">An array of soft evidence values.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.SetStates(BayesServer.Node,System.Double[])">
+      <summary>
+            Sets soft evidence for a discrete node with a single variable.
+            </summary>
+      <remarks>If the evidence <paramref name="values" /> are not actual soft evidence (e.g. {1, 0, 0} or {1, 1, 1}
+            then the evidence will be stored correctly but the <see cref="T:BayesServer.Inference.EvidenceType" /> will not be <see cref="F:BayesServer.Inference.EvidenceType.Soft" />.
+            </remarks>
+      <param name="node">The node with a single variable to set evidence on.</param>
+      <param name="values">An array of soft evidence values.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.SetStates(BayesServer.Variable,System.Double[],System.Nullable{System.Int32})">
+      <summary>
+            Sets soft evidence for a particular discrete variable at a specified time.
+            </summary>
+      <remarks>If the evidence <paramref name="values" /> are not actual soft evidence (e.g. {1, 0, 0} or {1, 1, 1}
+            then the evidence will be stored correctly but the <see cref="T:BayesServer.Inference.EvidenceType" /> will not be <see cref="F:BayesServer.Inference.EvidenceType.Soft" />.
+            </remarks>
+      <param name="variable">The variable to set evidence on.</param>
+      <param name="values">An array of soft evidence values.</param>
+      <param name="time">The time at which to set evidence.  Can be null.  Used by Dynamic Bayesian networks.</param>
+    </member>
+    <member name="M:BayesServer.Inference.IEvidence.SetStates(BayesServer.Node,System.Double[],System.Nullable{System.Int32})">
+      <summary>
+            Sets soft evidence for a discrete node with a single variable, at a specified time.
+            </summary>
+      <remarks>If the evidence <paramref name="values" /> are not actual soft evidence (e.g. {1, 0, 0} or {1, 1, 1}
+            then the evidence will be stored correctly but the <see cref="T:BayesServer.Inference.EvidenceType" /> will not be <see cref="F:BayesServer.Inference.EvidenceType.Soft" />.
+            </remarks>
+      <param name="node">The node with a single variable to set evidence on.</param>
+      <param name="values">An array of soft evidence values.</param>
+      <param name="time">The time at which to set evidence.  Can be null.  Used by Dynamic Bayesian networks.</param>
+    </member>
+    <member name="T:BayesServer.Inference.IInference">
+      <summary>
+            The interface for a Bayesian network inference algorithm, which is used to
+            perform queries such as calculating posterior probabilities and log-likelihood values for a case.
+            </summary>
+      <remarks>
+            For an example of a class that implements this interface see <see cref="T:BayesServer.Inference.RelevanceTree.RelevanceTreeInference" />.
+            </remarks>
+    </member>
+    <member name="P:BayesServer.Inference.IInference.Network">
+      <summary>
+            The target Bayesian network.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Inference.IInference.Evidence">
+      <summary>
+            Represents the evidence, or case data (e.g. row in a database) used in a <see cref="M:BayesServer.Inference.IInference.Query">query</see>.
+            </summary>
+      <remarks>The <see cref="P:BayesServer.Inference.IInference.QueryDistributions">distributions</see> are only recalculated by <see cref="M:BayesServer.Inference.IInference.Query" />, not each time evidence is changed.
+            <para>For more information see <see cref="T:BayesServer.Inference.IEvidence" />.</para></remarks>
+    </member>
+    <member name="P:BayesServer.Inference.IInference.BaseEvidence">
+      <summary>
+            Optional evidence which can be used to calculate the lift of queries.  Defaults to null.
+            </summary>
+      <remarks>
+            When <see cref="P:BayesServer.Inference.QueryDistribution.Comparison" /> is <c>true</c> queries are adjusted based on marginals calculated with this evidence or no evidence if this value is null.
+            </remarks>
+      <seealso cref="P:BayesServer.Inference.QueryDistribution.Comparison" />
+    </member>
+    <member name="P:BayesServer.Inference.IInference.QueryDistributions">
+      <summary>
+            Gets or sets the collection of distributions to calculate.  See <see cref="T:BayesServer.Inference.IQueryDistributionCollection" />.
+            </summary>
+      <remarks>
+            If required, a query distribution collection can be dynamically attached or detached.  Also note that individual elements can be enabled or disabled on a per query basis.
+            </remarks>
+    </member>
+    <member name="M:BayesServer.Inference.IInference.Query(BayesServer.Inference.IQueryOptions,BayesServer.Inference.IQueryOutput)">
+      <summary>
+            Calculates a number of distributions, e.g. P(A) and P(B) given the <see cref="T:BayesServer.Inference.IEvidence">evidence</see> (case data, e.g. row in a database), and if requested the log-likelihood of the data.
+            </summary>
+      <remarks>
+            Each time this method is called the <see cref="T:BayesServer.Inference.IQueryDistributionCollection">distributions</see> have their values replaced, acting like buffers.
+            <para>
+            As well as requesting distributions of the form P(A), P(B) it is also possible to request distributions over a number of variables such as P(A,B).
+            </para><para>
+            If <see cref="T:BayesServer.CLGaussian">CLGaussian</see> distributions are requested that include instantiated discrete variables, an algorithm
+            may legitimately return mean and covariance values equal to NaN for entries corresponding to inconsistent discrete combinations. 
+            For example, if a CLGaussian is requested that includes a discrete variable 'Gender' with states 'Male' and 
+            'Female' and evidence is set to 'Female' then any mean and covariance entries that correspond to 'Male' may be set to NaN.  NaN values will
+            always be accompanied by a corresponding zero value in the <see cref="P:BayesServer.CLGaussian.Table" />.
+            </para></remarks>
+      <param name="queryOptions">Options governing which calculations are performed and how.</param>
+      <param name="queryOutput">
+            Returns any information, in addition to the <see cref="T:BayesServer.Inference.IQueryDistributionCollection">distributions</see>, that is requested.  For example the <see cref="P:BayesServer.Inference.IQueryOutput.LogLikelihood">log-likelihood</see>.
+            </param>
+      <exception cref="T:BayesServer.InvalidNetworkException">Raised if the network is invalid.</exception>
+      <exception cref="T:BayesServer.Inference.InconsistentEvidenceException">Raised if inconsistent evidence is detected, or underflow/overflow occurs when calculating queries or the conflict measure.  Note that log-likelihood calculations do not raise this exception, but instead report -Infinity or +Infinity.</exception>
+    </member>
+    <member name="E:BayesServer.Inference.IInference.QueryExecuting">
+      <summary>
+            The event that is fired when the <see cref="M:BayesServer.Inference.IInference.Query" /> method begins.
+            </summary>
+    </member>
+    <member name="E:BayesServer.Inference.IInference.QueryExecuted">
+      <summary>
+            The event that is fired when the <see cref="M:BayesServer.Inference.IInference.Query" /> method completes.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Inference.IInferenceFactory">
+      <summary>
+            Uses the factory design pattern to create inference related objects for inference algorithms.
+            </summary>
+      <remarks>
+            An inference algorithm provides an implementation of this factory, which creates objects specific to that algorithm.
+            </remarks>
+    </member>
+    <member name="M:BayesServer.Inference.IInferenceFactory.CreateInferenceEngine(BayesServer.Network)">
+      <summary>
+            Creates an instance of an inference algorithm, with the <paramref name="network" /> as it's target.
+            </summary>
+      <param name="network">The target Bayesian network.</param>
+      <returns>The inference algorithm/engine.</returns>
+    </member>
+    <member name="M:BayesServer.Inference.IInferenceFactory.CreateQueryOptions">
+      <summary>
+            Creates options that govern how each <see cref="M:BayesServer.Inference.IInference.Query">query</see> is performed.
+            </summary>
+      <remarks>
+            Each algorithm may provide additional options.
+            </remarks>
+      <returns>The options.</returns>
+    </member>
+    <member name="M:BayesServer.Inference.IInferenceFactory.CreateQueryOutput">
+      <summary>
+            Creates an object that collects information about each <see cref="M:BayesServer.Inference.IInference.Query">query</see>, in addition to the <see cref="T:BayesServer.Inference.IQueryDistributionCollection">distributions</see>.
+            </summary>
+      <remarks>Each algorithm may provide additional output information.
+            <para>The output object can be created once, and reused over many calls to <see cref="M:BayesServer.Inference.IInference.Query" />.</para></remarks>
+      <returns>The output instance.</returns>
+    </member>
+    <member name="T:BayesServer.Inference.InferenceFactoryAttribute">
+      <summary>
+            An attribute that can be applied to classes implementing <see cref="T:BayesServer.Inference.IInferenceFactory" />.
+            It provides additional information about the inference algorithm.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Inference.InferenceFactoryAttribute.#ctor(System.String)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.InferenceFactoryAttribute" /> class.
+            </summary>
+      <param name="name">The name of the algorithm.</param>
+    </member>
+    <member name="M:BayesServer.Inference.InferenceFactoryAttribute.#ctor(System.String,System.String,System.String)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.InferenceFactoryAttribute" /> class.
+            </summary>
+      <param name="name">The name of the algorithm.</param>
+      <param name="category">The algorithm category.</param>
+      <param name="description">A description of the algorithm.</param>
+    </member>
+    <member name="P:BayesServer.Inference.InferenceFactoryAttribute.Name">
+      <summary>
+            Gets the name of the algorithm.
+            </summary>
+      <value>The name of the algorithm.</value>
+    </member>
+    <member name="P:BayesServer.Inference.InferenceFactoryAttribute.Category">
+      <summary>
+            Gets the algorithm category, such as Exact inference.
+            </summary>
+      <value>The algorithm category.</value>
+    </member>
+    <member name="P:BayesServer.Inference.InferenceFactoryAttribute.Description">
+      <summary>
+            Gets a description of the algorithm.
+            </summary>
+      <value>A description of the algorithm.</value>
+    </member>
+    <member name="T:BayesServer.Inference.InconsistentEvidenceException">
+      <summary>
+            Exception raised when either inconsistent evidence is detected, or underflow has occurred.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Inference.InconsistentEvidenceException.#ctor">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.InconsistentEvidenceException" /> class.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Inference.InconsistentEvidenceException.#ctor(System.String)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.InconsistentEvidenceException" /> class.
+            </summary>
+      <param name="message">The message.</param>
+    </member>
+    <member name="M:BayesServer.Inference.InconsistentEvidenceException.#ctor(System.String,System.Exception)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.InconsistentEvidenceException" /> class.
+            </summary>
+      <param name="message">The message.</param>
+      <param name="inner">The inner.</param>
+    </member>
+    <member name="T:BayesServer.Inference.InconsistentEvidenceMode">
+      <summary>
+            Determines when an <see cref="T:BayesServer.InconsistentEvidenceException" /> is raied.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Inference.InconsistentEvidenceMode.QueryOptimized">
+      <summary>
+            This is the default mode, and only raises an exception,
+            when the requested queries cannot be computed.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Inference.InconsistentEvidenceMode.AllEvidence">
+      <summary>
+            In this mode, all evidence is checked for inconsistencies, 
+            by checking the log-likelihood, and raising an exception if -Infinity.
+            </summary>
+      <remarks>
+            The log-likelihood option must be set to true when using this mode.
+            </remarks>
+    </member>
+    <member name="T:BayesServer.Inference.IQueryDistributionCollection">
+      <summary>
+            The collection of distributions to be calculated by a <see cref="M:BayesServer.Inference.IInference.Query" />.  Only request those that you need.
+            </summary>
+      <remarks>
+            If required, a distribution collection can be dynamically attached or detached from an <see cref="T:BayesServer.Inference.IInference">inference engine</see>.
+            Also note that individual elements can be enabled or disabled on a per query basis.
+            <para>
+            Each distribution added, such as a <see cref="T:BayesServer.Table" />, acts like a buffer.  I.e. the values are populated by the <see cref="M:BayesServer.Inference.IInference.Query" /> method.
+            This means that the same distributions can be re-used across multiple calls to <see cref="M:BayesServer.Inference.IInference.Query" />, without the need to recreate the
+            distribution each time.
+            </para><para>
+            It is important not to request distributions you do not need, because the computations will take longer.  For example, it is common to request
+            all marginal probabilities, P(A), P(B), P(C), ... , P(Z) given the <see cref="T:BayesServer.Inference.IEvidence">evidence</see>, however if you only need to know P(A) and P(B) given the <see cref="T:BayesServer.Inference.IEvidence">evidence</see>, then limit the query to just these distributions.
+            </para><para>
+            Typically the distributions requested are a number of marginal probabilities, such as P(A), P(B), P(C) etc... given the <see cref="T:BayesServer.Inference.IEvidence">evidence</see>, however it is also possible to request
+            distributions over more than one variable, so we might query P(A), P(B,C) given the <see cref="T:BayesServer.Inference.IEvidence">evidence</see>.
+            </para><para>
+            If you are performing a batch of queries, there is no need to remove distributions that happen to have evidence set for a particular query.
+            </para><para>For Dynamic Bayesian networks, times can be associated with distribution variables, to predict values in the future, present or past.</para></remarks>
+    </member>
+    <member name="M:BayesServer.Inference.IQueryDistributionCollection.Add(BayesServer.IDistribution)">
+      <summary>
+            Adds the specified distribution, automatically creating a <see cref="T:BayesServer.Inference.QueryDistribution" /> instance.
+            </summary>
+      <param name="distribution">The distribution to query.</param>
+      <returns>The automatically created <see cref="T:BayesServer.Inference.QueryDistribution" /> instance.</returns>
+    </member>
+    <member name="T:BayesServer.Inference.IQueryOptions">
+      <summary>
+            Options that govern the calculations performed by <see cref="M:BayesServer.Inference.IInference.Query" />.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Inference.IQueryOptions.LogLikelihood">
+      <summary>
+            Gets or sets a value indicating whether the log-likelihood of a case should be calculated in a call to <see cref="M:BayesServer.Inference.IInference.Query" />.  If calculated the result can be obtained from <see cref="P:BayesServer.Inference.IQueryOutput.LogLikelihood" />.
+            </summary>
+      <remarks>
+        <para>This should only be requested if required.</para>
+        <para>The natural log (base e) is calculated.</para>
+      </remarks>
+      <value>
+        <c>true</c> if the log-likelihood should be calculated; otherwise, <c>false</c>.  Defaults to false.</value>
+    </member>
+    <member name="P:BayesServer.Inference.IQueryOptions.Propagation">
+      <summary>
+            Gets or sets the propagation method to be used during inference.  Default is <see cref="F:BayesServer.PropagationMethod.Sum" />.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Inference.IQueryOptions.DecisionAlgorithm">
+      <summary>
+            Gets or sets the algorithm to use when a network contains Decision nodes.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Inference.IQueryOptions.Conflict">
+      <summary>
+            Gets or sets a value indicating whether the conflict measure should be calculated in a call to <see cref="M:BayesServer.Inference.IInference.Query" />.  If calculated the result can be obtained from <see cref="P:BayesServer.Inference.IQueryOutput.Conflict" />.
+            </summary>
+      <remarks>
+        <para>
+            Conflict is a measure that detects evidence that is conflicting or rare.  The greater the conflict value above zero, the 
+            more likely the evidence is in conflict, or rare.
+            </para>
+        <para>
+            Conflict = log((P(e1)P(e2)...P(ei)) / P(e)),
+            where P(e1), P(e2) etc... are the likelihoods of each variable
+            considered in isolation, and P(e) is the likelihood of the all the evidence together.
+            </para>
+      </remarks>
+    </member>
+    <member name="P:BayesServer.Inference.IQueryOptions.QueryEvidenceMode">
+      <summary>
+            Determines whether evidence is retracted for each query.  See <see cref="T:BayesServer.Inference.QueryEvidenceMode" /> for more information.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Inference.IQueryOptions.InconsistentEvidenceMode">
+      <summary>
+            Determines when an <see cref="T:BayesServer.InconsistentEvidenceException" /> is raied.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Inference.IQueryOptions.Cancellation">
+      <summary>
+            Allows cancellation of a query.  
+            </summary>
+      <remarks>
+            When cancelled, a <see cref="T:System.OperationCanceledException" /> will be raised.
+            <para>
+            If <see cref="P:BayesServer.ICancellation.Cancel" /> has been set to true, it should be reset to false, before a subsequent
+            query.
+            </para></remarks>
+    </member>
+    <member name="P:BayesServer.Inference.IQueryOptions.TerminalTime">
+      <summary>
+            Gets or sets the terminal time, which is the time at which any terminal nodes in a Dynamic Bayesian Network connect to temporal nodes.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Inference.IQueryOutput">
+      <summary>
+            Returns any information, in addition to the <see cref="T:BayesServer.Inference.IQueryDistributionCollection">distributions</see>, that is requested from a <see cref="M:BayesServer.Inference.IInference.Query">query</see>.  For example the <see cref="P:BayesServer.Inference.IQueryOutput.LogLikelihood">log-likelihood</see>.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Inference.IQueryOutput.LogLikelihood">
+      <summary>
+            Gets or sets the log-likelihood value.  On return from a <see cref="M:BayesServer.Inference.IInference.Query">query</see> the value will be 
+            null unless <see cref="P:BayesServer.Inference.IQueryOptions.LogLikelihood" /> is set to true.
+            </summary>
+      <remarks>
+        <para>The log-likelihood should only be requested if required.</para>
+        <para>The natural log (base e) likelihood is returned, or null if not requested.</para>
+      </remarks>
+    </member>
+    <member name="P:BayesServer.Inference.IQueryOutput.Conflict">
+      <summary>
+            Gets or sets the conflict measure.  On return from a <see cref="M:BayesServer.Inference.IInference.Query">query</see> the value will be 
+            null unless <see cref="P:BayesServer.Inference.IQueryOptions.Conflict" /> is set to true.
+            </summary>
+      <remarks>
+        <para>The conflict measure should only be requested if required.</para>
+      </remarks>
+    </member>
+    <member name="M:BayesServer.Inference.IQueryOutput.Reset">
+      <summary>
+            Resets all values to their defaults.  For example the log-likelihood is reset to null.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Inference.NamespaceDoc">
+      <summary>
+            Contains interfaces for performing probabilistic inference with a
+            Bayesian network, such as calculating posterior probabilities and log-likelihoods.
+            See the <see cref="T:BayesServer.Inference.RelevanceTree.RelevanceTreeInference" /> class for an algorithm that implements the necessary interfaces.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Inference.QueryComparison">
+      <summary>
+            Determines whether and how queried values (e.g. probabilities) are adjusted to be comparisons.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Inference.QueryComparison.None">
+      <summary>
+            No comparison is made.  This is the default.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Inference.QueryComparison.Difference">
+      <summary>
+            The difference between the current queried value and the value calculated using <see cref="P:BayesServer.Inference.IInference.BaseEvidence">Base evidence</see>.  Returns a value between -1 and 1 for discrete values.
+            </summary>
+      <remarks>This comparison is useful because it gives less weight when small probabilities are involved.</remarks>
+    </member>
+    <member name="F:BayesServer.Inference.QueryComparison.Lift">
+      <summary>
+            Each queried value is divided by its value when calculated using <see cref="P:BayesServer.Inference.IInference.BaseEvidence">Base evidence</see>.
+            </summary>
+      <remarks>
+        <para>A value of NaN will be returned if the probability before and after is zero. This is by design.</para>
+        <para>A value of Infinity will be returned if the probability before is zero and the probability after is positive. This is by design.</para>
+      </remarks>
+    </member>
+    <member name="T:BayesServer.Inference.QueryDistance">
+      <summary>
+            Type of distance to calculate for a query.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Inference.QueryDistance.None">
+      <summary>
+            No distance is calculated.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Inference.QueryDistance.KLDivergence">
+      <summary>
+            Kullback-Leibler divergence, D(P||Q) where Q is calculated using Base Evidence (or no evidence), and P is calculated from the standard evidence. 
+            </summary>
+    </member>
+    <member name="F:BayesServer.Inference.QueryDistance.JSDivergenceBits">
+      <summary>
+            Jensen Shannon divergence, JSD(P||Q) measured in BITS
+            </summary>
+    </member>
+    <member name="T:BayesServer.Inference.QueryDistribution">
+      <summary>
+            Defines a distribution to be queried in a call to <see cref="M:BayesServer.Inference.IInference.Query" />.
+            </summary>
+    </member>
+    <member name="E:BayesServer.Inference.QueryDistribution.PropertyChanged">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.QueryDistribution.#ctor(BayesServer.IDistribution)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.QueryDistribution" /> class.  The enabled property defaults to true.
+            </summary>
+      <param name="distribution">The distribution to query.</param>
+    </member>
+    <member name="M:BayesServer.Inference.QueryDistribution.#ctor(BayesServer.IDistribution,System.Boolean)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.QueryDistribution" /> class.
+            </summary>
+      <param name="distribution">The distribution to query.</param>
+      <param name="isEnabled">Sets the <see cref="P:BayesServer.Inference.QueryDistribution.IsEnabled" /> property.</param>
+    </member>
+    <member name="P:BayesServer.Inference.QueryDistribution.QueryDistance">
+      <summary>
+            Gets or sets a value indicating whether the distance should be calculated between the query calculated with base evidence (or no evidence), and the same query calculated with evidence.
+            </summary>
+      <remarks>
+        <para>The distance can be calculated against no evidence, or against base evidence which can be set on <see cref="P:BayesServer.Inference.IInference.BaseEvidence" />.</para>
+      </remarks>
+    </member>
+    <member name="P:BayesServer.Inference.QueryDistribution.Comparison">
+      <summary>
+            Gets or sets a value indicating whether queried values should be adjusted to show how they compare to the same query with no evidence, or base evidence.
+            </summary>
+      <remarks>
+        <para>
+            Using comparisons is useful when you want to measure the difference or lift of a prediction value, for example when spotting unusual patterns during data exploration, or making recommendations.
+            </para>
+        <para>The comparison can be calculated based on no evidence, or against base evidence which can be set on <see cref="P:BayesServer.Inference.IInference.BaseEvidence" />.</para>
+      </remarks>
+    </member>
+    <member name="P:BayesServer.Inference.QueryDistribution.QueryLogLikelihood">
+      <summary>
+            Determines whether or not to calculate the <see cref="P:BayesServer.Inference.QueryDistribution.LogLikelihood" /> specific to the evidence used to calculate this query.  For more information see <see cref="P:BayesServer.Inference.QueryDistribution.LogLikelihood" />.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Inference.QueryDistribution.LogLikelihood">
+      <summary>
+            The log-likelihood specific to the evidence used to calculate this query.  Only calculated when <see cref="P:BayesServer.Inference.QueryDistribution.QueryLogLikelihood" /> is <c>true</c>.
+            </summary>
+      <remarks>
+            The log-likelihood value will equal the overall <see cref="P:BayesServer.Inference.IQueryOutput.LogLikelihood" /> unless
+            <see cref="P:BayesServer.Inference.IQueryOptions.QueryEvidenceMode" /> is set to <see cref="F:BayesServer.Inference.QueryEvidenceMode.RetractQueryEvidence" />, and there is evidence
+            on at least one variable in the <see cref="T:BayesServer.IDistribution" />.
+            <para>
+            When evidence is retracted for a particular query, this value contains the log likelihood of the remaining evidence.
+            </para></remarks>
+    </member>
+    <member name="P:BayesServer.Inference.QueryDistribution.Distance">
+      <summary>
+            The distance between this query calculated with base evidence or no evidence, and when calculated with evidence.  Only calculated when <see cref="P:BayesServer.Inference.QueryDistribution.QueryDistance" /> is not None.
+            </summary>
+      <remarks>
+            This value can be null when the QueryDistance is set to None or the distance is undefined for the given queries.
+            </remarks>
+    </member>
+    <member name="P:BayesServer.Inference.QueryDistribution.IsEnabled">
+      <summary>
+            Gets or sets a value indicating whether the distribution should be queried.
+            </summary>
+      <value>
+        <c>true</c> if the distribution should be queried; otherwise, <c>false</c>.
+            </value>
+    </member>
+    <member name="P:BayesServer.Inference.QueryDistribution.Distribution">
+      <summary>
+            Gets the distribution to query.
+            </summary>
+      <value>The distribution.</value>
+    </member>
+    <member name="M:BayesServer.Inference.QueryDistribution.ToString">
+      <summary>
+            Returns a <see cref="T:System.String" /> that represents this instance.
+            </summary>
+      <returns>
+            A <see cref="T:System.String" /> that represents this instance.
+            </returns>
+    </member>
+    <member name="T:BayesServer.Inference.QueryDistributionCollection">
+      <summary>
+            The collection of distributions to be calculated by a <see cref="M:BayesServer.Inference.IInference.Query" />.  See <see cref="T:BayesServer.Inference.IQueryDistributionCollection" />.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Inference.QueryDistributionCollection.#ctor(BayesServer.Network)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.QueryDistributionCollection" /> class, passing the target Bayesian network as a parameter.
+            </summary>
+      <param name="network">The network that will be the target of the <see cref="M:BayesServer.Inference.IInference.Query" />.</param>
+    </member>
+    <member name="M:BayesServer.Inference.QueryDistributionCollection.InsertItem(System.Int32,BayesServer.Inference.QueryDistribution)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.QueryDistributionCollection.ClearItems">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.QueryDistributionCollection.Add(BayesServer.IDistribution)">
+      <summary>
+            Adds the specified distribution, automatically creating a <see cref="T:BayesServer.Inference.QueryDistribution" /> instance.
+            </summary>
+      <param name="distribution">The distribution to query.</param>
+      <returns>The automatically created <see cref="T:BayesServer.Inference.QueryDistribution" /> instance.</returns>
+    </member>
+    <member name="M:BayesServer.Inference.QueryDistributionCollection.RemoveItem(System.Int32)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.QueryDistributionCollection.SetItem(System.Int32,BayesServer.Inference.QueryDistribution)">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.QueryDistributionCollection.Network">
+      <summary>
+            Gets the <see cref="T:BayesServer.Network" /> that is the target for a <see cref="M:BayesServer.Inference.IInference.Query" />.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Inference.QueryEvidenceMode">
+      <summary>
+            Determines how predictions on variables with evidence are performed.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Inference.QueryEvidenceMode.RetainQueryEvidence">
+      <summary>
+            When predictions are made on a variable with evidence, the prediction simply returns the evidence.
+            </summary>
+    </member>
+    <member name="F:BayesServer.Inference.QueryEvidenceMode.RetractQueryEvidence">
+      <summary>
+            When predictions are made on a variable with evidence, the variable's own evidence is ignored.
+            </summary>
+      <remarks>
+            For example, consider a network with variables {A,B,C}, with evidence set on all variables.
+            If you query {P(A),P(B),P(C)}, P(A) will only use the evidence on B and C, P(B) will only use the evidence on A and C, 
+            and P(C) will only use the evidence on A and B.
+            <para>
+            This allows the prediction of variables, without having to perform multiple calls to <see cref="M:BayesServer.Inference.IInference.Query" />, each time
+            setting a different variable to null (missing).
+            </para></remarks>
+    </member>
+    <member name="T:BayesServer.Inference.QueryExecutedEventArgs">
+      <summary>
+            Contains information passed by <see cref="E:BayesServer.Inference.IInference.QueryExecuted" />.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Inference.QueryExecutedEventArgs.#ctor(BayesServer.Inference.IQueryOptions,BayesServer.Inference.IQueryOutput)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.IInference.QueryExecutedEventArgs" /> class.
+            </summary>
+      <param name="queryOptions">The query options passed to <see cref="M:BayesServer.Inference.IInference.Query(BayesServer.Inference.IQueryOptions,BayesServer.Inference.IQueryOutput)" />.</param>
+      <param name="queryOutput">The query output passed to <see cref="M:BayesServer.Inference.IInference.Query(BayesServer.Inference.IQueryOptions,BayesServer.Inference.IQueryOutput)" />.</param>
+    </member>
+    <member name="P:BayesServer.Inference.QueryExecutedEventArgs.QueryOptions">
+      <summary>
+            Gets the query options that were passed to <see cref="M:BayesServer.Inference.IInference.Query(BayesServer.Inference.IQueryOptions,BayesServer.Inference.IQueryOutput)" />.
+            </summary>
+      <value>The query options.</value>
+    </member>
+    <member name="P:BayesServer.Inference.QueryExecutedEventArgs.QueryOutput">
+      <summary>
+            Gets the query output to be returned by <see cref="M:BayesServer.Inference.IInference.Query(BayesServer.Inference.IQueryOptions,BayesServer.Inference.IQueryOutput)" />.
+            </summary>
+      <value>The query output.</value>
+    </member>
+    <member name="T:BayesServer.Inference.QueryExecutingEventArgs">
+      <summary>
+            Contains information passed by <see cref="E:BayesServer.Inference.IInference.QueryExecuting" />.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Inference.QueryExecutingEventArgs.#ctor(BayesServer.Inference.IQueryOptions)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.QueryExecutingEventArgs" /> class.
+            </summary>
+      <param name="queryOptions">The query options passed to <see cref="M:BayesServer.Inference.IInference.Query(BayesServer.Inference.IQueryOptions,BayesServer.Inference.IQueryOutput)" />.</param>
+    </member>
+    <member name="P:BayesServer.Inference.QueryExecutingEventArgs.QueryOptions">
+      <summary>
+            Gets the query options that were passed to <see cref="M:BayesServer.Inference.IInference.Query(BayesServer.Inference.IQueryOptions,BayesServer.Inference.IQueryOutput)" />.
+            </summary>
+      <value>The query options.</value>
+    </member>
+    <member name="T:BayesServer.Inference.RelevanceTree.NamespaceDoc">
+      <summary>
+            Provides an exact probabilistic inference algorithm for Bayesian networks and Dynamic Bayesian networks, that can compute multiple distributions more efficiently
+            than the <see cref="T:BayesServer.Inference.VariableElimination.VariableEliminationInference" /> algorithm.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Inference.RelevanceTree.RelevanceTreeInference">
+      <summary>
+            An exact probabilistic inference algorithm for Bayesian networks and Dynamic Bayesian networks, that can compute multiple distributions more efficiently
+            than the <see cref="T:BayesServer.Inference.VariableElimination.VariableEliminationInference" /> algorithm.
+            </summary>
+      <seealso cref="T:BayesServer.Inference.IInference" />
+    </member>
+    <member name="E:BayesServer.Inference.RelevanceTree.RelevanceTreeInference.QueryExecuting">
+      <inheritdoc />
+    </member>
+    <member name="E:BayesServer.Inference.RelevanceTree.RelevanceTreeInference.QueryExecuted">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.RelevanceTree.RelevanceTreeInference.#ctor(BayesServer.Network)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.RelevanceTree.RelevanceTreeInference" /> class, with the target Bayesian network.
+            </summary>
+      <param name="network">The target <see cref="T:BayesServer.Network" />.</param>
+      <exception cref="T:System.ArgumentNullException">Raised if <paramref name="network" /> is null.</exception>
+    </member>
+    <member name="P:BayesServer.Inference.RelevanceTree.RelevanceTreeInference.Network">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.RelevanceTree.RelevanceTreeInference.Evidence">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.RelevanceTree.RelevanceTreeInference.BaseEvidence">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.RelevanceTree.RelevanceTreeInference.QueryDistributions">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.RelevanceTree.RelevanceTreeInference.Query(BayesServer.Inference.IQueryOptions,BayesServer.Inference.IQueryOutput)">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.RelevanceTree.RelevanceTreeInference.Dispose">
+      <summary>
+            Stops listening to notifications on the underlying <see cref="T:BayesServer.Network" />.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Inference.RelevanceTree.RelevanceTreeInference.Finalize">
+      <summary>
+            Stops listening to notifications on the underlying <see cref="T:BayesServer.Network" /> before the
+            <see cref="T:BayesServer.Inference.RelevanceTree.RelevanceTreeInference" /> instance is reclaimed by garbage collection.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Inference.RelevanceTree.RelevanceTreeInferenceFactory">
+      <summary>
+            Uses the factory design pattern to create inference related objects for the Relevance Tree algorithm.  See <see cref="T:BayesServer.Inference.IInferenceFactory" /> for more details.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Inference.RelevanceTree.RelevanceTreeInferenceFactory.CreateInferenceEngine(BayesServer.Network)">
+      <summary>
+            Uses the factory design pattern to create inference related objects for the Relevance Tree algorithm.  See <see cref="T:BayesServer.Inference.IInferenceFactory" /> for more details.
+            </summary>
+      <param name="network">The target Bayesian network.</param>
+      <returns>The inference algorithm/engine.</returns>
+    </member>
+    <member name="M:BayesServer.Inference.RelevanceTree.RelevanceTreeInferenceFactory.CreateQueryOptions">
+      <summary>
+            Creates a <see cref="T:BayesServer.Inference.RelevanceTree.RelevanceTreeQueryOptions" /> instance that governs the calculations performed by the <see cref="M:BayesServer.Inference.RelevanceTree.RelevanceTreeInference.Query" /> method.
+            </summary>
+      <returns>The options for use with <see cref="M:BayesServer.Inference.RelevanceTree.RelevanceTreeInference.Query" />.</returns>
+    </member>
+    <member name="M:BayesServer.Inference.RelevanceTree.RelevanceTreeInferenceFactory.CreateQueryOutput">
+      <summary>
+            Creates a <see cref="T:BayesServer.Inference.RelevanceTree.RelevanceTreeQueryOutput" /> instance that collects information about each <see cref="M:BayesServer.Inference.RelevanceTree.RelevanceTreeInference.Query">query</see>, in addition to the <see cref="T:BayesServer.Inference.IQueryDistributionCollection">distributions</see>.
+            </summary>
+      <remarks>
+        <para>The output object can be created once, and reused over many calls to <see cref="M:BayesServer.Inference.IInference.Query" />.</para>
+      </remarks>
+      <returns>The output instance.</returns>
+    </member>
+    <member name="T:BayesServer.Inference.RelevanceTree.RelevanceTreeQueryOptions">
+      <summary>
+            Options that govern the calculations performed by <see cref="M:BayesServer.Inference.IInference.Query" />.
+            </summary>
+    </member>
+    <member name="E:BayesServer.Inference.RelevanceTree.RelevanceTreeQueryOptions.PropertyChanged">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.RelevanceTree.RelevanceTreeQueryOptions.#ctor">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.RelevanceTree.RelevanceTreeQueryOptions" /> class.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Inference.RelevanceTree.RelevanceTreeQueryOptions.LogLikelihood">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.RelevanceTree.RelevanceTreeQueryOptions.Propagation">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.RelevanceTree.RelevanceTreeQueryOptions.DecisionAlgorithm">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.RelevanceTree.RelevanceTreeQueryOptions.Conflict">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.RelevanceTree.RelevanceTreeQueryOptions.Cancellation">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.RelevanceTree.RelevanceTreeQueryOptions.TerminalTime">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.RelevanceTree.RelevanceTreeQueryOptions.QueryEvidenceMode">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.RelevanceTree.RelevanceTreeQueryOptions.InconsistentEvidenceMode">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Inference.RelevanceTree.RelevanceTreeQueryOutput">
+      <summary>
+            Returns any information, in addition to the <see cref="T:BayesServer.Inference.IQueryDistributionCollection">distributions</see>, that is requested from a <see cref="M:BayesServer.Inference.IInference.Query">query</see>.  For example the <see cref="P:BayesServer.Inference.IQueryOutput.LogLikelihood">log-likelihood</see>.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Inference.RelevanceTree.RelevanceTreeQueryOutput.#ctor">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.RelevanceTree.RelevanceTreeQueryOutput" /> class.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Inference.RelevanceTree.RelevanceTreeQueryOutput.LogLikelihood">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.RelevanceTree.RelevanceTreeQueryOutput.Conflict">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.RelevanceTree.RelevanceTreeQueryOutput.Reset">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Inference.SoftEvidence">
+      <summary>
+            Helper methods for manipulating soft/virtual evidence.
+            </summary>
+      <see cref="M:BayesServer.Inference.IEvidence.SetStates(BayesServer.Variable,System.Double[])" />
+    </member>
+    <member name="M:BayesServer.Inference.SoftEvidence.DivideByPrior(BayesServer.Table,BayesServer.Table)">
+      <summary>
+            Divides target soft evidence by an existing prior distribution or query.
+            </summary>
+      <remarks>
+            This is often used so that when the soft evidence is applied during inference, it
+            cancels out the prior or query.
+            </remarks>
+      <param name="target">
+      </param>
+      <param name="prior">
+      </param>
+      <returns>The adjusted distribution.</returns>
+    </member>
+    <member name="T:BayesServer.Inference.TreeQuery">
+      <summary>
+            Contains methods to determine properties of a Bayesian network or Dynamic Bayesian network when converted to a tree for inference.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Inference.TreeQuery.Query(BayesServer.Network,BayesServer.Inference.IQueryDistributionCollection,BayesServer.Inference.IEvidence,BayesServer.Inference.TreeQueryOptions)">
+      <summary>
+            Calculates properties of a Bayesian network or Dynamic Bayesian network when converted to a tree for inference.
+            </summary>
+      <remarks>
+        <para>
+            This is done without requiring the memory to actually perform inference, and so can be useful to test whether exact inference is feasible on a network,
+            or determine memory requirements.
+            </para>
+        <para>This can be done while taking into account any evidence currently set, and the particular queries that are being requested.</para>
+      </remarks>
+      <param name="network">The Bayesian network or Dynamic Bayesian network.</param>
+      <param name="queryDistributions">The distributions being queried.</param>
+      <param name="evidence">Any evidence.</param>
+      <param name="queryOptions">Options which affect how the query is performed.</param>
+      <returns>Information about the tree, such as tree width.</returns>
+    </member>
+    <member name="T:BayesServer.Inference.TreeQueryOptions">
+      <summary>
+            Options which affect the calculation performed by a <see cref="T:BayesServer.Inference.TreeQuery" />.
+            </summary>
+    </member>
+    <member name="E:BayesServer.Inference.TreeQueryOptions.PropertyChanged">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.TreeQueryOptions.#ctor">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.TreeQueryOptions" /> class.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Inference.TreeQueryOptions.#ctor(BayesServer.Inference.IQueryOptions)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.TreeQueryOptions" /> class, copying options from another instance implementing <see cref="T:BayesServer.Inference.IQueryOptions" />.
+            </summary>
+      <param name="queryOptions">The query options to copy.</param>
+      <exception cref="T:System.ArgumentNullException">queryOptions</exception>
+    </member>
+    <member name="P:BayesServer.Inference.TreeQueryOptions.TreeWidth">
+      <summary>
+            Gets or sets a value indicating whether or not to calculate the tree width.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Inference.TreeQueryOptions.IsImpliedEvidenceEnabled">
+      <summary>
+            Gets or sets a value indicating whether to detect implied evidence during the calculation.
+            </summary>
+      <remarks>
+            An example of implied evidence is:  Male =&gt; Not Pregnant.
+            </remarks>
+    </member>
+    <member name="P:BayesServer.Inference.TreeQueryOptions.TerminalTime">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.TreeQueryOptions.Propagation">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.TreeQueryOptions.DecisionAlgorithm">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.TreeQueryOptions.Cancellation">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.TreeQueryOptions.LogLikelihood">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.TreeQueryOptions.Conflict">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.TreeQueryOptions.QueryEvidenceMode">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.TreeQueryOptions.InconsistentEvidenceMode">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Inference.TreeQueryOutput">
+      <summary>
+            Contains information output by a <see cref="T:BayesServer.Inference.TreeQuery" />.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Inference.TreeQueryOutput.TreeWidth">
+      <summary>
+            Gets the tree width, if requested.
+            </summary>
+      <remarks>
+            The tree width gives an indication of how much space is required to calculate the queries using exact inference, given the evidence.
+            </remarks>
+    </member>
+    <member name="T:BayesServer.Inference.VariableElimination.NamespaceDoc">
+      <summary>
+            Provides an exact probabilistic inference algorithm for Bayesian networks, loosely based on the Variable Elimination algorithm.
+            </summary>
+    </member>
+    <member name="T:BayesServer.Inference.VariableElimination.VariableEliminationInference">
+      <summary>
+            An exact inference algorithm for Bayesian networks and Dynamic Bayesian networks, loosely based on the Variable Elimination algorithm.
+            </summary>
+      <seealso cref="T:BayesServer.Inference.RelevanceTree.RelevanceTreeInference" />
+      <seealso cref="T:BayesServer.Inference.IInference" />
+    </member>
+    <member name="E:BayesServer.Inference.VariableElimination.VariableEliminationInference.QueryExecuting">
+      <inheritdoc />
+    </member>
+    <member name="E:BayesServer.Inference.VariableElimination.VariableEliminationInference.QueryExecuted">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.VariableElimination.VariableEliminationInference.#ctor(BayesServer.Network)">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.VariableElimination.VariableEliminationInference" /> class, with the target Bayesian network.
+            </summary>
+      <param name="network">The target <see cref="T:BayesServer.Network" />.</param>
+      <exception cref="T:System.ArgumentNullException">Raised if <paramref name="network" /> is null.</exception>
+    </member>
+    <member name="M:BayesServer.Inference.VariableElimination.VariableEliminationInference.Dispose">
+      <summary>
+            Stops listening to notifications on the underlying <see cref="T:BayesServer.Network" />.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Inference.VariableElimination.VariableEliminationInference.Finalize">
+      <summary>
+            Stops listening to notifications on the underlying <see cref="T:BayesServer.Network" /> before the
+            <see cref="T:BayesServer.Inference.VariableElimination.VariableEliminationInference" /> instance is reclaimed by garbage collection.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Inference.VariableElimination.VariableEliminationInference.Evidence">
+      <summary>
+            Gets or sets the evidence (case data, e.g. row in a database) used in a <see cref="M:BayesServer.Inference.IInference.Query">query</see>.
+            </summary>
+      <remarks>
+            The <see cref="P:BayesServer.Inference.IInference.QueryDistributions">distributions</see> are only recalculated when <see cref="M:BayesServer.Inference.IInference.Query" /> is called, not each time evidence is changed.
+            </remarks>
+    </member>
+    <member name="P:BayesServer.Inference.VariableElimination.VariableEliminationInference.BaseEvidence">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.VariableElimination.VariableEliminationInference.QueryDistributions">
+      <summary>
+            The collection of distributions required from a <see cref="M:BayesServer.Inference.IInference.Query" />.  Only request those that you need.
+            </summary>
+      <remarks>
+        <para>
+            Each distribution added, such as a <see cref="T:BayesServer.Table" />, acts like a buffer.  I.e. the values are populated by the <see cref="M:BayesServer.Inference.IInference.Query" /> method.
+            This means that the same distributions can be resused across multiple calls to <see cref="M:BayesServer.Inference.IInference.Query" />, without the need to recreate the
+            distribution each time.
+            </para>
+        <para>
+            It is important not to request distributions you do not need, because the computations will take longer.  For example, it is common to request
+            all marginal probabilities, P(A), P(B), P(C), ... , P(Z) given the <see cref="T:BayesServer.Inference.IEvidence">evidence</see>, however if you only need to know P(A) and P(B) given the <see cref="T:BayesServer.Inference.IEvidence">evidence</see>, then limit the query to just these distributions.
+            </para>
+        <para>
+            Typically the distributions requested are a number of marginal propabilities, such as P(A), P(B), P(C) etc... given the <see cref="T:BayesServer.Inference.IEvidence">evidence</see>, however it is also possible to request
+            distributions over more than one variable, so we might query P(A), P(B,C) given the <see cref="T:BayesServer.Inference.IEvidence">evidence</see>.
+            </para>
+        <para>
+            If you are performing a batch of queries, there is no need to remove those distributions that you require, however happen to have evidence set for a particular query.
+            </para>
+      </remarks>
+    </member>
+    <member name="P:BayesServer.Inference.VariableElimination.VariableEliminationInference.Network">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.VariableElimination.VariableEliminationInference.Query(BayesServer.Inference.IQueryOptions,BayesServer.Inference.IQueryOutput)">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Inference.VariableElimination.VariableEliminationInferenceFactory">
+      <summary>
+            Uses the factory design pattern to create inference related objects for the Variable elimination algorithm.  See <see cref="T:BayesServer.Inference.IInferenceFactory" /> for more details.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Inference.VariableElimination.VariableEliminationInferenceFactory.CreateInferenceEngine(BayesServer.Network)">
+      <summary>
+            Uses the factory design pattern to create inference related objects for the Variable elimination algorithm.  See <see cref="T:BayesServer.Inference.IInferenceFactory" /> for more details.
+            </summary>
+      <param name="network">The target Bayesian network.</param>
+      <returns>The inference algorithm/engine.</returns>
+    </member>
+    <member name="M:BayesServer.Inference.VariableElimination.VariableEliminationInferenceFactory.CreateQueryOptions">
+      <summary>
+            Creates a <see cref="T:BayesServer.Inference.VariableElimination.VariableEliminationQueryOptions" /> instance that governs the calculations performed by the <see cref="M:BayesServer.Inference.VariableElimination.VariableEliminationInference.Query" /> method.
+            </summary>
+      <returns>The options for use with <see cref="M:BayesServer.Inference.VariableElimination.VariableEliminationInference.Query" />.</returns>
+    </member>
+    <member name="M:BayesServer.Inference.VariableElimination.VariableEliminationInferenceFactory.CreateQueryOutput">
+      <summary>
+            Creates a <see cref="T:BayesServer.Inference.VariableElimination.VariableEliminationQueryOutput" /> instance that collects information about each <see cref="M:BayesServer.Inference.VariableElimination.VariableEliminationInference.Query">query</see>, in addition to the <see cref="T:BayesServer.Inference.IQueryDistributionCollection">distributions</see>.
+            </summary>
+      <remarks>
+        <para>The output object can be created once, and reused over many calls to <see cref="M:BayesServer.Inference.IInference.Query" />.</para>
+      </remarks>
+      <returns>The output instance.</returns>
+    </member>
+    <member name="T:BayesServer.Inference.VariableElimination.VariableEliminationQueryOptions">
+      <summary>
+            Options that govern the calculations performed by <see cref="M:BayesServer.Inference.IInference.Query" />.
+            </summary>
+    </member>
+    <member name="E:BayesServer.Inference.VariableElimination.VariableEliminationQueryOptions.PropertyChanged">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.VariableElimination.VariableEliminationQueryOptions.#ctor">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.VariableElimination.VariableEliminationQueryOptions" /> class.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Inference.VariableElimination.VariableEliminationQueryOptions.TerminalTime">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.VariableElimination.VariableEliminationQueryOptions.Propagation">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.VariableElimination.VariableEliminationQueryOptions.DecisionAlgorithm">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.VariableElimination.VariableEliminationQueryOptions.Cancellation">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.VariableElimination.VariableEliminationQueryOptions.LogLikelihood">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.VariableElimination.VariableEliminationQueryOptions.Conflict">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.VariableElimination.VariableEliminationQueryOptions.QueryEvidenceMode">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.VariableElimination.VariableEliminationQueryOptions.InconsistentEvidenceMode">
+      <inheritdoc />
+    </member>
+    <member name="T:BayesServer.Inference.VariableElimination.VariableEliminationQueryOutput">
+      <summary>
+            Returns any information, in addition to the <see cref="T:BayesServer.Inference.IQueryDistributionCollection">distributions</see>, that is requested from a <see cref="M:BayesServer.Inference.IInference.Query">query</see>.  For example the <see cref="P:BayesServer.Inference.IQueryOutput.LogLikelihood">log-likelihood</see>.
+            </summary>
+    </member>
+    <member name="M:BayesServer.Inference.VariableElimination.VariableEliminationQueryOutput.#ctor">
+      <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Inference.VariableElimination.VariableEliminationQueryOutput" /> class.
+            </summary>
+    </member>
+    <member name="P:BayesServer.Inference.VariableElimination.VariableEliminationQueryOutput.LogLikelihood">
+      <inheritdoc />
+    </member>
+    <member name="P:BayesServer.Inference.VariableElimination.VariableEliminationQueryOutput.Conflict">
+      <inheritdoc />
+    </member>
+    <member name="M:BayesServer.Inference.VariableElimination.VariableEliminationQueryOutput.Reset">
+      <inheritdoc />
+    </member>
+  </members>
+</doc>

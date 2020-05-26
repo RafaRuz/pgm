@@ -1,0 +1,156 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BayesServer.Statistics</name>
+    </assembly>
+    <members>
+        <member name="T:BayesServer.Statistics.Entropy">
+            <summary>
+            Calculates entropy, joint entropy or conditional entropy, which can be used to determine the uncertainty in the states of a discrete distribution.
+            </summary>
+            <remarks>
+            A higher values indicates less certainty about being in a particular state.
+            </remarks>
+        </member>
+        <member name="M:BayesServer.Statistics.Entropy.Calculate(BayesServer.IDistribution,BayesServer.Statistics.LogarithmBase)">
+            <summary>
+            Measures the uncertainty of a distribution.
+            </summary>
+            <param name="joint">The marginal or joint distribution.</param>
+            <param name="logarithmBase">The logarithm base to use for the calculations.</param>
+            <returns>The entropy value.</returns>
+        </member>
+        <member name="M:BayesServer.Statistics.Entropy.Calculate(BayesServer.IDistribution,System.Collections.Generic.IList{BayesServer.VariableContext},BayesServer.Statistics.LogarithmBase)">
+            <summary>
+            Measures the uncertainty of a distribution conditional on one or more variables.
+            </summary>
+            <param name="joint">The marginal or joint distribution.</param>
+            <param name="conditionOn">Any conditional variables.  I.e. those on the right hand side of H(Y|X) when calculating conditional entropy.</param>
+            <param name="logarithmBase">The logarithm base to use for the calculations.</param>
+            <returns>The entropy value.</returns>
+        </member>
+        <member name="M:BayesServer.Statistics.Entropy.Calculate(BayesServer.Table,System.Collections.Generic.IList{BayesServer.VariableContext},BayesServer.Statistics.LogarithmBase)">
+            <summary>
+            Measures the uncertainty of a distribution conditional on one or more variables.
+            </summary>
+            <param name="joint">The marginal or joint distribution.</param>
+            <param name="conditionOn">Any conditional variables.  I.e. those on the right hand side of H(Y|X) when calculating conditional entropy.</param>
+            <param name="logarithmBase">The logarithm base to use for the calculations.</param>
+            <returns>The entropy value.</returns>
+        </member>
+        <member name="M:BayesServer.Statistics.Entropy.Calculate(BayesServer.Table,BayesServer.Statistics.LogarithmBase)">
+            <summary>
+            Measures the uncertainty of a distribution.
+            </summary>
+            <param name="joint">The marginal or joint distribution.</param>
+            <param name="logarithmBase">The logarithm base to use for the calculations.</param>
+            <returns>The entropy value.</returns>
+        </member>
+        <member name="M:BayesServer.Statistics.Entropy.Calculate(BayesServer.CLGaussian,System.Collections.Generic.IList{BayesServer.VariableContext},BayesServer.Statistics.LogarithmBase)">
+            <summary>
+            Measures the uncertainty of a distribution conditional on one or more variables.
+            </summary>
+            <param name="joint">The marginal or joint distribution.</param>
+            <param name="conditionOn">Any conditional variables.  I.e. those on the right hand side of H(Y|X) when calculating conditional entropy.</param>
+            <param name="logarithmBase">The logarithm base to use for the calculations.</param>
+            <returns>The entropy value.</returns>
+        </member>
+        <member name="M:BayesServer.Statistics.Entropy.Calculate(BayesServer.CLGaussian,BayesServer.Statistics.LogarithmBase)">
+            <summary>
+            Measures the uncertainty of a distribution.
+            </summary>
+            <param name="joint">The marginal or joint distribution.</param>
+            <param name="logarithmBase">The logarithm base to use for the calculations.</param>
+            <returns>The entropy value.</returns>
+        </member>
+        <member name="T:BayesServer.Statistics.JensenShannon">
+            <summary>
+            Methods for computing the Jensen Shannon divergence, which measures the similarity between probability distributions.
+            </summary>
+            <remarks>The Jensen Shannon divergence is symmetric and finite.  The square root is a metric. </remarks>
+        </member>
+        <member name="M:BayesServer.Statistics.JensenShannon.Divergence(BayesServer.IDistribution,BayesServer.IDistribution,BayesServer.Statistics.LogarithmBase)">
+            <summary>
+            Calculates the Jensen Shannon divergence between two distributions.
+            </summary>
+            <param name="p">The first distribution.</param>
+            <param name="q">The second distribution.</param>
+            <param name="logarithm">The logarithm base to use in the calculations.</param>
+            <returns>The Jensen Shannon divergence.</returns>
+        </member>
+        <member name="T:BayesServer.Statistics.KullbackLeibler">
+            <summary>
+            Calculate the Kullback–Leibler divergence between 2 distributions with the same variables, D(P||Q).
+            </summary>
+            <remarks>
+            A value of 0 indicates that the two distributions behave in a very similar or identical way.
+            </remarks>
+        </member>
+        <member name="M:BayesServer.Statistics.KullbackLeibler.Divergence(BayesServer.IDistribution,BayesServer.IDistribution,BayesServer.Statistics.LogarithmBase)">
+            <summary>
+            Calculates the Kullback-Leibler divergence D(P||Q).  Supports multivariate distributions.  Supports discrete or continuous distributions.
+            </summary>
+            <param name="priorQ">The distribution Q in D(P||Q), e.g. the Prior.</param>
+            <param name="posteriorP">The distribution P in D(P||Q), e.g. the Posterior.</param>
+            <param name="logarithm">The base of the computation.</param>
+            <returns>The Kullback-Leibler divergence in NATS if the logarithm is natural, BITS if the logarithm is base 2.</returns>
+        </member>
+        <member name="T:BayesServer.Statistics.LogarithmBase">
+            <summary>
+            Determines the base of the logarithm to use during calculations such as mutual information.
+            </summary>
+        </member>
+        <member name="F:BayesServer.Statistics.LogarithmBase.Natural">
+            <summary>
+            Natural (base e) logarithm.
+            </summary>
+        </member>
+        <member name="F:BayesServer.Statistics.LogarithmBase.Two">
+            <summary>
+            Base 2 logarithm.
+            </summary>
+        </member>
+        <member name="T:BayesServer.Statistics.MutualInformation">
+            <summary>
+            Calculates mutual information or conditional mutual information, which measures the dependence between two variables.
+            </summary>
+        </member>
+        <member name="M:BayesServer.Statistics.MutualInformation.Calculate(BayesServer.IDistribution,BayesServer.VariableContext,BayesServer.VariableContext,BayesServer.Statistics.LogarithmBase)">
+            <summary>
+            Measures the dependence between two variables.
+            </summary>
+            <param name="joint">The joint distribution over two (head) variables.</param>
+            <param name="x">X in the expression I(X,Y).</param>
+            <param name="y">Y in the expression I(X,Y).</param>
+            <param name="logarithmBase">The logarithm base to use for the calculations.</param>
+            <returns>The mutual information value.</returns>
+        </member>
+        <member name="M:BayesServer.Statistics.MutualInformation.Calculate(BayesServer.IDistribution,BayesServer.VariableContext,BayesServer.VariableContext,System.Collections.Generic.IList{BayesServer.VariableContext},BayesServer.Statistics.LogarithmBase)">
+            <summary>
+            Calculates mutual information or conditional mutual information, which measures the dependence between two variables.
+            </summary>
+            <param name="joint">The joint distribution over two or more variables.</param>
+            <param name="x">X in the expression I(X,Y) or I(X,Y|Z).</param>
+            <param name="y">Y in the expression I(X,Y) or I(X,Y|Z).</param>
+            <param name="conditionOn">Any conditional variables.  I.e. Z in the expression I(X,Y|Z) when calculating conditional mutual information.</param>
+            <param name="logarithmBase">The logarithm base to use for the calculations.</param>
+            <returns>The mutual information value.</returns>
+        </member>
+        <member name="M:BayesServer.Statistics.MutualInformation.Calculate(BayesServer.IDistribution,System.Collections.Generic.IList{BayesServer.VariableContext},System.Collections.Generic.IList{BayesServer.VariableContext},System.Collections.Generic.IList{BayesServer.VariableContext},BayesServer.Statistics.LogarithmBase)">
+            <summary>
+            Calculates mutual information or conditional mutual information, which measures the dependence between two variables.
+            </summary>
+            <param name="joint">The joint distribution over two or more variables.</param>
+            <param name="x">X in the expression I(X,Y) or I(X,Y|Z).</param>
+            <param name="y">Y in the expression I(X,Y) or I(X,Y|Z).</param>
+            <param name="conditionOn">Any conditional variables.  I.e. Z in the expression I(X,Y|Z) when calculating conditional mutual information.</param>
+            <param name="logarithmBase">The logarithm base to use for the calculations.</param>
+            <returns>The mutual information value.</returns>
+        </member>
+        <member name="T:BayesServer.Statistics.NamespaceDoc">
+            <summary>
+            Contains interfaces and classes for performing statistical/probabilistic tests.
+            </summary>
+        </member>
+    </members>
+</doc>

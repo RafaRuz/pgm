@@ -1,0 +1,522 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BayesServer.Data.Discovery</name>
+    </assembly>
+    <members>
+        <member name="T:BayesServer.Data.Discovery.DiscretizationMethod">
+            <summary>
+            The method (algorithm) to use for discretization of continuous data.
+            </summary>
+        </member>
+        <member name="F:BayesServer.Data.Discovery.DiscretizationMethod.None">
+            <summary>
+            Do not discretize.
+            </summary>
+        </member>
+        <member name="F:BayesServer.Data.Discovery.DiscretizationMethod.Clustering">
+            <summary>
+            Discretize using a probabilistic clustering algorithm.
+            </summary>
+        </member>
+        <member name="F:BayesServer.Data.Discovery.DiscretizationMethod.EqualIntervals">
+            <summary>
+            Discretize using equal width intervals.
+            </summary>
+        </member>
+        <member name="F:BayesServer.Data.Discovery.DiscretizationMethod.EqualFrequencies">
+            <summary>
+            Discretize such that each bin contains a similar number of items.
+            </summary>
+        </member>
+        <member name="T:BayesServer.Data.Discovery.Discretization.Clustering">
+            <summary>
+            Discretizes continuous data in bins, using a probabilistic clustering algorithm.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.Discretization.Clustering.Progress">
+            <inheritdoc />
+        </member>
+        <member name="M:BayesServer.Data.Discovery.Discretization.Clustering.Discretize(System.Collections.Generic.IEnumerable{System.Nullable{System.Double}},BayesServer.Data.Discovery.Discretization.DiscretizationOptions,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:BayesServer.Data.Discovery.Discretization.Clustering.Discretize(System.Collections.Generic.IEnumerable{BayesServer.Data.Discovery.Discretization.WeightedValue},BayesServer.Data.Discovery.Discretization.DiscretizationOptions,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:BayesServer.Data.Discovery.Discretization.Clustering.Discretize(BayesServer.Data.IDataReaderCommand,System.Collections.Generic.IList{BayesServer.Data.Discovery.Discretization.DiscretizationColumn},BayesServer.Data.Discovery.Discretization.DiscretizationAlgoOptions)">
+            <inheritdoc />
+        </member>
+        <member name="T:BayesServer.Data.Discovery.Discretization.DiscretizationAlgoOptions">
+            <summary>
+            Options for a discretization algorithm.  Each DiscretizationColumn also has options that can be set.
+            </summary>
+        </member>
+        <member name="E:BayesServer.Data.Discovery.Discretization.DiscretizationAlgoOptions.PropertyChanged">
+            <inheritdoc />
+        </member>
+        <member name="M:BayesServer.Data.Discovery.Discretization.DiscretizationAlgoOptions.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.Discovery.Discretization.DiscretizationAlgorithmOptions"/> class.
+            </summary>
+        </member>
+        <member name="M:BayesServer.Data.Discovery.Discretization.DiscretizationAlgoOptions.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.Discovery.Discretization.DiscretizationAlgorithmOptions"/> class.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.Discretization.DiscretizationAlgoOptions.WeightColumn">
+            <summary>
+            Gets or sets a column that contains case weights for each record.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.Discretization.DiscretizationAlgoOptions.Cancellation">
+            <summary>
+            Gets of sets an instance implementing <see cref="T:BayesServer.ICancellation"/>, used for cancellation.
+            </summary>
+            <seealso cref="T:BayesServer.ICancellation"/>
+        </member>
+        <member name="T:BayesServer.Data.Discovery.Discretization.DiscretizationColumn">
+            <summary>
+            Identifies a column of data and how it is to be discretized.
+            </summary>
+        </member>
+        <member name="M:BayesServer.Data.Discovery.Discretization.DiscretizationColumn.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.Discovery.Discretization.DiscretizationColumn"/> class.
+            </summary>
+            <param name="columnName">The name of the column of data to discretize.</param>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.Discretization.DiscretizationColumn.Options">
+            <summary>
+            Gets the discretization options for this column of data.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.Discretization.DiscretizationColumn.ColumnName">
+            <summary>
+            Gets or sets the name of the column of data to be discretized.
+            </summary>
+        </member>
+        <member name="T:BayesServer.Data.Discovery.Discretization.DiscretizationInfo">
+            <summary>
+            Discretization information for column of data, returned from a discretization algorithm.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.Discretization.DiscretizationInfo.Intervals">
+            <summary>
+            Gets the intervals generated by a discretization algorithm for a column of data.
+            </summary>
+        </member>
+        <member name="T:BayesServer.Data.Discovery.Discretization.DiscretizationOptions">
+            <summary>
+            Options that determine whether and how continuous data should be discretized.
+            </summary>
+        </member>
+        <member name="E:BayesServer.Data.Discovery.Discretization.DiscretizationOptions.PropertyChanged">
+            <inheritdoc />
+        </member>
+        <member name="P:BayesServer.Data.Discovery.Discretization.DiscretizationOptions.InfiniteExtremes">
+            <summary>
+            Gets or sets a value indicating whether the first and last intervals extend to negative and positive infinity respectively.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.Discretization.DiscretizationOptions.SuggestedBinCount">
+            <summary>
+            Gets or sets the number of suggested bins to use during discretization.
+            </summary>
+            <remarks>
+            The actual number of bins may be lower than the suggested bin count, if there is insufficient data.
+            </remarks>
+        </member>
+        <member name="M:BayesServer.Data.Discovery.Discretization.DiscretizationOptions.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:BayesServer.Data.Discovery.Discretization.EqualFrequencies">
+            <summary>
+            Discretizes continuous data in bins, such that each bin contain a similar number of data points.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.Discretization.EqualFrequencies.Progress">
+            <inheritdoc />
+        </member>
+        <member name="M:BayesServer.Data.Discovery.Discretization.EqualFrequencies.Discretize(System.Collections.Generic.IEnumerable{System.Nullable{System.Double}},BayesServer.Data.Discovery.Discretization.DiscretizationOptions,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:BayesServer.Data.Discovery.Discretization.EqualFrequencies.Discretize(BayesServer.Data.IDataReaderCommand,System.Collections.Generic.IList{BayesServer.Data.Discovery.Discretization.DiscretizationColumn},BayesServer.Data.Discovery.Discretization.DiscretizationAlgoOptions)">
+            <inheritdoc />
+        </member>
+        <member name="M:BayesServer.Data.Discovery.Discretization.EqualFrequencies.Discretize(System.Collections.Generic.IEnumerable{BayesServer.Data.Discovery.Discretization.WeightedValue},BayesServer.Data.Discovery.Discretization.DiscretizationOptions,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:BayesServer.Data.Discovery.Discretization.EqualIntervals">
+            <summary>
+            Discretizes continuous data in bins, such that the bins have equal size.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.Discretization.EqualIntervals.Progress">
+            <inheritdoc />
+        </member>
+        <member name="M:BayesServer.Data.Discovery.Discretization.EqualIntervals.Discretize(BayesServer.Data.IDataReaderCommand,System.Collections.Generic.IList{BayesServer.Data.Discovery.Discretization.DiscretizationColumn},BayesServer.Data.Discovery.Discretization.DiscretizationAlgoOptions)">
+            <inheritdoc />
+        </member>
+        <member name="M:BayesServer.Data.Discovery.Discretization.EqualIntervals.Discretize(System.Collections.Generic.IEnumerable{System.Nullable{System.Double}},BayesServer.Data.Discovery.Discretization.DiscretizationOptions,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:BayesServer.Data.Discovery.Discretization.EqualIntervals.Discretize(System.Collections.Generic.IEnumerable{BayesServer.Data.Discovery.Discretization.WeightedValue},BayesServer.Data.Discovery.Discretization.DiscretizationOptions,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:BayesServer.Data.Discovery.Discretization.IDiscretize">
+            <summary>
+            Interface which a discretization algorithm must implement.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.Discretization.IDiscretize.Progress">
+            <summary>
+            Gets an instance that receive progress notifications.
+            </summary>
+        </member>
+        <member name="M:BayesServer.Data.Discovery.Discretization.IDiscretize.Discretize(BayesServer.Data.IDataReaderCommand,System.Collections.Generic.IList{BayesServer.Data.Discovery.Discretization.DiscretizationColumn},BayesServer.Data.Discovery.Discretization.DiscretizationAlgoOptions)">
+            <summary>
+            Discretizes one or more data columns, that may contain missing (null) values.
+            </summary>
+            <param name="dataReaderCommand">The data reader command to allow iteration of data.</param>
+            <param name="dataColumns">The data columns that should be discretized and options per column.</param>
+            <param name="options">Options governing the overall discretization algorithm.  Each data column also has options.</param>
+            <returns>A number of bins each identified by an interval for each data column.</returns>
+        </member>
+        <member name="M:BayesServer.Data.Discovery.Discretization.IDiscretize.Discretize(System.Collections.Generic.IEnumerable{System.Nullable{System.Double}},BayesServer.Data.Discovery.Discretization.DiscretizationOptions,System.String)">
+            <summary>
+            Discretizes unsorted continuous data that may contain missing (null) values.
+            </summary>
+            <param name="unsortedData">The data to discretize.</param>
+            <param name="options">Options that affect how discretization is performed, such as the algorithm to use.</param>
+            <param name="dataColumn">The name of the source column.  This is only used for error reporting.</param>
+            <returns>A number of bins each identified by an interval.</returns>
+        </member>
+        <member name="M:BayesServer.Data.Discovery.Discretization.IDiscretize.Discretize(System.Collections.Generic.IEnumerable{BayesServer.Data.Discovery.Discretization.WeightedValue},BayesServer.Data.Discovery.Discretization.DiscretizationOptions,System.String)">
+            <summary>
+            Discretizes unsorted weighted continuous data that may contain missing (null) values.
+            </summary>
+            <param name="unsortedData">The weighted data to discretize.</param>
+            <param name="options">Options that affect how discretization is performed, such as the algorithm to use.</param>
+            <param name="dataColumn">The name of the source column.  This is only used for error reporting.</param>
+            <returns>A number of bins each identified by an interval.</returns>
+        </member>
+        <member name="T:BayesServer.Data.Discovery.Discretization.IDiscretizeProgress">
+            <summary>
+            Interface to provide progress information during discretization.
+            </summary>
+        </member>
+        <member name="M:BayesServer.Data.Discovery.Discretization.IDiscretizeProgress.Update(BayesServer.Data.Discovery.Discretization.IDiscretizeProgressInfo)">
+            <summary>
+            Progress updates from a discretization algorithm.
+            </summary>
+            <param name="info">Contains progress information from a discretization algorithm.</param>
+        </member>
+        <member name="T:BayesServer.Data.Discovery.Discretization.IDiscretizeProgressInfo">
+            <summary>
+            Interface to provide progress information during discretization.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.Discretization.IDiscretizeProgressInfo.Message">
+            <summary>
+            Gets a progress message.
+            </summary>
+        </member>
+        <member name="T:BayesServer.Data.Discovery.Discretization.NamespaceDoc">
+            <summary>
+            Contains classes and interfaces for discretizing continuous data.
+            </summary>
+        </member>
+        <member name="T:BayesServer.Data.Discovery.Discretization.WeightedValue">
+            <summary>
+            A value (which can be null) and its associated weight (support).
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.Discretization.WeightedValue.Value">
+            <summary>
+            Gets or sets the value, which can be null.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.Discretization.WeightedValue.Weight">
+            <summary>
+            Gets or sets the weight (support) for the <see cref="P:BayesServer.Data.Discovery.Discretization.WeightedValue.Value"/>.
+            </summary>
+        </member>
+        <member name="T:BayesServer.Data.Discovery.IVariableGeneratorProgress">
+            <summary>
+            Interface to provide progress information during data discovery (VariableGenerator).
+            </summary>
+        </member>
+        <member name="M:BayesServer.Data.Discovery.IVariableGeneratorProgress.Update(BayesServer.Data.Discovery.VariableGeneratorProgressInfo)">
+            <summary>
+            Progress updates from the Variable Generator algorithm.
+            </summary>
+            <param name="info">Contains progress information from the Variable Generator algorithm.</param>
+        </member>
+        <member name="T:BayesServer.Data.Discovery.NamespaceDoc">
+            <summary>
+            Contains classes and interfaces for generating variables from data.
+            </summary>
+        </member>
+        <member name="T:BayesServer.Data.Discovery.SortOrder">
+            <summary>
+            The sort order of states for new discrete variables.
+            </summary>
+        </member>
+        <member name="F:BayesServer.Data.Discovery.SortOrder.None">
+            <summary>
+            Discrete states should not be sorted.
+            </summary>
+        </member>
+        <member name="F:BayesServer.Data.Discovery.SortOrder.Ascending">
+            <summary>
+            Discrete states should be sorted in ascending order.
+            </summary>
+        </member>
+        <member name="F:BayesServer.Data.Discovery.SortOrder.Descending">
+            <summary>
+            Discrete states should be sorted in descending order.
+            </summary>
+        </member>
+        <member name="F:BayesServer.Data.Discovery.SortOrder.AscendingFrequency">
+            <summary>
+            Discrete states should be sorted in order of ascending frequency of ocuurence in the data.
+            </summary>
+        </member>
+        <member name="F:BayesServer.Data.Discovery.SortOrder.DescendingFrequency">
+            <summary>
+            Discrete states should be sorted in order of descending frequency of ocuurence in the data.
+            </summary>
+        </member>
+        <member name="T:BayesServer.Data.Discovery.VariableDefinition">
+            <summary>
+            Defines how a variable should be created.
+            </summary>
+        </member>
+        <member name="E:BayesServer.Data.Discovery.VariableDefinition.PropertyChanged">
+            <inheritdoc />
+        </member>
+        <member name="M:BayesServer.Data.Discovery.VariableDefinition.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.Discovery.VariableDefinition"/> class.
+            </summary>
+        </member>
+        <member name="M:BayesServer.Data.Discovery.VariableDefinition.#ctor(System.String,System.String,System.Nullable{BayesServer.VariableValueType})">
+            <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.Discovery.VariableDefinition"/> class.
+            </summary>
+            <param name="dataColumn">The data column.</param>
+            <param name="name">The name for the new variable.</param>
+            <param name="valueType">The <see cref="T:BayesServer.VariableValueType"/> for the new variable, or null if this should be detected automatically.</param>
+        </member>
+        <member name="M:BayesServer.Data.Discovery.VariableDefinition.#ctor(System.String,System.String,System.Nullable{BayesServer.VariableValueType},System.Nullable{BayesServer.StateValueType})">
+            <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.Discovery.VariableDefinition"/> class.
+            </summary>
+            <param name="dataColumn">The data column.</param>
+            <param name="name">The name for the new variable.</param>
+            <param name="valueType">The <see cref="T:BayesServer.VariableValueType"/> for the new variable, or null if this should be detected automatically.</param>
+            <param name="stateValueType">The <see cref="T:BayesServer.StateValueType"/> for the new variable, or null if this should be detected automatically.</param>
+        </member>
+        <member name="M:BayesServer.Data.Discovery.VariableDefinition.#ctor(System.String,System.String,System.Nullable{BayesServer.VariableValueType},System.Nullable{BayesServer.StateValueType},BayesServer.VariableKind)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BayesServer.Data.Discovery.VariableDefinition"/> class.
+            </summary>
+            <param name="dataColumn">The data column.</param>
+            <param name="name">The name for the new variable.</param>
+            <param name="valueType">The <see cref="T:BayesServer.VariableValueType"/> for the new variable, or null if this should be detected automatically.</param>
+            <param name="stateValueType">The <see cref="T:BayesServer.StateValueType"/> for the new variable, or null if this should be detected automatically.</param>
+            <param name="kind">The <see cref="T:BayesServer.VariableKind"/> for the new variable.</param>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.VariableDefinition.EmptyStringAction">
+            <summary>
+            Determines the action to take if an empty string is encountered.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.VariableDefinition.DiscretizationMethod">
+            <summary>
+            Gets or sets the method (algorithm) to use for discretization, if any.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.VariableDefinition.DiscretizationOptions">
+            <summary>
+            Gets options that specify how continuous data should be discretized, if <see cref="T:BayesServer.Data.Discovery.Discretization.DiscretizationMethod"/> is not <see cref="F:BayesServer.Data.Discovery.DiscretizationMethod.None"/>.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.VariableDefinition.SortOrder">
+            <summary>
+            Gets or sets the sort order for states of a new discrete variable.
+            </summary>
+            <remarks>
+            Note that this value is ignored if <see cref="T:BayesServer.StateValueType"/> is not <see cref="F:BayesServer.StateValueType.None"/>, whether specified or auto detected.
+            </remarks>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.VariableDefinition.Name">
+            <summary>
+            Gets or sets the name for the new variable.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.VariableDefinition.ValueType">
+            <summary>
+            Gets or sets the <see cref="T:BayesServer.VariableValueType"/> for the new variable.  If null, the <see cref="T:BayesServer.VariableValueType"/> will be detected automatically.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.VariableDefinition.StateValueType">
+            <summary>
+            Gets or sets the <see cref="T:BayesServer.StateValueType"/> for the new variable.  If null, the <see cref="T:BayesServer.StateValueType"/> will be detected automatically.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.VariableDefinition.Kind">
+            <summary>
+            Gets or sets the <see cref="T:BayesServer.VariableKind"/> for the new variable.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.VariableDefinition.DataColumn">
+            <summary>
+            The name of the data column, containing the data used to generate the new variable.
+            </summary>
+        </member>
+        <member name="T:BayesServer.Data.Discovery.VariableGenerator">
+            <summary>
+            Generates variables from a data source.
+            </summary>
+        </member>
+        <member name="M:BayesServer.Data.Discovery.VariableGenerator.Generate(BayesServer.Data.IDataReaderCommand,System.Collections.Generic.IEnumerable{BayesServer.Data.Discovery.VariableDefinition},BayesServer.Data.Discovery.VariableGeneratorOptions)">
+            <summary>
+            Generates variables from a data source.
+            </summary>
+            <param name="readerCommand">Command to retrieve the data.</param>
+            <param name="variableDefinitions">Definitions for the variables to be created.</param>
+            <param name="options">Options affecting how variables are created.</param>
+            <returns>The new variables.</returns>
+        </member>
+        <member name="T:BayesServer.Data.Discovery.VariableGeneratorOptions">
+            <summary>
+            Options that affect the generation of variables from data.
+            </summary>
+        </member>
+        <member name="E:BayesServer.Data.Discovery.VariableGeneratorOptions.PropertyChanged">
+            <inheritdoc />
+        </member>
+        <member name="P:BayesServer.Data.Discovery.VariableGeneratorOptions.DataProgress">
+            <summary>
+            Reports progress on the number of cases read.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.VariableGeneratorOptions.Cancellation">
+            <summary>
+            Gets of sets an instance implementing <see cref="T:BayesServer.ICancellation"/>, used for cancellation.
+            </summary>
+            <seealso cref="T:BayesServer.ICancellation"/>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.VariableGeneratorOptions.Progress">
+            <summary>
+            Gets of sets the instance implementing <see cref="T:BayesServer.Data.Discovery.IVariableGeneratorProgress"/>, used for progress notifications.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.VariableGeneratorOptions.DetectIntegralFloats">
+            <summary>
+            Gets or sets a value, which when true tests floating point column data to see if the data is an integral type, which would then become a candidate to be a discrete variable when VariableValueType is not specified.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.VariableGeneratorOptions.AutoDetectDiscreteLimit">
+            <summary>
+            Gets or sets the distinct value count, which when exceeded changes a variable from discrete to continuous. This only applies when the variable's value type is undefined..
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.VariableGeneratorOptions.WeightColumn">
+            <summary>
+            Gets or sets the name of a column which contains a weight (support) for each case.
+            </summary>
+            <remarks>
+            A weight is a positive numeric value, which is often an integer value which indicates the number of duplicates for a case,
+            but could also be a numeric value such as a probability.
+            </remarks>
+        </member>
+        <member name="T:BayesServer.Data.Discovery.VariableGeneratorProgressInfo">
+            <summary>
+            Interface to provide progress information during data discovery (VariableGenerator).
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.VariableGeneratorProgressInfo.Message">
+            <summary>
+            Gets a progress message.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.VariableGeneratorProgressInfo.InnerMessage">
+            <summary>
+            Gets an inner progress message.  For example from a discretization algorithm.
+            </summary>
+        </member>
+        <member name="T:BayesServer.Data.Discovery.VariableInfo">
+            <summary>
+            Contains the generated <see cref="T:BayesServer.Variable"/> and any supplementary information.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.VariableInfo.MissingProbability">
+            <summary>
+            Gets weighted and unweighted values between 0 and 1 indicating the percentage of data that is missing for this variable.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.VariableInfo.Counts">
+            <summary>
+            Gets counts such as missing and non-missing data for the variable.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.VariableInfo.Variable">
+            <summary>
+            Gets the generated <see cref="T:BayesServer.Variable"/>.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.VariableInfo.IsConstant">
+            <summary>
+            Gets a value which when true indicates that the variable has a constant value.  For discrete this indicates a single state, for continuous this indicates zero variance. 
+            </summary>
+        </member>
+        <member name="T:BayesServer.Data.Discovery.VariableInfoCount">
+            <summary>
+            Reports weighted and unweighted record counts.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.VariableInfoCount.Weighted">
+            <summary>
+            The sum of record weights.  This equals 'Unweighted' when all weights are 1.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.VariableInfoCount.Unweighted">
+            <summary>
+            The number of records. This ignores any weights.
+            </summary>
+        </member>
+        <member name="T:BayesServer.Data.Discovery.VariableInfoCounts">
+            <summary>
+            Reports counts for each variable.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.VariableInfoCounts.Missing">
+            <summary>
+            Gets the count of missing/null values.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.VariableInfoCounts.NotMissing">
+            <summary>
+            Gets the counts of values that are not missing/null values.
+            </summary>
+        </member>
+        <member name="T:BayesServer.Data.Discovery.VariableInfoValue">
+            <summary>
+            Reports general weighted and unweighted information/statistics about a variable.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.VariableInfoValue.Weighted">
+            <summary>
+            Gets the weighted value.  This equals 'Unweighted' when all weights are 1.
+            </summary>
+        </member>
+        <member name="P:BayesServer.Data.Discovery.VariableInfoValue.Unweighted">
+            <summary>
+            Gets the unweighted value. This ignores any weights.
+            </summary>
+        </member>
+    </members>
+</doc>
