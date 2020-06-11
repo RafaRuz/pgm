@@ -45,7 +45,6 @@ def plot_pomegranate_bn_pgvz(pgm, filename=None, prog='dot', color='red'):
 def plot_pgmpy_bn(pgm, layout=None, node_size=2000, node_color='pink'):
     pos=None
     if layout=='graphviz':
-        print("asd locaso")
         pos = nx.drawing.nx_agraph.graphviz_layout(pgm, prog='dot')
     elif layout!=None:
         pos = layout(G)
