@@ -1,3 +1,9 @@
+"""
+Este fichero contiene funciones auxiliares para visualizar los grafos generados por las distintas librerías.
+Para ello hace uso de las librerías para visualización de grafos networkx y pygraphviz
+"""
+
+
 import networkx as nx
 import pygraphviz
 from matplotlib import pylab as plt
